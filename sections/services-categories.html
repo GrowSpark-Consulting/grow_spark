@@ -1,7 +1,10 @@
 <section id="services" class="py-20 lg:py-28">
   <div class="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
 
-    <nav aria-label="Service categories" class="sticky top-16 z-30 -mx-5 px-5 sm:mx-0 sm:px-0 bg-paper/95 backdrop-blur-md py-4 mb-16 flex flex-wrap justify-center gap-2.5 border-b border-hairline" data-service-tabs>
+    <!-- Sticky offset matches the fixed header's real scrolled height (105px
+         below lg, 115px at lg+ where the nav is taller) so the tab bar parks
+         directly beneath the header instead of sliding underneath it. -->
+    <nav aria-label="Service categories" class="sticky top-[105px] lg:top-[115px] z-30 -mx-5 px-5 sm:mx-0 sm:px-0 bg-paper/95 backdrop-blur-md py-4 mb-16 flex flex-wrap justify-center gap-2.5 border-b border-hairline" data-service-tabs>
       <a href="#cat-ai-automation" class="service-tab" data-tab-for="cat-ai-automation">AI &amp; Automation</a>
       <a href="#cat-software" class="service-tab" data-tab-for="cat-software">Software &amp; Product</a>
       <a href="#cat-systems" class="service-tab" data-tab-for="cat-systems">Enterprise Systems</a>
