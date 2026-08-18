@@ -30,6 +30,7 @@ import { initSmoothScroll } from './smooth-scroll.js';
 import { initNav } from './nav.js';
 import { initAnchorLinks } from './anchor-links.js';
 import { initServiceTabs } from './service-tabs.js';
+import { initBookingTabs } from './booking-tabs.js';
 import { initScrollReveal } from '../animations/reveal.js';
 import { initCounters } from '../animations/counters.js';
 import { initFrameworkLine } from '../animations/framework-line.js';
@@ -77,6 +78,7 @@ if (document.querySelector('[data-hero-swiper]')) {
 }
 initAnchorLinks(lenis);
 initServiceTabs();
+initBookingTabs();
 initScrollReveal();
 initCounters();
 initFrameworkLine();

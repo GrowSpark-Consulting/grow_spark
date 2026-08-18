@@ -1704,4 +1704,197 @@
   .source-item .si-link:hover {
     text-decoration: underline;
   }
+
+  /* ---------- Strategy sessions (/strategy/) ----------
+     Five engagement tiers plus a tabbed booking area. */
+  .eng-card {
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-card);
+    padding: 30px 26px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  /* The entry-level tier is the one most founders should start with, so it
+     carries the accent border the other tiers don't. */
+  .eng-card.is-featured {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-card-md);
+  }
+  /* The top two tiers are application-only — the dark treatment separates
+     them from the tiers you can simply book. */
+  .eng-card.is-selective {
+    background: var(--color-ink);
+    border-color: transparent;
+  }
+  .eng-card.is-selective .eng-num,
+  .eng-card.is-selective .eng-meta {
+    color: #9BA1A7;
+  }
+  .eng-card.is-selective h3,
+  .eng-card.is-selective .eng-price {
+    color: #fff;
+  }
+  .eng-card.is-selective .eng-for,
+  .eng-card.is-selective .eng-note {
+    color: #9BA1A7;
+  }
+  .eng-card.is-selective .eng-side {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .eng-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .eng-for {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-ink-soft);
+    margin-bottom: 22px;
+  }
+  .eng-note {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    margin-top: 16px;
+  }
+  .eng-side {
+    background: var(--color-paper-sunken);
+    border-radius: var(--radius-tag);
+    padding: 24px 22px;
+    text-align: center;
+    align-self: start;
+  }
+  .eng-price {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .eng-price .range {
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  }
+  .eng-meta {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-muted);
+    margin: 10px 0 20px;
+  }
+  .eng-leave li {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+    padding: 8px 0 8px 20px;
+    position: relative;
+  }
+  .eng-leave li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 8px;
+    height: 1px;
+    background: var(--color-accent);
+  }
+  @media (min-width: 1024px) {
+    .eng-card {
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      padding: 40px 38px;
+    }
+  }
+
+  /* "I have this problem" → the tier that fits it. */
+  .decide-row {
+    background: var(--color-paper-raised);
+    padding: 22px 26px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+  .decide-row .d-said {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-ink-soft);
+    flex: 1 1 240px;
+  }
+  .decide-row .d-answer {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-ink);
+  }
+  .decide-row .d-answer .price {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-accent);
+    margin-top: 3px;
+  }
+
+  /* Booking tab bar. */
+  .booking-tab {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13.5px;
+    line-height: 1.35;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-hairline-strong);
+    background: var(--color-paper-raised);
+    color: var(--color-ink-soft);
+    cursor: pointer;
+    transition: color .2s var(--ease-standard), border-color .2s var(--ease-standard), background-color .2s var(--ease-standard);
+  }
+  .booking-tab:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .booking-tab[aria-selected='true'] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* Form controls — same visual language as the contact form, extracted so
+     the long booking forms don't repeat a utility chain on every field. */
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    border-radius: var(--radius-tag);
+    border: 1px solid var(--color-hairline-strong);
+    background: var(--color-paper);
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--color-ink);
+    transition: border-color .2s var(--ease-standard), box-shadow .2s var(--ease-standard);
+  }
+  .form-input::placeholder {
+    color: var(--color-muted);
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-accent-tint);
+  }
+  textarea.form-input {
+    min-height: 120px;
+    resize: vertical;
+  }
 }
