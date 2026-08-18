@@ -3,9 +3,12 @@
 </a>
 
 <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-[background-color,border-color,box-shadow] duration-[400ms] ease-[var(--ease-standard)]">
-  <div class="mx-auto max-w-[var(--container-wide)] px-6 sm:px-10 grid grid-cols-[1fr_auto_1fr] items-center transition-[padding] duration-300 ease-[var(--ease-standard)] py-8" id="nav-inner">
+  <!-- Mobile is a three-part flex row: logo left, CTA centered in the space
+       between, hamburger hard right. At lg the same children become the
+       original 3-column grid (logo / nav / CTA), and the hamburger drops out. -->
+  <div class="mx-auto max-w-[var(--container-wide)] px-6 sm:px-10 flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between transition-[padding] duration-300 ease-[var(--ease-standard)] py-8" id="nav-inner">
 
-    <a href="/" class="site-nav__logo logo-lockup justify-self-start shrink-0" aria-label="Grow Spark Consulting — home">
+    <a href="/" class="site-nav__logo logo-lockup shrink-0 lg:justify-self-start" aria-label="Grow Spark Consulting — home">
       <span class="logo-line logo-line--grow">Grow<span class="logo-dot" aria-hidden="true"></span></span>
       <span class="logo-line logo-line--spark">Spark</span>
     </a>
@@ -33,13 +36,13 @@
       </div>
     </nav>
 
-    <div class="justify-self-end flex items-center gap-3 sm:gap-5">
+    <div class="flex-1 lg:flex-none flex justify-center lg:justify-end min-w-0 px-3 lg:px-0 lg:col-start-3 lg:justify-self-end">
       <a href="/contact/" class="btn site-nav__cta inline-flex shrink-0">Book Strategy Session</a>
-
-      <button id="nav-toggle" class="site-nav__toggle lg:hidden p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
-        <i data-lucide="menu" class="w-6 h-6"></i>
-      </button>
     </div>
+
+    <button id="nav-toggle" class="site-nav__toggle lg:hidden shrink-0 p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
   </div>
 </header>
 
