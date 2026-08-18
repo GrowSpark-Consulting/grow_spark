@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Value Gap — Grow Spark Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff; --charcoal:#14171A; --charcoal-soft:#1E2226;
+    --grey:#565C63; --grey-light:#8A9096; --hairline:#E4E6E8; --panel:#F6F7F7;
+    --emerald:#0B5E45; --emerald-deep:#083F2F; --emerald-tint:#E6EFEA;
+    --amber-tint:#FBF3E6; --amber-line:#E8CFA0; --amber-text:#8a5a1f;
+    --ease: cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter', sans-serif; color:var(--charcoal); background:var(--white); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope', sans-serif; font-weight:700; letter-spacing:-0.02em; color:var(--charcoal);}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .wrap-narrow{max-width:720px; margin:0 auto; padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--emerald); color:var(--white);}
+  :focus-visible{outline:2px solid var(--emerald); outline-offset:3px;}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
+  header{position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.92); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--hairline);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; max-width:1180px; margin:0 auto;}
+  .logo{font-family:'Manrope', sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px;}
+  .logo .mark{width:9px; height:9px; border-radius:1px; background:var(--emerald); display:inline-block;}
+  .navlinks{display:flex; gap:32px; align-items:center;}
+  .navlinks a{font-size:14.5px; font-weight:500; color:var(--charcoal-soft);}
+  .navlinks a:hover, .navlinks a.active{color:var(--emerald);}
+  .nav-cta{background:var(--charcoal); color:var(--white); padding:11px 20px; border-radius:2px; font-size:13px; font-weight:600;}
+  .nav-cta:hover{background:var(--emerald);}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .nav-toggle span{display:block; width:22px; height:2px; background:var(--charcoal); margin:5px 0;}
+
+  .crumb{padding:22px 0 0;}
+  .crumb .wrap{font-size:13px; color:var(--grey-light);}
+  .crumb a{color:var(--grey);}
+  .crumb a:hover{color:var(--emerald);}
+
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .cta-row.center{justify-content:center;}
+  .btn-primary{background:var(--charcoal); color:var(--white); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px;}
+  .btn-primary:hover{background:var(--emerald);}
+  .btn-secondary{border:1px solid var(--hairline); color:var(--charcoal); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px;}
+  .btn-secondary:hover{border-color:var(--emerald); color:var(--emerald);}
+  .eyebrow{font-size:12.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--emerald); margin-bottom:20px; display:block;}
+
+  /* Publication header */
+  .pub-header{padding:50px 0 60px; border-bottom:1px solid var(--hairline); text-align:center;}
+  .pub-header .cat-tag{display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--emerald); border:1px solid var(--emerald); padding:6px 14px; border-radius:20px; margin-bottom:24px;}
+  .pub-header h1{font-size:clamp(28px,4.6vw,44px); line-height:1.18; max-width:780px; margin:0 auto 18px;}
+  .pub-header h2{font-family:'Instrument Serif'; font-style:italic; font-weight:400; font-size:clamp(18px,2.6vw,24px); color:var(--grey); max-width:660px; margin:0 auto 30px; line-height:1.4;}
+  .meta-row{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--grey-light); font-weight:500;}
+  .meta-row span:not(.dot){color:var(--charcoal-soft);}
+  .meta-row .dot{color:var(--hairline);}
+
+  /* Body sections */
+  .paper-sec{padding:76px 0; border-bottom:1px solid var(--hairline);}
+  .paper-sec.alt{background:var(--panel);}
+  .paper-sec .sec-label{font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey-light); margin-bottom:16px; display:block;}
+  .paper-sec h3{font-size:clamp(21px,2.8vw,28px); margin-bottom:22px; line-height:1.32;}
+  .paper-sec p.para{font-size:15.5px; color:var(--charcoal-soft); margin-bottom:16px;}
+
+  .summary-box{border-left:3px solid var(--emerald); background:var(--emerald-tint); padding:26px 30px;}
+  .summary-box p{font-size:15.5px; color:var(--emerald-deep); font-weight:500; margin-bottom:12px;}
+  .summary-box p:last-child{margin-bottom:0;}
+
+  .fw-tag{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--emerald); background:var(--emerald-tint); border:1px solid var(--emerald); padding:5px 11px; border-radius:12px; margin-bottom:16px;}
+  .ext-tag{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-text); background:var(--amber-tint); border:1px solid var(--amber-line); padding:5px 11px; border-radius:12px; margin-bottom:16px;}
+
+  /* Hypothesis / key insight block */
+  .insight-block{max-width:100%; text-align:center; padding:50px 44px; background:var(--charcoal); border-radius:2px;}
+  .insight-block .il-tag{font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#6FE3B4; margin-bottom:18px; display:block;}
+  .insight-block p{font-family:'Manrope'; font-weight:700; font-size:clamp(18px,2.6vw,23px); color:var(--white); line-height:1.5;}
+
+  /* External evidence callout */
+  .ext-callout{border:1px solid var(--amber-line); background:var(--amber-tint); padding:24px 28px; margin:24px 0;}
+  .ext-callout p{font-size:14.5px; color:#5c3d16; line-height:1.6; margin-bottom:10px;}
+  .ext-callout p:last-child{margin-bottom:0;}
+  .ext-callout .src-link{font-size:13px; font-weight:600; color:var(--amber-text); text-decoration:underline;}
+
+  /* Chain / numbered steps */
+  .chain-list{display:flex; flex-direction:column; gap:1px; background:var(--hairline); border:1px solid var(--hairline); margin:26px 0;}
+  .chain-item{background:var(--white); padding:20px 26px; display:flex; gap:20px; align-items:flex-start;}
+  .chain-item .cnum{font-family:'Manrope'; font-weight:800; font-size:14px; color:var(--white); background:var(--emerald); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .chain-item h4{font-size:15.5px; margin-bottom:4px;}
+  .chain-item p{font-size:14px; color:var(--grey);}
+
+  .app-list{display:flex; flex-wrap:wrap; gap:9px; margin:22px 0;}
+  .app-list span{font-size:13px; font-weight:600; color:var(--charcoal-soft); border:1px solid var(--hairline); padding:8px 14px; border-radius:20px; background:var(--white);}
+
+  .formula-box{background:var(--charcoal); color:var(--white); padding:24px 28px; font-family:'Manrope'; font-weight:600; font-size:14.5px; line-height:1.9; margin:24px 0; overflow-x:auto; white-space:nowrap;}
+  .formula-box .fx{color:#6FE3B4;}
+
+  .pivot{font-family:'Manrope'; font-weight:700; font-size:19px; color:var(--charcoal); margin:22px 0; line-height:1.5;}
+  .pivot.emerald{color:var(--emerald);}
+
+  /* About Grow Spark Research */
+  .about-box{border:1px solid var(--hairline); padding:28px 30px; background:var(--white);}
+  .about-box p{font-size:14.5px; color:var(--grey); margin-bottom:10px; line-height:1.6;}
+  .about-box p:last-child{margin-bottom:0;}
+
+  /* Sources */
+  .source-list{display:flex; flex-direction:column; gap:14px; margin-top:20px;}
+  .source-item{border:1px solid var(--hairline); padding:18px 22px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;}
+  .source-item .si-text{font-size:14px; color:var(--charcoal-soft); font-weight:500;}
+  .source-item .si-text strong{display:block; font-weight:700; color:var(--charcoal); font-size:14.5px; margin-bottom:2px;}
+  .source-item a.si-link{font-size:13px; font-weight:600; color:var(--emerald); white-space:nowrap;}
+  .source-item a.si-link:hover{text-decoration:underline;}
+
+  /* Final CTA */
+  .final-cta{padding:110px 0; text-align:center; background:var(--emerald-deep); color:var(--white);}
+  .final-cta .eyebrow{color:#6FE3B4; margin-bottom:18px;}
+  .final-cta h2{color:var(--white); font-size:clamp(24px,3.6vw,36px); margin-bottom:32px; max-width:540px; margin-left:auto; margin-right:auto; line-height:1.3;}
+  .final-cta .btn-primary{background:var(--white); color:var(--emerald-deep);}
+  .final-cta .btn-primary:hover{background:#eef7f2;}
+  .final-cta .btn-secondary{border-color:rgba(255,255,255,0.3); color:var(--white);}
+  .final-cta .btn-secondary:hover{border-color:var(--white);}
+
+  footer{padding:56px 0 40px; border-top:1px solid var(--hairline); text-align:center;}
+  footer .foot-links{display:flex; justify-content:center; gap:24px; margin-bottom:24px; flex-wrap:wrap;}
+  footer .foot-links a{font-size:14px; color:var(--charcoal-soft);}
+  footer .foot-links a:hover{color:var(--emerald);}
+  footer .copyright{font-size:13px; color:var(--grey-light);}
+
+  @media (max-width:900px){
+    .navlinks{display:none;} .nav-toggle{display:block;}
+    .source-item{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="mark"></span>Grow Spark</a>
+    <div class="navlinks">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#challenges">Business Challenges</a>
+      <a href="framework.html">Our Framework</a>
+      <a href="research.html" class="active">Research</a>
+      <a href="founder.html">Leadership</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Book Growth Diagnostic</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<div class="crumb"><div class="wrap"><a href="index.html">Home</a> / <a href="research.html">Research</a> / The AI Value Gap</div></div>
+
+<!-- PUBLICATION HEADER -->
+<section class="pub-header">
+  <div class="wrap reveal">
+    <span class="cat-tag">White Paper 04 · AI &amp; Technology</span>
+    <h1>The AI Value Gap</h1>
+    <h2>Why Companies Struggle to Turn AI Adoption Into Measurable Business Value</h2>
+    <div class="meta-row">
+      <span>Grow Spark Research</span><span class="dot">·</span>
+      <span>Version 1.0</span><span class="dot">·</span>
+      <span>August 2026</span><span class="dot">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section class="paper-sec">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Executive Summary</span>
+    <div class="summary-box">
+      <p>AI adoption is not the same as AI transformation. Buying tools creates capability; measurable value requires workflow redesign, data readiness, governance, adoption and outcome measurement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KEY INSIGHT -->
+<section class="paper-sec alt">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Key Insight</span>
+    <span class="fw-tag">Grow Spark Framework</span>
+    <div class="insight-block">
+      <span class="il-tag">The Grow Spark AI Value Chain</span>
+      <p>Opportunity → Workflow → Data → AI System → Human Adoption → Measurement → Governance</p>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK: THE AI VALUE GAP -->
+<section class="paper-sec">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Framework</span>
+    <h3>Where The Gap Appears</h3>
+    <p class="para">The gap between AI adoption and AI value tends to appear at predictable points:</p>
+    <div class="app-list">
+      <span>Problem isn't economically important</span><span>Workflow is poorly defined</span><span>Data is inaccessible</span><span>People don't adopt the system</span><span>Outputs aren't integrated into decisions</span><span>No baseline exists</span><span>Risk is unmanaged</span>
+    </div>
+  </div>
+</section>
+
+<!-- AI OPPORTUNITY MATRIX -->
+<section class="paper-sec alt">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Practical Application</span>
+    <span class="fw-tag">Grow Spark Framework</span>
+    <h3>The AI Opportunity Matrix</h3>
+    <p class="para">Rank candidate use cases across seven dimensions before committing budget:</p>
+    <div class="chain-list">
+      <div class="chain-item"><span class="cnum">1</span><div><h4>Business Impact</h4><p>How much value the use case could create if it works.</p></div></div>
+      <div class="chain-item"><span class="cnum">2</span><div><h4>Frequency</h4><p>How often the workflow occurs.</p></div></div>
+      <div class="chain-item"><span class="cnum">3</span><div><h4>Data Readiness</h4><p>Whether the data required actually exists and is accessible.</p></div></div>
+      <div class="chain-item"><span class="cnum">4</span><div><h4>Implementation Complexity</h4><p>How difficult the use case is to build and integrate.</p></div></div>
+      <div class="chain-item"><span class="cnum">5</span><div><h4>Risk</h4><p>The consequence of errors or misuse.</p></div></div>
+      <div class="chain-item"><span class="cnum">6</span><div><h4>Adoption</h4><p>How likely people are to actually use the system.</p></div></div>
+      <div class="chain-item"><span class="cnum">7</span><div><h4>Measurability</h4><p>Whether the outcome can actually be measured.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section class="paper-sec">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Governance</span>
+    <h3>AI Value Requires Managed Risk</h3>
+    <span class="ext-tag">External Source</span>
+    <div class="ext-callout">
+      <p>NIST's AI Risk Management Framework is a voluntary framework for managing AI risks and improving trustworthiness. Its playbook organises suggested actions around four functions: Govern, Map, Measure and Manage.</p>
+      <a class="src-link" href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">Source: NIST — AI Risk Management Framework ↗</a>
+    </div>
+    <p class="para">We treat the NIST AI RMF as an external reference for governance — not as a Grow Spark-owned framework.</p>
+  </div>
+</section>
+
+<!-- FROM PILOT TO OPERATING SYSTEM -->
+<section class="paper-sec alt">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">From Pilot To Operating System</span>
+    <h3>The Path From Experiment To Leverage</h3>
+    <div class="app-list">
+      <span>Use Case</span><span>Baseline</span><span>Pilot</span><span>Measure</span><span>Integrate</span><span>Govern</span><span>Scale</span>
+    </div>
+    <p class="pivot emerald">The objective is measurable leverage, not the number of AI tools.</p>
+  </div>
+</section>
+
+<!-- IMPLICATIONS / CONCLUSION -->
+<section class="paper-sec">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Conclusion</span>
+    <h3>Value Comes From The Workflow, Not The Tool</h3>
+    <p class="para">The companies that create the most value from AI may be those best at identifying economically important workflows and redesigning them around technology, people and data.</p>
+  </div>
+</section>
+
+<!-- ABOUT GROW SPARK RESEARCH -->
+<section class="paper-sec alt">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">About Grow Spark Research</span>
+    <div class="about-box">
+      <p>Grow Spark Research explores the economics, systems and strategic decisions behind business growth, including AI adoption. The AI Value Chain and AI Opportunity Matrix referenced in this paper are Grow Spark's own frameworks, developed through client work and field observation.</p>
+      <p>They are not independently validated academic research. Where we reference external standards, such as the NIST AI Risk Management Framework, they are clearly attributed and are not Grow Spark-owned.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES & EVIDENCE -->
+<section class="paper-sec">
+  <div class="wrap-narrow reveal">
+    <span class="sec-label">Sources &amp; Evidence</span>
+    <div class="source-list">
+      <div class="source-item">
+        <div class="si-text"><strong>NIST</strong>AI Risk Management Framework (AI RMF 1.0)</div>
+        <a class="si-link" href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">View Source ↗</a>
+      </div>
+      <div class="source-item">
+        <div class="si-text"><strong>NIST</strong>AI RMF Playbook</div>
+        <a class="si-link" href="https://www.nist.gov/itl/ai-risk-management-framework/nist-ai-rmf-playbook" target="_blank" rel="noopener">View Source ↗</a>
+      </div>
+      <div class="source-item">
+        <div class="si-text"><strong>NIST</strong>Generative AI Profile</div>
+        <a class="si-link" href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence" target="_blank" rel="noopener">View Source ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="wrap reveal">
+    <span class="eyebrow">Research Into Action</span>
+    <h2>Find Out Where AI Could Actually Move Your Numbers.</h2>
+    <div class="cta-row center">
+      <a href="index.html#contact" class="btn-primary">Book A Growth Diagnostic</a>
+      <a href="research.html" class="btn-secondary">More Research</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="research.html">Research</a>
+      <a href="framework.html">Our Framework</a>
+      <a href="founder.html">Leadership</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <p class="copyright">© 2026 Grow Spark Consulting. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.navlinks');
+  toggle.addEventListener('click', ()=>{
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; padding:24px 32px; border-bottom:1px solid #E4E6E8; gap:20px;';
+  });
+</script>
+
+</body>
+</html>

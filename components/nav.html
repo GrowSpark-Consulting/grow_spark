@@ -10,24 +10,27 @@
       <span class="logo-line logo-line--spark">Spark</span>
     </a>
 
-    <nav aria-label="Primary" class="hidden lg:flex items-center gap-10 font-body justify-self-center">
+    <nav aria-label="Primary" class="hidden lg:flex items-center gap-5 xl:gap-8 font-body justify-self-center">
       <a href="/" class="site-nav__link font-medium">Home</a>
+      <a href="/case-studies/" class="site-nav__link font-medium">Our Works</a>
+      <a href="/solutions/" class="site-nav__link font-medium">Solutions</a>
+      <a href="/framework/" class="site-nav__link font-medium">Our Framework</a>
+      <a href="/rnd/" class="site-nav__link font-medium">R&amp;D</a>
+      <a href="/industries/" class="site-nav__link font-medium">Industries</a>
 
       <div class="relative" data-mega-group>
-        <a href="/services/" class="site-nav__link site-nav__trigger flex items-center gap-1.5 font-medium" data-mega-trigger="services" aria-expanded="false" aria-controls="mega-services">
-          Services <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-300" data-mega-chevron></i>
-        </a>
-      </div>
+        <button type="button" class="site-nav__trigger flex items-center gap-1.5 font-medium" data-mega-trigger="who-we-are" aria-expanded="false" aria-controls="mega-who-we-are">
+          Who We Are <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-300" data-mega-chevron></i>
+        </button>
 
-      <div class="relative" data-mega-group>
-        <a href="/solutions/" class="site-nav__link site-nav__trigger flex items-center gap-1.5 font-medium" data-mega-trigger="solutions" aria-expanded="false" aria-controls="mega-solutions">
-          Solutions <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-300" data-mega-chevron></i>
-        </a>
+        <!-- Compact dropdown rather than a full-bleed panel — three links
+             don't need the width the old mega menus took. -->
+        <div id="mega-who-we-are" class="mega-panel absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-paper-raised border border-hairline rounded-card shadow-[var(--shadow-card-lg)] p-2.5 opacity-0 invisible -translate-y-2 transition-all duration-300 ease-[var(--ease-out-expo)]" data-mega-panel="who-we-are">
+          <a href="/leadership/" class="mega-link !py-2.5 !px-3 rounded-tag hover:bg-paper-sunken">Leadership</a>
+          <a href="/contact/" class="mega-link !py-2.5 !px-3 rounded-tag hover:bg-paper-sunken">Contact</a>
+          <a href="/alliances/" class="mega-link !py-2.5 !px-3 rounded-tag hover:bg-paper-sunken">Alliances</a>
+        </div>
       </div>
-
-      <a href="/case-studies/" class="site-nav__link font-medium">Case Studies</a>
-      <a href="/about/" class="site-nav__link font-medium">About</a>
-      <a href="/contact/" class="site-nav__link font-medium">Contact</a>
     </nav>
 
     <div class="justify-self-end flex items-center gap-3 sm:gap-5">
@@ -36,99 +39,6 @@
       <button id="nav-toggle" class="site-nav__toggle lg:hidden p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
-    </div>
-  </div>
-
-  <!-- Mega menu: Services -->
-  <div id="mega-services" class="mega-panel absolute inset-x-0 top-full bg-paper-raised border-b border-hairline shadow-[var(--shadow-card-lg)] opacity-0 invisible -translate-y-2 transition-all duration-300 ease-[var(--ease-out-expo)]" data-mega-panel="services">
-    <div class="mx-auto max-w-[var(--container-wide)] px-5 sm:px-8 py-12 grid grid-cols-1 lg:grid-cols-5 gap-10">
-      <div>
-        <p class="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-muted mb-5">AI &amp; Automation</p>
-        <ul class="space-y-3.5">
-          <li><a href="/services/#ai-automation" class="mega-link">AI Automation</a></li>
-          <li><a href="/services/#ai-agents" class="mega-link">AI Agents</a></li>
-          <li><a href="/services/#chatbots" class="mega-link">Chatbots</a></li>
-          <li><a href="/services/#sales-automation" class="mega-link">Sales Automation</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-muted mb-5">Software &amp; Product</p>
-        <ul class="space-y-3.5">
-          <li><a href="/services/#web-development" class="mega-link">Web Development</a></li>
-          <li><a href="/services/#saas-development" class="mega-link">SaaS Development</a></li>
-          <li><a href="/services/#mobile-apps" class="mega-link">Mobile Apps</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-muted mb-5">Enterprise Systems</p>
-        <ul class="space-y-3.5">
-          <li><a href="/services/#crm" class="mega-link">CRM Development</a></li>
-          <li><a href="/services/#erp" class="mega-link">ERP Solutions</a></li>
-          <li><a href="/services/#cloud" class="mega-link">Cloud Solutions</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-muted mb-5">Growth &amp; Brand</p>
-        <ul class="space-y-3.5">
-          <li><a href="/services/#digital-marketing" class="mega-link">Digital Marketing</a></li>
-          <li><a href="/services/#branding" class="mega-link">Branding</a></li>
-          <li><a href="/services/#business-consulting" class="mega-link">Business Consulting</a></li>
-          <li><a href="/services/#business-digitalization" class="mega-link">Business Digitalization</a></li>
-        </ul>
-      </div>
-      <div class="bg-paper-sunken rounded-md p-6 flex flex-col justify-between">
-        <div>
-          <span class="eyebrow !text-accent">Our Methodology</span>
-          <p class="font-display font-semibold text-[17px] mt-3 mb-2 leading-snug">The Grow Spark Business Transformation Framework&trade;</p>
-          <p class="text-[13.5px] text-ink-soft leading-relaxed">A disciplined, five-phase path from diagnosis to sustained impact.</p>
-        </div>
-        <a href="/framework/" class="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-accent mt-5 group">
-          Explore the framework <i data-lucide="arrow-right" class="w-4 h-4 btn-arrow"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mega menu: Solutions -->
-  <div id="mega-solutions" class="mega-panel absolute inset-x-0 top-full bg-paper-raised border-b border-hairline shadow-[var(--shadow-card-lg)] opacity-0 invisible -translate-y-2 transition-all duration-300 ease-[var(--ease-out-expo)]" data-mega-panel="solutions">
-    <div class="mx-auto max-w-[var(--container-wide)] px-5 sm:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-      <div>
-        <p class="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-muted mb-5">By Industry</p>
-        <ul class="grid grid-cols-2 gap-x-6 gap-y-3.5">
-          <li><a href="/#industry-manufacturing" class="mega-link">Manufacturing</a></li>
-          <li><a href="/#industry-healthcare" class="mega-link">Healthcare</a></li>
-          <li><a href="/#industry-retail" class="mega-link">Retail</a></li>
-          <li><a href="/#industry-education" class="mega-link">Education</a></li>
-          <li><a href="/#industry-professional-services" class="mega-link">Professional Services</a></li>
-          <li><a href="/#industry-technology" class="mega-link">Technology</a></li>
-          <li><a href="/#industry-construction" class="mega-link">Construction</a></li>
-          <li><a href="/#industry-hospitality" class="mega-link">Hospitality</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-muted mb-5">By Business Challenge</p>
-        <ul class="space-y-3.5">
-          <li><a href="/solutions/growth-has-stalled/" class="mega-link">Growth has stalled</a></li>
-          <li><a href="/solutions/modernise-your-business/" class="mega-link">Modernise our business</a></li>
-          <li><a href="/solutions/launch-new-business/" class="mega-link">Launch a new company</a></li>
-          <li><a href="/solutions/operations-are-inefficient/" class="mega-link">Inefficient operations</a></li>
-          <li><a href="/solutions/leadership-alignment/" class="mega-link">Leadership isn't aligned</a></li>
-          <li><a href="/solutions/premium-brand/" class="mega-link">Become a premium brand</a></li>
-          <li><a href="/solutions/scalable-systems/" class="mega-link">Build scalable systems</a></li>
-          <li><a href="/solutions/profitability/" class="mega-link">Revenue grows, profit doesn't</a></li>
-          <li><a href="/solutions/customer-experience/" class="mega-link">Customer experience</a></li>
-        </ul>
-      </div>
-      <div class="bg-paper-sunken rounded-md p-6 flex flex-col justify-between">
-        <div>
-          <span class="eyebrow !text-accent">The Impact</span>
-          <p class="font-display font-semibold text-[17px] mt-3 mb-2 leading-snug">Business outcomes we deliver</p>
-          <p class="text-[13.5px] text-ink-soft leading-relaxed">Revenue growth, operational excellence, AI adoption and more.</p>
-        </div>
-        <a href="/#outcomes" class="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-accent mt-5 group">
-          See all outcomes <i data-lucide="arrow-right" class="w-4 h-4 btn-arrow"></i>
-        </a>
-      </div>
     </div>
   </div>
 </header>
@@ -143,38 +53,20 @@
     </div>
     <nav class="px-6 py-6 flex flex-col gap-1 font-body" aria-label="Mobile">
       <a href="/" class="drawer-link">Home</a>
+      <a href="/case-studies/" class="drawer-link">Our Works</a>
+      <a href="/solutions/" class="drawer-link">Solutions</a>
+      <a href="/framework/" class="drawer-link">Our Framework</a>
+      <a href="/rnd/" class="drawer-link">R&amp;D</a>
+      <a href="/industries/" class="drawer-link">Industries</a>
 
       <details class="drawer-accordion">
-        <summary>Services</summary>
+        <summary>Who We Are</summary>
         <div class="drawer-accordion-body">
-          <a href="/services/#ai-automation">AI Automation</a>
-          <a href="/services/#ai-agents">AI Agents</a>
-          <a href="/services/#chatbots">Chatbots</a>
-          <a href="/services/#web-development">Web Development</a>
-          <a href="/services/#saas-development">SaaS Development</a>
-          <a href="/services/#mobile-apps">Mobile Apps</a>
-          <a href="/services/#crm">CRM Development</a>
-          <a href="/services/#erp">ERP Solutions</a>
-          <a href="/services/#cloud">Cloud Solutions</a>
-          <a href="/services/#digital-marketing">Digital Marketing</a>
-          <a href="/services/#branding">Branding</a>
-          <a href="/services/#sales-automation">Sales Automation</a>
-          <a href="/services/#business-consulting">Business Consulting</a>
-          <a href="/services/#business-digitalization">Business Digitalization</a>
+          <a href="/leadership/">Leadership</a>
+          <a href="/contact/">Contact</a>
+          <a href="/alliances/">Alliances</a>
         </div>
       </details>
-
-      <details class="drawer-accordion">
-        <summary>Solutions</summary>
-        <div class="drawer-accordion-body">
-          <a href="/#industries">By Industry</a>
-          <a href="/#challenges">By Business Challenge</a>
-        </div>
-      </details>
-
-      <a href="/case-studies/" class="drawer-link">Case Studies</a>
-      <a href="/about/" class="drawer-link">About</a>
-      <a href="/contact/" class="drawer-link">Contact</a>
 
       <a href="/contact/" class="btn btn-primary justify-center mt-6">Book Strategy Session</a>
     </nav>

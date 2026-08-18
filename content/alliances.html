@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alliances — Grow Spark Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff; --charcoal:#14171A; --charcoal-soft:#1E2226;
+    --grey:#565C63; --grey-light:#8A9096; --hairline:#E4E6E8; --panel:#F6F7F7;
+    --emerald:#0B5E45; --emerald-deep:#083F2F; --emerald-tint:#E6EFEA;
+    --ease: cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter', sans-serif; color:var(--charcoal); background:var(--white); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope', sans-serif; font-weight:700; letter-spacing:-0.02em; color:var(--charcoal);}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .wrap-narrow{max-width:740px; margin:0 auto; padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--emerald); color:var(--white);}
+  :focus-visible{outline:2px solid var(--emerald); outline-offset:3px;}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
+  header{position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.92); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--hairline);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; max-width:1180px; margin:0 auto;}
+  .logo{font-family:'Manrope', sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px;}
+  .logo .mark{width:9px; height:9px; border-radius:1px; background:var(--emerald); display:inline-block;}
+  .navlinks{display:flex; gap:32px; align-items:center;}
+  .navlinks a{font-size:14.5px; font-weight:500; color:var(--charcoal-soft);}
+  .navlinks a:hover, .navlinks a.active{color:var(--emerald);}
+  .nav-cta{background:var(--charcoal); color:var(--white); padding:11px 20px; border-radius:2px; font-size:13px; font-weight:600;}
+  .nav-cta:hover{background:var(--emerald);}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .nav-toggle span{display:block; width:22px; height:2px; background:var(--charcoal); margin:5px 0;}
+
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .cta-row.center{justify-content:center;}
+  .btn-primary{background:var(--charcoal); color:var(--white); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px; transition:background .2s var(--ease); display:inline-block;}
+  .btn-primary:hover{background:var(--emerald);}
+  .btn-secondary{border:1px solid var(--hairline); color:var(--charcoal); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px; transition:border-color .2s var(--ease), color .2s var(--ease); display:inline-block;}
+  .btn-secondary:hover{border-color:var(--emerald); color:var(--emerald);}
+  .eyebrow{font-size:12.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--emerald); margin-bottom:22px; display:block;}
+
+  /* Hero */
+  .hero{padding:96px 0 70px; border-bottom:1px solid var(--hairline); text-align:center;}
+  .hero .wrap{max-width:780px;}
+  .hero h1{font-size:clamp(28px,4.6vw,44px); line-height:1.2; margin-bottom:28px;}
+  .hero .para{font-size:15.5px; color:var(--charcoal-soft); max-width:620px; margin:0 auto 16px; line-height:1.65;}
+  .hero .close-stack{margin-top:30px;}
+  .hero .close-stack p{font-family:'Manrope'; font-weight:800; font-size:20px; color:var(--charcoal); line-height:1.4;}
+  .hero .close-stack p:last-child{color:var(--emerald);}
+
+  .section-head{max-width:700px; margin:0 auto 44px; text-align:center;}
+  .section-head h2{font-size:clamp(24px,3.4vw,34px); line-height:1.28;}
+  .section-head p{color:var(--grey); font-size:16px; margin-top:14px;}
+
+  /* Why model exists */
+  .story{padding:90px 0; border-bottom:1px solid var(--hairline);}
+  .story.alt{background:var(--panel);}
+  .story-body{max-width:700px; margin:0 auto;}
+  .story-body p.para{font-size:15.5px; color:var(--charcoal-soft); margin-bottom:16px;}
+  .story-body .pivot{font-family:'Manrope'; font-weight:700; font-size:19px; color:var(--charcoal); margin:24px 0; line-height:1.5;}
+  .story-body .pivot.emerald{color:var(--emerald);}
+  .tag-row{display:flex; flex-wrap:wrap; gap:9px; margin:22px 0; justify-content:center;}
+  .tag-row span{font-size:13px; font-weight:600; color:var(--charcoal-soft); border:1px solid var(--hairline); padding:8px 14px; border-radius:20px; background:var(--white);}
+  .word-strip{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:30px;}
+  .word-strip span{font-family:'Manrope'; font-weight:700; font-size:15px; color:var(--charcoal-soft);}
+  .word-strip .sep{color:var(--emerald); font-weight:400; font-size:14px;}
+
+  /* Alliance cards */
+  .alliance-sec{padding:100px 0;}
+  .alliance-sec.digital{background:var(--panel);}
+  .alliance-card{max-width:960px; margin:0 auto; display:grid; grid-template-columns:0.9fr 1.1fr; border:1px solid var(--hairline); overflow:hidden;}
+  .alliance-visual{padding:56px 44px; display:flex; flex-direction:column; justify-content:center; color:var(--white);}
+  .alliance-visual.ai{background:var(--emerald-deep);}
+  .alliance-visual.digital{background:var(--charcoal);}
+  .alliance-visual .av-mark{width:44px; height:44px; border:1px solid rgba(255,255,255,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Manrope'; font-weight:800; font-size:15px; margin-bottom:24px;}
+  .alliance-visual .av-name{font-size:26px; color:var(--white); margin-bottom:10px;}
+  .alliance-visual .av-tagline{font-family:'Instrument Serif'; font-style:italic; font-size:17px; color:#BFE0D2; line-height:1.4;}
+  .alliance-visual.digital .av-tagline{color:#B9BEC3;}
+  .alliance-body{padding:48px 44px; background:var(--white);}
+  .alliance-body .ab-lede{font-size:15px; color:var(--charcoal-soft); margin-bottom:22px; line-height:1.6;}
+  .alliance-body .ab-label{font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--grey-light); margin-bottom:12px; display:block;}
+  .alliance-body .ab-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px;}
+  .alliance-body .ab-tags span{font-size:12.5px; font-weight:600; color:var(--charcoal-soft); border:1px solid var(--hairline); padding:7px 13px; border-radius:16px; background:var(--panel);}
+  .role-split{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px;}
+  .role-box{padding:16px 18px; border-left:3px solid var(--hairline);}
+  .role-box.grow{border-left-color:var(--emerald);}
+  .role-box span{font-size:10.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--grey-light); display:block; margin-bottom:6px;}
+  .role-box.grow span{color:var(--emerald);}
+  .role-box p{font-size:13px; color:var(--charcoal-soft); line-height:1.5;}
+  .alliance-cta{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .alliance-cta .url-note{font-size:12px; color:var(--grey-light); font-style:italic;}
+
+  /* Ecosystem flow */
+  .flow-sec{padding:96px 0; background:var(--emerald-deep); color:var(--white);}
+  .flow-sec .section-head h2, .flow-sec .section-head p{color:var(--white);}
+  .flow-sec .section-head p{color:#BFE0D2;}
+  .flow-sec .eyebrow{color:#6FE3B4;}
+  .flow-h{display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; margin:40px 0;}
+  .flow-h .fh-step{font-family:'Manrope'; font-weight:700; font-size:13px; color:var(--emerald-deep); background:#6FE3B4; padding:12px 20px; border-radius:20px; margin:5px;}
+  .flow-h .fh-arrow{color:#6FE3B4; font-size:15px; padding:0 4px;}
+  .route-list{display:flex; flex-direction:column; gap:1px; background:rgba(255,255,255,0.14); max-width:640px; margin:0 auto;}
+  .route-row{background:rgba(255,255,255,0.05); padding:18px 26px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;}
+  .route-row .rr-said{font-family:'Instrument Serif'; font-style:italic; font-size:15.5px; color:var(--white);}
+  .route-row .rr-arrow{color:#6FE3B4; font-size:14px;}
+  .route-row .rr-dest{font-family:'Manrope'; font-weight:700; font-size:14px; color:#6FE3B4; text-align:right;}
+  .route-close{text-align:center; max-width:600px; margin:34px auto 0; font-size:15px; color:#BFE0D2;}
+
+  /* One client one direction */
+  .problem-list{max-width:520px; margin:0 auto 30px; display:flex; flex-direction:column; gap:1px; background:var(--hairline); border:1px solid var(--hairline);}
+  .problem-list p{background:var(--white); padding:14px 20px; font-size:14.5px; color:var(--grey);}
+
+  /* Example journey */
+  .example-sec{padding:96px 0; background:var(--panel);}
+  .journey-chain{display:flex; flex-direction:column; align-items:center; max-width:460px; margin:34px auto 0;}
+  .journey-step{width:100%; background:var(--white); border:1px solid var(--hairline); padding:18px 24px; text-align:center;}
+  .journey-step .js-name{font-family:'Manrope'; font-weight:700; font-size:15px; color:var(--emerald-deep);}
+  .journey-step .js-desc{font-size:13px; color:var(--grey); margin-top:4px;}
+  .journey-arrow{color:var(--emerald); font-size:16px; padding:8px 0;}
+
+  /* What we don't do */
+  .not-sec{padding:90px 0;}
+  .not-list{display:flex; flex-direction:column; gap:10px; max-width:600px; margin:0 auto 32px;}
+  .not-list p{font-size:14.5px; color:var(--grey); padding:12px 18px; border:1px dashed var(--hairline); border-radius:2px;}
+  .then-chain{display:flex; justify-content:center; gap:14px; flex-wrap:wrap;}
+  .then-chain .tc-item{text-align:center;}
+  .then-chain .tc-label{font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--emerald); display:block; margin-bottom:4px;}
+  .then-chain .tc-text{font-family:'Manrope'; font-weight:700; font-size:14px; color:var(--charcoal);}
+  .then-chain .tc-arrow{align-self:center; color:var(--grey-light); font-size:15px; padding-top:18px;}
+
+  /* Disclosure */
+  .disclosure-sec{padding:80px 0; background:var(--panel);}
+  .disclosure-box{max-width:760px; margin:0 auto; border:1px solid var(--hairline); background:var(--white); padding:32px 36px;}
+  .disclosure-box p{font-size:14px; color:var(--charcoal-soft); line-height:1.65; margin-bottom:14px;}
+  .disclosure-box .replace-note{font-size:12.5px; color:var(--grey-light); font-style:italic; border-top:1px solid var(--hairline); padding-top:14px; margin-top:6px;}
+
+  /* Final CTA */
+  .final-cta{padding:120px 0; text-align:center; background:var(--charcoal); color:var(--white);}
+  .final-cta .eyebrow{color:#4FCB9B; margin-bottom:18px;}
+  .final-cta h2{color:var(--white); font-size:clamp(26px,4vw,40px); margin-bottom:16px; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.3;}
+  .final-cta .stack p{font-size:14.5px; color:#9BA1A7; margin-bottom:2px;}
+  .final-cta .stack{margin-bottom:28px;}
+  .final-cta .btn-primary{background:var(--emerald);}
+  .final-cta .btn-primary:hover{background:#0e7a58;}
+  .final-cta .btn-secondary{border-color:rgba(255,255,255,0.25); color:var(--white);}
+  .final-cta .btn-secondary:hover{border-color:var(--emerald); color:#4FCB9B;}
+
+  footer{padding:56px 0 40px; border-top:1px solid var(--hairline); text-align:center;}
+  footer .foot-links{display:flex; justify-content:center; gap:24px; margin-bottom:24px; flex-wrap:wrap;}
+  footer .foot-links a{font-size:14px; color:var(--charcoal-soft);}
+  footer .foot-links a:hover{color:var(--emerald);}
+  footer .copyright{font-size:13px; color:var(--grey-light);}
+
+  @media (max-width:900px){
+    .navlinks{display:none;} .nav-toggle{display:block;}
+    .alliance-card{grid-template-columns:1fr;}
+    .role-split{grid-template-columns:1fr;}
+    .route-row{flex-direction:column; align-items:flex-start;}
+    .route-row .rr-dest{text-align:left;}
+    .then-chain{flex-direction:column; align-items:center;}
+    .then-chain .tc-arrow{padding-top:0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="mark"></span>Grow Spark</a>
+    <div class="navlinks">
+      <a href="index.html#home">Home</a>
+      <a href="about.html">About</a>
+      <a href="industries.html">Industries</a>
+      <a href="research.html">Research</a>
+      <a href="alliances.html" class="active">Alliances</a>
+      <a href="founder.html">Founder</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Book Growth Diagnostic</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap reveal">
+    <span class="eyebrow">Alliances</span>
+    <h1>Strategy Should Not End At The Slide.</h1>
+    <p class="para">When a business needs transformation, strategy and implementation have to work together.</p>
+    <p class="para">Grow Spark leads the diagnosis, strategic direction and transformation roadmap.</p>
+    <p class="para">Through our strategic alliances with specialist businesses across AI, automation, technology and digital growth, we can connect that strategy to the capabilities required to build it.</p>
+    <div class="close-stack">
+      <p>One Strategic Partner.</p>
+      <p>A Broader Technology Ecosystem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY OUR ALLIANCE MODEL EXISTS -->
+<section class="story">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why Our Alliance Model Exists</span>
+      <h2>A Consulting Firm Should Know When To Advise — And When To Bring In Specialist Builders.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para" style="text-align:center;">A business may discover that its biggest constraint requires:</p>
+      <div class="tag-row">
+        <span>An AI system</span><span>A workflow automation</span><span>A custom application</span><span>A new digital platform</span><span>A CRM architecture</span><span>A website or digital experience</span><span>Marketing technology</span><span>Data infrastructure</span><span>Analytics</span><span>Technology integration</span>
+      </div>
+      <p class="para" style="text-align:center;">Instead of forcing every problem into a consulting deliverable, Grow Spark can connect the strategy to specialist implementation capabilities within our alliance ecosystem.</p>
+      <p class="para" style="text-align:center;">The result:</p>
+      <div class="word-strip">
+        <span>Diagnose</span><span class="sep">→</span>
+        <span>Design</span><span class="sep">→</span>
+        <span>Build</span><span class="sep">→</span>
+        <span>Integrate</span><span class="sep">→</span>
+        <span>Improve</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MCCARTHY AI -->
+<section class="alliance-sec">
+  <div class="wrap">
+    <div class="alliance-card reveal">
+      <div class="alliance-visual ai">
+        <span class="av-mark">AI</span>
+        <h3 class="av-name">McCarthy AI</h3>
+        <p class="av-tagline">AI strategy. Automation. Intelligent workflows.</p>
+      </div>
+      <div class="alliance-body">
+        <p class="ab-lede">When the opportunity is AI or automation, Grow Spark can work alongside McCarthy AI to move from business problem to implemented system.</p>
+        <span class="ab-label">Capabilities May Include</span>
+        <div class="ab-tags">
+          <span>AI opportunity assessment</span><span>AI strategy &amp; roadmap</span><span>Workflow audits</span><span>Process automation</span><span>AI-assisted lead intake</span><span>Knowledge-assistant workflows</span><span>API &amp; workflow integrations</span><span>Dashboards &amp; decision systems</span><span>AI-enabled customer workflows</span><span>Ongoing AI advisory &amp; optimisation</span>
+        </div>
+        <div class="role-split">
+          <div class="role-box grow"><span>Role Of Grow Spark</span><p>Identify the business problem, economic opportunity and strategic priority.</p></div>
+          <div class="role-box"><span>Role Of McCarthy AI</span><p>Design and implement the appropriate AI / automation solution within the agreed scope.</p></div>
+        </div>
+        <div class="alliance-cta">
+          <a href="#" target="_blank" rel="noopener" class="btn-primary">Explore McCarthy AI →</a>
+          <span class="url-note">[McCarthy AI website URL to be added]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MCCARTHY DIGITAL -->
+<section class="alliance-sec digital">
+  <div class="wrap">
+    <div class="alliance-card reveal">
+      <div class="alliance-visual digital">
+        <span class="av-mark">MD</span>
+        <h3 class="av-name">McCarthy Digital</h3>
+        <p class="av-tagline">Technology. Digital products. Marketing. Digital growth.</p>
+      </div>
+      <div class="alliance-body">
+        <p class="ab-lede">When a strategic recommendation requires technology, digital execution or marketing infrastructure, Grow Spark can connect the client with McCarthy Digital.</p>
+        <span class="ab-label">Capabilities May Include</span>
+        <div class="ab-tags">
+          <span>Website design &amp; development</span><span>Web applications</span><span>Digital product development</span><span>Technology implementation</span><span>CRM &amp; marketing technology</span><span>Digital marketing</span><span>Performance marketing</span><span>SEO / organic growth</span><span>Analytics &amp; dashboards</span><span>Technology integrations</span><span>Digital customer experience</span><span>Ongoing technology support</span>
+        </div>
+        <div class="role-split">
+          <div class="role-box grow"><span>Role Of Grow Spark</span><p>Determine what the business actually needs, why it matters and how the capability fits into the broader growth strategy.</p></div>
+          <div class="role-box"><span>Role Of McCarthy Digital</span><p>Provide the relevant technical, digital and marketing implementation capability within the agreed scope.</p></div>
+        </div>
+        <div class="alliance-cta">
+          <a href="#" target="_blank" rel="noopener" class="btn-primary">Explore McCarthy Digital →</a>
+          <span class="url-note">[McCarthy Digital website URL to be added]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW THE ECOSYSTEM WORKS -->
+<section class="flow-sec">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How The Ecosystem Works</span>
+      <h2>A Business Problem Does Not Arrive Labelled "Marketing," "AI" Or "Technology."</h2>
+      <p>It arrives as:</p>
+    </div>
+    <div class="tag-row reveal" style="max-width:700px; margin-left:auto; margin-right:auto;">
+      <span>"We're losing customers."</span><span>"Our team is spending too much time on manual work."</span><span>"We can't see what's happening across the business."</span><span>"Our website isn't converting."</span><span>"We need to scale without adding another 20 employees."</span><span>"We need better systems."</span><span>"We want to use AI but don't know where to start."</span>
+    </div>
+    <p class="route-close reveal">Grow Spark starts by understanding the underlying business problem. Then we determine whether the solution requires:</p>
+    <div class="route-list reveal">
+      <div class="route-row"><div class="rr-said">Strategy</div><span class="rr-arrow">→</span><div class="rr-dest">Grow Spark</div></div>
+      <div class="route-row"><div class="rr-said">AI / Automation</div><span class="rr-arrow">→</span><div class="rr-dest">McCarthy AI</div></div>
+      <div class="route-row"><div class="rr-said">Technology / Digital</div><span class="rr-arrow">→</span><div class="rr-dest">McCarthy Digital</div></div>
+      <div class="route-row"><div class="rr-said">Or a combination</div><span class="rr-arrow">→</span><div class="rr-dest">All Three, Aligned</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ONE CLIENT. ONE STRATEGIC DIRECTION. -->
+<section class="story">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">One Client. One Strategic Direction.</span>
+      <h2>Designed To Prevent A Common Transformation Problem</h2>
+    </div>
+    <div class="story-body reveal">
+      <div class="problem-list">
+        <p>The strategy says one thing.</p>
+        <p>The technology team builds another.</p>
+        <p>The marketing team does something else.</p>
+        <p>The business ends up with more tools — but no better system.</p>
+      </div>
+      <p class="para" style="text-align:center;">Grow Spark acts as the strategic layer. Where appropriate, our alliance companies provide specialist implementation capabilities.</p>
+      <p class="pivot emerald" style="text-align:center;">This creates a connected path from business diagnosis to implementation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLE -->
+<section class="example-sec">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Example</span>
+      <h2>"We Want To Use AI To Reduce Our Team's Workload."</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para" style="text-align:center;">We don't immediately sell an AI chatbot. We first examine:</p>
+      <div class="tag-row">
+        <span>Which workflows consume the most time?</span><span>How often do they occur?</span><span>What is the cost of the current process?</span><span>What data is involved?</span><span>What risk exists if automation makes a mistake?</span><span>What should remain human?</span><span>What would measurable improvement look like?</span>
+      </div>
+      <p class="para" style="text-align:center;">Then:</p>
+      <div class="journey-chain">
+        <div class="journey-step"><div class="js-name">Grow Spark</div><div class="js-desc">Business diagnosis + AI opportunity + roadmap</div></div>
+        <div class="journey-arrow">↓</div>
+        <div class="journey-step"><div class="js-name">McCarthy AI</div><div class="js-desc">Workflow design + automation + integration</div></div>
+        <div class="journey-arrow">↓</div>
+        <div class="journey-step"><div class="js-name">Grow Spark</div><div class="js-desc">Business measurement + optimisation</div></div>
+      </div>
+      <p class="para" style="text-align:center; margin-top:26px;">The technology serves the business.</p>
+      <p class="pivot emerald" style="text-align:center;">Not the other way around.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY THIS MATTERS -->
+<section class="story alt">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why This Matters</span>
+      <h2>Founders Should Not Have To Manage Five Different Vendors To Transform One Business.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para" style="text-align:center;">Our alliance ecosystem can help reduce fragmentation.</p>
+      <div class="tag-row">
+        <span>One strategic direction</span><span>Specialist capabilities when required</span><span>Clearer accountability</span><span>Better alignment between business objectives and implementation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DON'T DO -->
+<section class="not-sec">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">What We Don't Do</span>
+      <h2>Technology Follows The Business, Not The Other Way Around</h2>
+    </div>
+    <div class="not-list reveal">
+      <p>We don't recommend technology because it is fashionable.</p>
+      <p>We don't automate a process simply because it can be automated.</p>
+      <p>We don't build software before understanding the business requirement.</p>
+      <p>We don't add marketing activity to compensate for a broken business model.</p>
+      <p>We don't believe every client needs every capability.</p>
+    </div>
+    <div class="then-chain reveal">
+      <div class="tc-item"><span class="tc-label">First</span><span class="tc-text">Understand the business</span></div>
+      <span class="tc-arrow">→</span>
+      <div class="tc-item"><span class="tc-label">Then</span><span class="tc-text">Choose the right intervention</span></div>
+      <span class="tc-arrow">→</span>
+      <div class="tc-item"><span class="tc-label">Then</span><span class="tc-text">Bring in the right capability</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ALLIANCE DISCLOSURE -->
+<section class="disclosure-sec">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Alliance Disclosure</span>
+      <h2>How We Describe This Relationship</h2>
+    </div>
+    <div class="disclosure-box reveal">
+      <p>Grow Spark Consulting works with specialist businesses within its broader operating ecosystem to extend the capabilities available to clients. Depending on the engagement, Grow Spark may provide strategy and advisory directly while specialist implementation is delivered by an affiliated or alliance business under a separate scope or agreement.</p>
+      <p class="replace-note">This is placeholder disclosure language. It should be replaced with the final, legally approved wording once the ownership, contracting and invoicing structure of Grow Spark, McCarthy AI and McCarthy Digital is confirmed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="wrap reveal">
+    <span class="eyebrow">Start With The Problem</span>
+    <h2>Your Business Problem Doesn't Have To Fit Into One Service Category.</h2>
+    <div class="stack">
+      <p>It may require strategy.</p>
+      <p>It may require technology.</p>
+      <p>It may require AI.</p>
+      <p>It may require marketing.</p>
+      <p>It may require all of them.</p>
+    </div>
+    <p style="font-family:'Manrope'; font-weight:700; font-size:17px; color:var(--white); margin-bottom:34px;">Start with the business problem. We'll determine what comes next.</p>
+    <div class="cta-row center">
+      <a href="index.html#contact" class="btn-primary">Book A Grow Spark Growth Diagnostic</a>
+      <a href="#" target="_blank" rel="noopener" class="btn-secondary">Explore McCarthy AI</a>
+      <a href="#" target="_blank" rel="noopener" class="btn-secondary">Explore McCarthy Digital</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="industries.html">Industries</a>
+      <a href="research.html">Research</a>
+      <a href="founder.html">Founder</a>
+      <a href="leadership.html">Leadership</a>
+    </div>
+    <p class="copyright">© 2026 Grow Spark Consulting. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.navlinks');
+  toggle.addEventListener('click', ()=>{
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; padding:24px 32px; border-bottom:1px solid #E4E6E8; gap:20px;';
+  });
+</script>
+
+</body>
+</html>

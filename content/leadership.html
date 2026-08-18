@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership — Grow Spark Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff; --charcoal:#14171A; --charcoal-soft:#1E2226;
+    --grey:#565C63; --grey-light:#8A9096; --hairline:#E4E6E8; --panel:#F6F7F7;
+    --emerald:#0B5E45; --emerald-deep:#083F2F; --emerald-tint:#E6EFEA;
+    --ease: cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter', sans-serif; color:var(--charcoal); background:var(--white); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope', sans-serif; font-weight:700; letter-spacing:-0.02em; color:var(--charcoal);}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .wrap-narrow{max-width:740px; margin:0 auto; padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--emerald); color:var(--white);}
+  :focus-visible{outline:2px solid var(--emerald); outline-offset:3px;}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
+  header{position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.92); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--hairline);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; max-width:1180px; margin:0 auto;}
+  .logo{font-family:'Manrope', sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px;}
+  .logo .mark{width:9px; height:9px; border-radius:1px; background:var(--emerald); display:inline-block;}
+  .navlinks{display:flex; gap:32px; align-items:center;}
+  .navlinks a{font-size:14.5px; font-weight:500; color:var(--charcoal-soft);}
+  .navlinks a:hover, .navlinks a.active{color:var(--emerald);}
+  .nav-cta{background:var(--charcoal); color:var(--white); padding:11px 20px; border-radius:2px; font-size:13px; font-weight:600;}
+  .nav-cta:hover{background:var(--emerald);}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .nav-toggle span{display:block; width:22px; height:2px; background:var(--charcoal); margin:5px 0;}
+
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .cta-row.center{justify-content:center;}
+  .btn-primary{background:var(--charcoal); color:var(--white); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px; transition:background .2s var(--ease);}
+  .btn-primary:hover{background:var(--emerald);}
+  .btn-secondary{border:1px solid var(--hairline); color:var(--charcoal); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px; transition:border-color .2s var(--ease), color .2s var(--ease);}
+  .btn-secondary:hover{border-color:var(--emerald); color:var(--emerald);}
+  .eyebrow{font-size:12.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--emerald); margin-bottom:22px; display:block;}
+
+  /* Hero */
+  .hero{padding:100px 0 90px; border-bottom:1px solid var(--hairline); text-align:center;}
+  .hero .wrap{max-width:780px;}
+  .hero h1{font-size:clamp(28px,4.6vw,46px); line-height:1.2; margin-bottom:30px;}
+  .hero .para{font-size:15.5px; color:var(--charcoal-soft); max-width:620px; margin:0 auto 16px; line-height:1.65;}
+  .hero .pivot{font-family:'Manrope'; font-weight:700; font-size:19px; color:var(--emerald); margin:22px 0 10px;}
+
+  .section-head{max-width:700px; margin:0 auto 44px; text-align:center;}
+  .section-head h2{font-size:clamp(24px,3.4vw,34px); line-height:1.28;}
+  .section-head p{color:var(--grey); font-size:16px; margin-top:14px;}
+
+  .story{padding:96px 0; border-bottom:1px solid var(--hairline);}
+  .story.alt{background:var(--panel);}
+  .story-body{max-width:700px; margin:0 auto;}
+  .story-body p.para{font-size:15.5px; color:var(--charcoal-soft); margin-bottom:16px;}
+  .story-body .pivot{font-family:'Manrope'; font-weight:700; font-size:19px; color:var(--charcoal); margin:24px 0; line-height:1.5;}
+  .story-body .pivot.emerald{color:var(--emerald);}
+  .stack-lines p{font-size:15px; font-weight:500; color:var(--charcoal-soft); padding:8px 0 8px 16px; border-left:2px solid var(--hairline);}
+  .stack-lines{margin:22px 0;}
+
+  /* Philosophy principles */
+  .phil-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline); border:1px solid var(--hairline); margin-top:36px;}
+  .phil-card{background:var(--white); padding:32px 28px;}
+  .phil-card .pnum{font-family:'Manrope'; font-weight:800; font-size:13px; color:var(--emerald); display:block; margin-bottom:12px;}
+  .phil-card h4{font-size:16.5px; margin-bottom:8px;}
+  .phil-card p{font-size:14px; color:var(--grey);}
+
+  /* Pragadeesh primary profile */
+  .primary-profile{max-width:920px; margin:0 auto; display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:center; border:1px solid var(--hairline); padding:48px;}
+  .portrait-frame{border:1px solid var(--hairline); background:var(--panel); aspect-ratio:4/5; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;}
+  .portrait-frame .initial{font-family:'Manrope'; font-weight:800; font-size:88px; color:var(--charcoal); opacity:0.14; line-height:1;}
+  .portrait-frame .caption{position:absolute; bottom:0; left:0; right:0; padding:18px 20px; border-top:1px solid var(--hairline); background:var(--white); text-align:center;}
+  .portrait-frame .caption .name{font-family:'Manrope'; font-weight:700; font-size:14px; color:var(--charcoal);}
+  .portrait-frame .caption .role2{font-size:11.5px; color:var(--grey-light); margin-top:3px;}
+  .primary-profile .p-tag{font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--emerald); display:block; margin-bottom:10px;}
+  .primary-profile h3{font-size:24px; margin-bottom:4px;}
+  .primary-profile .role{font-family:'Manrope'; font-weight:600; font-size:14.5px; color:var(--grey); margin-bottom:18px;}
+  .primary-profile p.para{font-size:14.5px; color:var(--charcoal-soft); margin-bottom:14px;}
+  .primary-profile .q-line{font-family:'Manrope'; font-weight:700; font-size:16px; color:var(--charcoal); margin-bottom:14px;}
+  .phil-mini{margin:18px 0; display:flex; flex-direction:column; gap:4px;}
+  .phil-mini p{font-size:13.5px; color:var(--grey); padding-left:14px; position:relative;}
+  .phil-mini p::before{content:'—'; position:absolute; left:0; color:var(--grey-light);}
+
+  /* Leadership team grid */
+  .team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:44px;}
+  .team-card{border:1px solid var(--hairline); padding:0; overflow:hidden;}
+  .team-card.confirmed{background:var(--white);}
+  .team-card.placeholder{background:var(--panel); border-style:dashed;}
+  .tc-photo{aspect-ratio:4/5; background:var(--panel); display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--hairline);}
+  .team-card.placeholder .tc-photo{background:var(--white);}
+  .tc-photo .tc-initial{font-family:'Manrope'; font-weight:800; font-size:56px; color:var(--charcoal); opacity:0.14;}
+  .tc-photo .tc-plus{font-size:32px; color:var(--grey-light); font-weight:300;}
+  .tc-body{padding:24px 22px;}
+  .tc-body .tc-name{font-size:16px; margin-bottom:2px;}
+  .tc-body .tc-title{font-size:12.5px; color:var(--emerald); font-weight:600; margin-bottom:12px;}
+  .team-card.placeholder .tc-title{color:var(--grey-light);}
+  .tc-body .tc-desc{font-size:13.5px; color:var(--grey); line-height:1.55; margin-bottom:14px;}
+  .tc-body .tc-leads{font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--grey-light); margin-bottom:8px; display:block;}
+  .tc-body .tc-link{font-size:13px; font-weight:700; color:var(--emerald);}
+  .tc-body .tc-link:hover{text-decoration:underline;}
+  .team-note{max-width:700px; margin:26px auto 0; text-align:center; font-size:13px; color:var(--grey-light);}
+
+  /* Works together grid */
+  .persp-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline); border:1px solid var(--hairline); margin:36px 0;}
+  .persp-card{background:var(--white); padding:26px 24px;}
+  .persp-card h4{font-size:14.5px; color:var(--emerald-deep); margin-bottom:8px;}
+  .persp-card p{font-size:13.5px; color:var(--grey);}
+
+  /* Client-first Q list */
+  .q-list{max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:12px;}
+  .q-list p{font-size:15px; font-weight:500; color:var(--charcoal-soft); padding:13px 20px; background:var(--white); border:1px solid var(--hairline); border-radius:2px;}
+
+  /* Leadership standard chain */
+  .std-chain{display:flex; flex-direction:column; gap:1px; background:var(--hairline); border:1px solid var(--hairline); margin:30px 0;}
+  .std-item{background:var(--white); padding:22px 26px; display:flex; gap:20px; align-items:flex-start;}
+  .std-item .snum{font-family:'Manrope'; font-weight:800; font-size:14px; color:var(--white); background:var(--emerald); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .std-item h4{font-size:15px; margin-bottom:4px;}
+  .std-item p{font-size:13.5px; color:var(--grey);}
+
+  /* Operator mindset callout */
+  .op-callout{max-width:640px; margin:30px auto; text-align:center; background:var(--charcoal); color:var(--white); padding:34px 38px; border-radius:2px;}
+  .op-callout p{font-family:'Manrope'; font-weight:700; font-size:18px; line-height:1.5;}
+
+  /* Tag rows */
+  .tag-row{display:flex; flex-wrap:wrap; gap:9px; margin:22px 0; justify-content:center;}
+  .tag-row span{font-size:13px; font-weight:600; color:var(--charcoal-soft); border:1px solid var(--hairline); padding:8px 14px; border-radius:20px; background:var(--white);}
+
+  .building-list{display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin:26px 0;}
+  .building-list span{font-family:'Manrope'; font-weight:700; font-size:13.5px; color:var(--emerald-deep); border:1px solid var(--emerald); background:var(--emerald-tint); padding:9px 16px; border-radius:20px;}
+
+  /* Final CTA */
+  .final-cta{padding:120px 0; text-align:center; background:var(--emerald-deep); color:var(--white);}
+  .final-cta .eyebrow{color:#6FE3B4; margin-bottom:18px;}
+  .final-cta h2{color:var(--white); font-size:clamp(26px,4vw,40px); margin-bottom:34px; max-width:560px; margin-left:auto; margin-right:auto; line-height:1.3;}
+  .final-cta .btn-primary{background:var(--white); color:var(--emerald-deep);}
+  .final-cta .btn-primary:hover{background:#eef7f2;}
+  .final-cta .btn-secondary{border-color:rgba(255,255,255,0.3); color:var(--white);}
+  .final-cta .btn-secondary:hover{border-color:var(--white);}
+  .final-cta .secondary-line{margin-top:30px; font-size:13.5px; color:#8fc9ac;}
+
+  footer{padding:56px 0 40px; border-top:1px solid var(--hairline); text-align:center;}
+  footer .foot-links{display:flex; justify-content:center; gap:24px; margin-bottom:24px; flex-wrap:wrap;}
+  footer .foot-links a{font-size:14px; color:var(--charcoal-soft);}
+  footer .foot-links a:hover{color:var(--emerald);}
+  footer .copyright{font-size:13px; color:var(--grey-light);}
+
+  @media (max-width:900px){
+    .navlinks{display:none;} .nav-toggle{display:block;}
+    .phil-grid, .persp-grid, .team-grid{grid-template-columns:1fr;}
+    .primary-profile{grid-template-columns:1fr; gap:32px; padding:32px 26px;}
+    .portrait-frame{max-width:280px; margin:0 auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="mark"></span>Grow Spark</a>
+    <div class="navlinks">
+      <a href="index.html#home">Home</a>
+      <a href="about.html">About</a>
+      <a href="framework.html">Our Framework</a>
+      <a href="industries.html">Industries</a>
+      <a href="research.html">Research</a>
+      <a href="leadership.html" class="active">Leadership</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Book Growth Diagnostic</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap reveal">
+    <span class="eyebrow">Leadership</span>
+    <h1>The People Behind The Thinking.</h1>
+    <p class="para">Grow Spark is built around a simple belief: great consulting requires more than good ideas.</p>
+    <p class="para">It requires people who can understand a business deeply, challenge assumptions, make difficult decisions and turn strategy into action.</p>
+    <p class="pivot">Our leadership brings together entrepreneurial experience, strategic thinking, technology, commercial understanding and an operator's mindset.</p>
+  </div>
+</section>
+
+<!-- LEADERSHIP PHILOSOPHY -->
+<section class="story">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Leadership Philosophy</span>
+      <h2>We Don't Want To Build A Firm Of Advisors Who Only Give Advice.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para">We want to build a firm of people who understand what happens after the strategy meeting.</p>
+      <p class="para">A strategy has to survive:</p>
+      <div class="stack-lines">
+        <p>The market.</p>
+        <p>The customer.</p>
+        <p>The numbers.</p>
+        <p>The team.</p>
+        <p>The technology.</p>
+        <p>The operations.</p>
+        <p>The founder.</p>
+      </div>
+      <p class="para">That's why our leadership philosophy is built around three principles:</p>
+    </div>
+    <div class="phil-grid reveal">
+      <div class="phil-card"><span class="pnum">01</span><h4>Think Deeply</h4><p>Understand the real problem before prescribing a solution.</p></div>
+      <div class="phil-card"><span class="pnum">02</span><h4>Challenge Honestly</h4><p>Tell the client what they need to hear, not simply what they want to hear.</p></div>
+      <div class="phil-card"><span class="pnum">03</span><h4>Execute With Accountability</h4><p>Stay close enough to implementation to understand whether the strategy actually works.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRAGADEESH PRIMARY PROFILE -->
+<section class="story alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Founder</span>
+      <h2>Pragadeesh</h2>
+    </div>
+    <div class="primary-profile reveal">
+      <div class="portrait-frame">
+        <span class="initial">P</span>
+        <div class="caption"><div class="name">Pragadeesh</div><div class="role2">Founder, Grow Spark Consulting</div></div>
+      </div>
+      <div>
+        <span class="p-tag">Founder &amp; Growth Strategist</span>
+        <h3>Pragadeesh</h3>
+        <p class="role">Founder &amp; Growth Strategist</p>
+        <p class="para">Pragadeesh is the founder of Grow Spark Consulting and an entrepreneur focused on helping business owners build, improve and scale successful businesses.</p>
+        <p class="q-line">What is actually holding this business back?</p>
+        <p class="para">Rather than approaching growth as a collection of marketing activities, Pragadeesh looks at the business as a connected system — business model, revenue, customer economics, margins, operations, people and technology.</p>
+        <div class="phil-mini">
+          <p>Build before you scale.</p>
+          <p>Understand before you invest.</p>
+          <p>Fix the constraint before adding more fuel.</p>
+          <p>Build systems before adding complexity.</p>
+          <p>Profit matters as much as revenue.</p>
+        </div>
+        <div class="cta-row">
+          <a href="founder.html" class="btn-secondary">View Pragadeesh's Founder Profile →</a>
+          <a href="founder.html#session" class="btn-primary">Book A 1:1 With Pragadeesh</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP TEAM -->
+<section class="story">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Leadership Team</span>
+      <h2>A Multi-Disciplinary Leadership Team.</h2>
+    </div>
+    <div class="team-grid reveal">
+      <div class="team-card confirmed">
+        <div class="tc-photo"><span class="tc-initial">P</span></div>
+        <div class="tc-body">
+          <div class="tc-name">Pragadeesh</div>
+          <div class="tc-title">Founder &amp; Growth Strategist</div>
+          <p class="tc-desc">Leads Grow Spark's overall growth methodology and founder-facing strategy work.</p>
+          <span class="tc-leads">Leads</span>
+          <p class="tc-desc" style="margin-bottom:16px;">Strategy · Growth · Founder Engagements</p>
+          <a href="founder.html" class="tc-link">View Profile →</a>
+        </div>
+      </div>
+      <div class="team-card placeholder">
+        <div class="tc-photo"><span class="tc-plus">+</span></div>
+        <div class="tc-body">
+          <div class="tc-name">[Leader 2 Name]</div>
+          <div class="tc-title">[Leader 2 Title]</div>
+          <p class="tc-desc">[Leader 2 bio to be added — verified details pending.]</p>
+          <span class="tc-leads">Leads</span>
+          <p class="tc-desc" style="margin-bottom:16px;">[Leader 2 responsibilities]</p>
+        </div>
+      </div>
+      <div class="team-card placeholder">
+        <div class="tc-photo"><span class="tc-plus">+</span></div>
+        <div class="tc-body">
+          <div class="tc-name">[Leader 3 Name]</div>
+          <div class="tc-title">[Leader 3 Title]</div>
+          <p class="tc-desc">[Leader 3 bio to be added — verified details pending.]</p>
+          <span class="tc-leads">Leads</span>
+          <p class="tc-desc" style="margin-bottom:16px;">[Leader 3 responsibilities]</p>
+        </div>
+      </div>
+    </div>
+    <p class="team-note">Additional leadership profiles will be published once names, titles, backgrounds and responsibilities are confirmed.</p>
+  </div>
+</section>
+
+<!-- HOW LEADERSHIP WORKS TOGETHER -->
+<section class="story alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How Leadership Works Together</span>
+      <h2>One Business. Multiple Perspectives.</h2>
+      <p>Grow Spark's leadership model is designed around complementary perspectives.</p>
+    </div>
+    <div class="persp-grid reveal">
+      <div class="persp-card"><h4>Strategy</h4><p>Where should the business go?</p></div>
+      <div class="persp-card"><h4>Economics</h4><p>Where is value created or lost?</p></div>
+      <div class="persp-card"><h4>Operations</h4><p>Can the business actually deliver the strategy?</p></div>
+      <div class="persp-card"><h4>Technology</h4><p>Where can systems and technology create leverage?</p></div>
+      <div class="persp-card"><h4>People</h4><p>Can the organisation support the next stage?</p></div>
+      <div class="persp-card"><h4>Growth</h4><p>Can the model acquire, convert and retain customers profitably?</p></div>
+    </div>
+    <p class="story-body pivot emerald" style="text-align:center; max-width:600px; margin-left:auto; margin-right:auto;">The objective is not to create six separate opinions. It is to create one coherent business strategy.</p>
+  </div>
+</section>
+
+<!-- CLIENT-FIRST PRINCIPLE -->
+<section class="story">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Client-First Principle</span>
+      <h2>The Leadership Team Exists To Make The Client's Business Better.</h2>
+      <p>Every engagement should ultimately answer:</p>
+    </div>
+    <div class="q-list reveal">
+      <p>What changed?</p>
+      <p>Did the business become more profitable?</p>
+      <p>Did the customer economics improve?</p>
+      <p>Did the company become more scalable?</p>
+      <p>Did the founder gain clarity?</p>
+      <p>Did the organisation become less dependent on individual heroics?</p>
+      <p>Did the business become more valuable?</p>
+    </div>
+    <p class="story-body pivot emerald" style="text-align:center; margin-top:26px;">If the answer is no, activity alone is not enough.</p>
+  </div>
+</section>
+
+<!-- LEADERSHIP STANDARD -->
+<section class="story alt">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Leadership Standard</span>
+      <h2>We Hold Ourselves To A Higher Standard.</h2>
+    </div>
+    <div class="std-chain reveal">
+      <div class="std-item"><span class="snum">1</span><div><h4>Truth Over Comfort</h4><p>We say what the analysis indicates, even when it challenges the original plan.</p></div></div>
+      <div class="std-item"><span class="snum">2</span><div><h4>Economics Over Ego</h4><p>We prioritise what improves the business, not what makes the project look impressive.</p></div></div>
+      <div class="std-item"><span class="snum">3</span><div><h4>Clarity Over Complexity</h4><p>The best strategy should become easier to understand, not harder.</p></div></div>
+      <div class="std-item"><span class="snum">4</span><div><h4>Outcomes Over Activity</h4><p>Meetings, reports and deliverables are not the goal. Business improvement is.</p></div></div>
+      <div class="std-item"><span class="snum">5</span><div><h4>Long-Term Value Over Short-Term Wins</h4><p>We want to build businesses that become stronger over time.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATOR MINDSET -->
+<section class="story">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Operator Mindset</span>
+      <h2>We Think Like Owners.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para" style="text-align:center;">Grow Spark was built by entrepreneurs and operators, not only career advisors. That matters because founders live with the consequences of decisions.</p>
+      <div class="stack-lines" style="border-left:none; text-align:center;">
+        <p style="border-left:none;">A bad hiring decision costs money.</p>
+        <p style="border-left:none;">A bad pricing decision destroys margin.</p>
+        <p style="border-left:none;">A bad technology decision creates complexity.</p>
+        <p style="border-left:none;">A bad business model can consume years.</p>
+      </div>
+      <p class="para" style="text-align:center;">Our leadership team approaches consulting with that reality in mind. Before we recommend an action, we ask:</p>
+      <div class="op-callout"><p>Would we make the same decision if it were our own capital?</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP NETWORK -->
+<section class="story alt">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Leadership Network</span>
+      <h2>The Core Team Doesn't Have To Do Everything.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para" style="text-align:center;">As Grow Spark grows, leadership can bring in specialist expertise across:</p>
+      <div class="tag-row">
+        <span>AI</span><span>Technology</span><span>Finance</span><span>Marketing</span><span>Sales</span><span>Operations</span><span>Data</span><span>Cybersecurity</span><span>Product</span><span>Research</span><span>Legal &amp; Compliance</span>
+      </div>
+      <p class="para" style="text-align:center;">The leadership team's responsibility is to ensure that specialists are deployed against the right business problem.</p>
+      <p class="pivot emerald" style="text-align:center;">Strategy first. Capability second.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIRM WE ARE BUILDING -->
+<section class="story">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Firm We Are Building</span>
+      <h2>We Are Building A Leadership Team That Can Think Across The Entire Business.</h2>
+    </div>
+    <div class="story-body reveal">
+      <p class="para" style="text-align:center;">The long-term ambition is to create a consulting platform where founders can access:</p>
+      <div class="building-list">
+        <span>Strategic thinking</span><span>Business research</span><span>Technology</span><span>AI</span><span>Data</span><span>Implementation</span><span>Operating expertise</span>
+      </div>
+      <p class="para" style="text-align:center;">The goal is not to become a large firm for the sake of being large.</p>
+      <p class="pivot emerald" style="text-align:center;">The goal is to build a firm capable of solving increasingly complex business problems.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="wrap reveal">
+    <span class="eyebrow">Work With Our Leadership Team</span>
+    <h2>Your Business Deserves More Than A Generic Playbook.</h2>
+    <p style="color:#BFE0D2; margin-bottom:8px; font-size:16px; max-width:520px; margin-left:auto; margin-right:auto;">If you are facing a growth, profitability, business-model or scaling challenge, start with a conversation.</p>
+    <div class="cta-row center" style="margin-top:30px;">
+      <a href="index.html#contact" class="btn-primary">Book A Grow Spark Growth Diagnostic</a>
+      <a href="founder.html#session" class="btn-secondary">Book A 1:1 With Pragadeesh</a>
+    </div>
+    <p class="secondary-line">Or work directly with Pragadeesh.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="framework.html">Our Framework</a>
+      <a href="industries.html">Industries</a>
+      <a href="research.html">Research</a>
+      <a href="founder.html">Founder</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <p class="copyright">© 2026 Grow Spark Consulting. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.navlinks');
+  toggle.addEventListener('click', ()=>{
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; padding:24px 32px; border-bottom:1px solid #E4E6E8; gap:20px;';
+  });
+</script>
+
+</body>
+</html>
