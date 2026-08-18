@@ -1290,4 +1290,418 @@
     color: #9BA1A7;
     margin-top: 12px;
   }
+
+  /* ---------- Shared across R&D, Industries, Leadership, Alliances ---------- */
+
+  /* A list of questions the work starts from. Hairline-separated rather than
+     bulleted — these read as a stack of prompts, not a checklist. */
+  .q-list {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .q-list p {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+    line-height: 1.5;
+    color: var(--color-ink);
+    padding: 14px 0 14px 22px;
+    border-bottom: 1px solid var(--color-hairline);
+    position: relative;
+  }
+  .q-list p::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 8px;
+    height: 1px;
+    background: var(--color-accent);
+  }
+  .q-list p:last-child {
+    border-bottom: none;
+  }
+
+  /* Fit / qualifier item with a check mark. */
+  .check-item {
+    background: var(--color-paper-raised);
+    padding: 20px 24px;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+  }
+  .check-item .check {
+    color: var(--color-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Numbered research area / focus cell. */
+  .area-card {
+    background: var(--color-paper-raised);
+    padding: 28px 26px;
+  }
+  .area-card .anum {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .area-card h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-ink);
+    line-height: 1.35;
+  }
+
+  /* White-paper row — same interaction language as .challenge-card. */
+  .paper-card {
+    background: var(--color-paper-raised);
+    padding: 26px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transition: background-color .3s var(--ease-standard);
+  }
+  .paper-card:hover {
+    background: var(--color-accent-tint);
+  }
+  .paper-card .pnum {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .paper-card h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16.5px;
+    color: var(--color-ink);
+    margin-bottom: 4px;
+  }
+  .paper-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+  }
+  .paper-card .arrow {
+    transition: transform .3s var(--ease-out-expo);
+  }
+  .paper-card:hover .arrow {
+    transform: translateX(5px);
+  }
+
+  /* Anchor pill strip (industries jump nav). */
+  .anchor-pill {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-hairline-strong);
+    background: var(--color-paper-raised);
+    color: var(--color-ink-soft);
+    transition: color .2s var(--ease-standard), border-color .2s var(--ease-standard), background-color .2s var(--ease-standard);
+  }
+  .anchor-pill:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-tint);
+  }
+
+  /* Rich industry block — heading, promise, description, tags, evidence. */
+  .industry-block {
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-card);
+    padding: 32px 26px;
+    scroll-margin-top: 7rem;
+  }
+  .industry-block .ic-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .industry-block .promise {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-accent);
+    margin: 14px 0 12px;
+  }
+  .industry-block .desc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-ink-soft);
+  }
+  .evidence-box {
+    background: var(--color-paper-sunken);
+    border-radius: var(--radius-tag);
+    padding: 22px 24px;
+  }
+  .evidence-box .case-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+  }
+  .evidence-box p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--color-ink-soft);
+  }
+  .evidence-box .case-note {
+    display: block;
+    font-size: 12.5px;
+    color: var(--color-muted);
+    margin-top: 12px;
+  }
+  .inline-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .inline-link:hover {
+    text-decoration: underline;
+  }
+  @media (min-width: 640px) {
+    .industry-block {
+      padding: 40px 38px;
+    }
+  }
+
+  /* Role split — who does what in an alliance engagement. */
+  .role-box {
+    background: var(--color-paper-sunken);
+    border-radius: var(--radius-tag);
+    padding: 20px 22px;
+  }
+  .role-box.is-grow {
+    background: var(--color-accent-tint);
+  }
+  .role-box span {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 8px;
+  }
+  .role-box.is-grow span {
+    color: var(--color-accent-deep);
+  }
+  .role-box p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
+  /* Alliance identity panel. */
+  .alliance-visual {
+    background: var(--color-ink);
+    border-radius: var(--radius-card);
+    padding: 40px 32px;
+    text-align: center;
+  }
+  .alliance-visual .av-mark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+    line-height: 1;
+    color: var(--color-accent-bright);
+    display: block;
+    margin-bottom: 18px;
+  }
+  .alliance-visual .av-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+  }
+  .alliance-visual .av-tagline {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #9BA1A7;
+    margin-top: 8px;
+  }
+
+  /* Routing row — problem type to the party that handles it. */
+  .route-row {
+    background: var(--color-paper-raised);
+    padding: 20px 26px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+  .route-row .rr-said {
+    font-size: 15px;
+    color: var(--color-ink-soft);
+    flex: 1 1 180px;
+  }
+  .route-row .rr-dest {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-ink);
+  }
+
+  /* ---------- White papers (/rnd/<paper>/) ----------
+     Long-form research documents. All five share one structure, so the
+     vocabulary here is deliberately small and reused across every paper. */
+  .paper-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--color-muted);
+  }
+  .paper-meta .dot {
+    color: var(--color-hairline-strong);
+  }
+
+  /* Small badge that marks whose framework a section describes. */
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-tint);
+    color: var(--color-accent-deep);
+  }
+  .tag-badge.is-external {
+    background: var(--color-paper-sunken);
+    color: var(--color-muted);
+  }
+
+  /* Callout block — executive summary, framework chain, external evidence. */
+  .callout {
+    border-radius: var(--radius-card);
+    padding: 26px 28px;
+  }
+  .callout p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+  .callout p + p {
+    margin-top: 14px;
+  }
+  .callout.is-summary {
+    background: var(--color-accent-tint);
+  }
+  .callout.is-summary p {
+    color: var(--color-accent-deep);
+    font-size: 16.5px;
+  }
+  .callout.is-neutral {
+    background: var(--color-paper-sunken);
+  }
+  .callout.is-bordered {
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-hairline);
+  }
+  /* The named chain a framework reduces to — set in display type so it reads
+     as the paper's central idea rather than body copy. */
+  .callout .chain-line {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1rem, 0.92rem + 0.4vw, 1.1875rem);
+    line-height: 1.6;
+    color: var(--color-ink);
+  }
+
+  /* Numbered dimension inside a framework list. */
+  .chain-item {
+    background: var(--color-paper-raised);
+    padding: 24px 26px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .chain-item .cnum {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .chain-item h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-ink);
+    margin-bottom: 5px;
+  }
+  .chain-item p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
+  /* Cited source row. */
+  .source-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .source-item:last-child {
+    border-bottom: none;
+  }
+  .source-item .si-text {
+    font-size: 15px;
+    color: var(--color-ink-soft);
+  }
+  .source-item .si-text strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-ink);
+    margin-right: 10px;
+  }
+  .source-item .si-link {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+  .source-item .si-link:hover {
+    text-decoration: underline;
+  }
 }

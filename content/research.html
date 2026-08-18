@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research & Development — Grow Spark Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff; --charcoal:#14171A; --charcoal-soft:#1E2226;
+    --grey:#565C63; --grey-light:#8A9096; --hairline:#E4E6E8; --panel:#F6F7F7;
+    --emerald:#0B5E45; --emerald-deep:#083F2F; --emerald-tint:#E6EFEA;
+    --ease: cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter', sans-serif; color:var(--charcoal); background:var(--white); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope', sans-serif; font-weight:700; letter-spacing:-0.02em; color:var(--charcoal);}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .wrap-narrow{max-width:760px; margin:0 auto; padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--emerald); color:var(--white);}
+  :focus-visible{outline:2px solid var(--emerald); outline-offset:3px;}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
+  header{position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.92); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--hairline);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; max-width:1180px; margin:0 auto;}
+  .logo{font-family:'Manrope', sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px;}
+  .logo .mark{width:9px; height:9px; border-radius:1px; background:var(--emerald); display:inline-block;}
+  .navlinks{display:flex; gap:32px; align-items:center;}
+  .navlinks a{font-size:14.5px; font-weight:500; color:var(--charcoal-soft); transition:color .2s var(--ease);}
+  .navlinks a:hover, .navlinks a.active{color:var(--emerald);}
+  .nav-cta{background:var(--charcoal); color:var(--white); padding:11px 20px; border-radius:2px; font-size:13px; font-weight:600; transition:background .2s var(--ease); white-space:nowrap;}
+  .nav-cta:hover{background:var(--emerald);}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .nav-toggle span{display:block; width:22px; height:2px; background:var(--charcoal); margin:5px 0;}
+
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .cta-row.center{justify-content:center;}
+  .btn-primary{background:var(--charcoal); color:var(--white); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px; transition:background .2s var(--ease);}
+  .btn-primary:hover{background:var(--emerald);}
+  .btn-secondary{border:1px solid var(--hairline); color:var(--charcoal); padding:16px 30px; font-size:14.5px; font-weight:600; border-radius:2px; transition:border-color .2s var(--ease), color .2s var(--ease);}
+  .btn-secondary:hover{border-color:var(--emerald); color:var(--emerald);}
+  .eyebrow{font-size:12.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--emerald); margin-bottom:22px; display:block;}
+
+  /* Hero */
+  .hero{padding:100px 0 90px; border-bottom:1px solid var(--hairline); text-align:center;}
+  .hero .wrap{max-width:780px;}
+  .hero h1{font-size:clamp(30px,4.8vw,50px); line-height:1.16; margin-bottom:26px;}
+  .hero .lede{font-size:16.5px; color:var(--grey); max-width:640px; margin:0 auto 20px; line-height:1.6;}
+  .hero .lede2{font-size:15.5px; color:var(--charcoal-soft); max-width:660px; margin:0 auto 38px; line-height:1.65;}
+
+  .section-head{max-width:680px; margin:0 auto 46px; text-align:center;}
+  .section-head h2{font-size:clamp(24px,3.4vw,34px); line-height:1.28;}
+  .section-head p{color:var(--grey); font-size:16px; margin-top:14px;}
+
+  /* Why we research */
+  .why-sec{padding:100px 0; background:var(--panel);}
+  .q-list{max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:12px;}
+  .q-list p{font-size:15px; font-weight:500; color:var(--charcoal-soft); padding:13px 20px; background:var(--white); border:1px solid var(--hairline); border-radius:2px;}
+  .why-close{max-width:600px; margin:30px auto 0; text-align:center; font-size:15.5px; color:var(--grey);}
+
+  /* Research areas */
+  .areas{padding:100px 0;}
+  .area-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline); border:1px solid var(--hairline); max-width:900px; margin:0 auto;}
+  .area-item{background:var(--white); padding:26px 30px; display:flex; align-items:center; gap:18px;}
+  .area-item .anum{font-family:'Manrope'; font-weight:800; font-size:14px; color:var(--emerald); flex-shrink:0;}
+  .area-item h4{font-size:15.5px; font-weight:600;}
+
+  /* How we research - flow */
+  .how-sec{padding:100px 0; background:var(--emerald-deep); color:var(--white);}
+  .how-sec .section-head h2, .how-sec .section-head p{color:var(--white);}
+  .how-sec .section-head p{color:#BFE0D2;}
+  .how-sec .eyebrow{color:#6FE3B4;}
+  .flow-h{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0; margin:40px 0 10px;}
+  .flow-h .fh-step{font-family:'Manrope'; font-weight:700; font-size:12.5px; letter-spacing:0.02em; color:var(--emerald-deep); background:#6FE3B4; padding:11px 16px; border-radius:20px; margin:5px;}
+  .flow-h .fh-arrow{color:#6FE3B4; font-size:14px; padding:0 2px;}
+  .how-close{max-width:640px; margin:30px auto 0; text-align:center; color:#BFE0D2; font-size:15px;}
+
+  /* Featured research cards */
+  .featured{padding:100px 0; background:var(--panel);}
+  .paper-grid{display:flex; flex-direction:column; gap:1px; background:var(--hairline); border:1px solid var(--hairline); max-width:880px; margin:0 auto;}
+  .paper-card{background:var(--white); padding:30px 34px; display:flex; align-items:center; justify-content:space-between; gap:24px; transition:background .2s var(--ease);}
+  .paper-card:hover{background:var(--emerald-tint);}
+  .paper-card .pc-left{display:flex; gap:20px; align-items:flex-start;}
+  .paper-card .pnum{font-family:'Manrope'; font-weight:800; font-size:13px; color:var(--emerald); flex-shrink:0; padding-top:3px;}
+  .paper-card h4{font-size:16.5px; margin-bottom:6px;}
+  .paper-card p{font-size:14px; color:var(--grey);}
+  .paper-card .pc-arrow{font-size:18px; color:var(--emerald); flex-shrink:0;}
+
+  /* Final CTA */
+  .final-cta{padding:120px 0; text-align:center; background:var(--charcoal); color:var(--white);}
+  .final-cta .eyebrow{color:#4FCB9B; margin-bottom:18px;}
+  .final-cta h2{color:var(--white); font-size:clamp(26px,4vw,40px); margin-bottom:34px; max-width:560px; margin-left:auto; margin-right:auto; line-height:1.3;}
+  .final-cta .btn-secondary{border-color:rgba(255,255,255,0.25); color:var(--white);}
+  .final-cta .btn-secondary:hover{border-color:var(--emerald); color:#4FCB9B;}
+  .final-cta .btn-primary{background:var(--emerald);}
+  .final-cta .btn-primary:hover{background:#0e7a58;}
+
+  footer{padding:56px 0 40px; border-top:1px solid var(--hairline); text-align:center;}
+  footer .foot-links{display:flex; justify-content:center; gap:24px; margin-bottom:24px; flex-wrap:wrap;}
+  footer .foot-links a{font-size:14px; color:var(--charcoal-soft);}
+  footer .foot-links a:hover{color:var(--emerald);}
+  footer .copyright{font-size:13px; color:var(--grey-light);}
+
+  @media (max-width:900px){
+    .navlinks{display:none;} .nav-toggle{display:block;}
+    .area-grid{grid-template-columns:1fr;}
+    .paper-card{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="mark"></span>Grow Spark</a>
+    <div class="navlinks">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#challenges">Business Challenges</a>
+      <a href="framework.html">Our Framework</a>
+      <a href="research.html" class="active">Research</a>
+      <a href="founder.html">Leadership</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Book Growth Diagnostic</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap reveal">
+    <span class="eyebrow">Research &amp; Development</span>
+    <h1>We Study How Businesses Grow.</h1>
+    <p class="lede">Markets change. Customer behaviour changes. Technology changes. Business models change.</p>
+    <p class="lede">Our job is to understand what those changes mean for founders before they become obvious to everyone else.</p>
+    <p class="lede2">Grow Spark Research explores the economics, systems and strategic decisions behind business growth — from customer lifetime value and margins to AI adoption, operating models and scalable business architecture.</p>
+    <div class="cta-row center">
+      <a href="#featured" class="btn-primary">Read Our Research</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY WE RESEARCH -->
+<section class="why-sec">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why We Research</span>
+      <h2>The Best Consulting Decisions Start With Better Questions</h2>
+    </div>
+    <div class="q-list reveal">
+      <p>What is changing?</p>
+      <p>Where is value being created?</p>
+      <p>Where is value leaking?</p>
+      <p>Which assumptions are no longer true?</p>
+      <p>What constraints are limiting growth?</p>
+      <p>Which technologies can create leverage?</p>
+      <p>Which business models can scale economically?</p>
+    </div>
+    <p class="why-close reveal">Our R&amp;D work turns those questions into frameworks, perspectives and practical tools for founders.</p>
+  </div>
+</section>
+
+<!-- RESEARCH AREAS -->
+<section class="areas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Research Areas</span>
+      <h2>Where We Focus Our Attention</h2>
+    </div>
+    <div class="area-grid reveal">
+      <div class="area-item"><span class="anum">01</span><h4>Revenue Architecture</h4></div>
+      <div class="area-item"><span class="anum">02</span><h4>Customer Economics</h4></div>
+      <div class="area-item"><span class="anum">03</span><h4>Profitability &amp; Margins</h4></div>
+      <div class="area-item"><span class="anum">04</span><h4>Business Model Engineering</h4></div>
+      <div class="area-item"><span class="anum">05</span><h4>AI &amp; Technology</h4></div>
+      <div class="area-item"><span class="anum">06</span><h4>Operating Systems</h4></div>
+      <div class="area-item" style="grid-column:span 2;"><span class="anum">07</span><h4>Market &amp; Competitive Strategy</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE RESEARCH -->
+<section class="how-sec">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How We Research</span>
+      <h2>From Field Observation To Perspective</h2>
+    </div>
+    <div class="flow-h reveal">
+      <span class="fh-step">Field Observation</span><span class="fh-arrow">→</span>
+      <span class="fh-step">Business Model Analysis</span><span class="fh-arrow">→</span>
+      <span class="fh-step">Market Research</span><span class="fh-arrow">→</span>
+      <span class="fh-step">Hypothesis</span><span class="fh-arrow">→</span>
+      <span class="fh-step">Framework</span><span class="fh-arrow">→</span>
+      <span class="fh-step">Field Testing</span><span class="fh-arrow">→</span>
+      <span class="fh-step">Perspective</span>
+    </div>
+    <p class="how-close reveal">We learn from real businesses and markets, break business models into economic and operating components, study external evidence, form hypotheses, turn insights into practical frameworks and test ideas through consulting and implementation where appropriate.</p>
+  </div>
+</section>
+
+<!-- FEATURED RESEARCH -->
+<section class="featured" id="featured">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Featured Research</span>
+      <h2>The Grow Spark White Paper Library</h2>
+    </div>
+    <div class="paper-grid reveal">
+      <a href="whitepaper-revenue-without-profit.html" class="paper-card">
+        <div class="pc-left"><span class="pnum">01</span><div><h4>Revenue Without Profit</h4><p>Why High-Growth E-Commerce Businesses Can Still Struggle to Create Wealth</p></div></div>
+        <span class="pc-arrow">→</span>
+      </a>
+      <a href="whitepaper-margin-architecture.html" class="paper-card">
+        <div class="pc-left"><span class="pnum">02</span><div><h4>The Margin Architecture of Manufacturing</h4><p>How Revenue Growth Can Hide Economic Weakness</p></div></div>
+        <span class="pc-arrow">→</span>
+      </a>
+      <a href="whitepaper-before-the-restaurant.html" class="paper-card">
+        <div class="pc-left"><span class="pnum">03</span><div><h4>Before You Build the Restaurant</h4><p>A Business-Model Framework for Food &amp; Beverage Founders</p></div></div>
+        <span class="pc-arrow">→</span>
+      </a>
+      <a href="whitepaper-ai-value-gap.html" class="paper-card">
+        <div class="pc-left"><span class="pnum">04</span><div><h4>The AI Value Gap</h4><p>Why Companies Struggle to Turn AI Adoption Into Measurable Business Value</p></div></div>
+        <span class="pc-arrow">→</span>
+      </a>
+      <a href="whitepaper-founder-dependency-index.html" class="paper-card">
+        <div class="pc-left"><span class="pnum">05</span><div><h4>The Founder Dependency Index</h4><p>A Framework for Building Businesses That Can Scale Beyond the Founder</p></div></div>
+        <span class="pc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="wrap reveal">
+    <span class="eyebrow">Research Into Action</span>
+    <h2>Research Is Only Useful When It Changes A Decision.</h2>
+    <p style="color:#9BA1A7; margin-bottom:8px; font-size:16px;">If you want to understand how these ideas apply to your business:</p>
+    <div class="cta-row center" style="margin-top:30px;">
+      <a href="index.html#contact" class="btn-primary">Book A Grow Spark Growth Diagnostic</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#challenges">Business Challenges</a>
+      <a href="framework.html">Our Framework</a>
+      <a href="founder.html">Leadership</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <p class="copyright">© 2026 Grow Spark Consulting. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.navlinks');
+  toggle.addEventListener('click', ()=>{
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; padding:24px 32px; border-bottom:1px solid #E4E6E8; gap:20px;';
+  });
+</script>
+
+</body>
+</html>
