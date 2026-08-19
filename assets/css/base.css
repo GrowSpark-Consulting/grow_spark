@@ -615,7 +615,7 @@
     font-variant-numeric: tabular-nums;
   }
   .stat-label {
-    font-size: 12.5px;
+    font-size: 14px;
     color: var(--color-ink-soft);
     margin-top: 6px;
     line-height: 1.4;
