@@ -20,9 +20,15 @@
   --color-accent-tint: #E6EFEA;
   --color-accent-ink: #FFFFFF;
   --color-accent-bright: #4FCB9B;
+  /* Deloitte Sans is a proprietary corporate typeface: not on Google Fonts,
+     not self-hostable without a licence. It leads the stack so it is used
+     wherever installed, or as soon as licensed .woff2 files are added behind
+     an @font-face rule. Open Sans is the documented web fallback and carries
+     the same humanist corporate-editorial tone. One family for headings and
+     body per the brand spec — weight does the differentiating. */
 
-  --font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Deloitte Sans', 'Open Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Deloitte Sans', 'Open Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --breakpoint-3xl: 1440px;
   --breakpoint-4xl: 1920px;
@@ -63,6 +69,13 @@
   desktop range instead of hitting its ceiling early and going flat.
 */
 :root {
+  /* The hero headline keeps Manrope. Its light, geometric letterforms are the
+     established look of that section, and Open Sans renders them noticeably
+     differently at display size. Scoped to this one element so the rest of the
+     site stays on the brand stack, and loaded only by the home page — the only
+     page with a hero. */
+  --font-hero: 'Manrope', 'Deloitte Sans', 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+
   --fs-hero-headline: clamp(2.5rem, 2rem + 2.5vw, 6rem);
   --fs-eyebrow: clamp(0.75rem, 0.7rem + 0.25vw, 0.9375rem);
   --fs-nav-link: clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem);
@@ -75,7 +88,7 @@
      CSS/arbitrary values rather than generating new Tailwind utilities. */
   --fs-section-heading: clamp(1.75rem, 1.4rem + 1.6vw, 3rem);
   --fs-card-title: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
-  --fs-body: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+  --fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
   --fs-stat-figure: clamp(2rem, 1.6rem + 1.8vw, 3.5rem);
 
   --space-section-y-mobile: 6rem;
