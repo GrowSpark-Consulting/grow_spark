@@ -105,6 +105,21 @@
     transform: translateY(0);
   }
 
+  /* Full-width button inside a narrow container (tier side panels, form
+     cards). The base .btn is nowrap with generous side padding, which is
+     right for a standalone button but makes a long label overflow a ~280px
+     panel. This variant lets the label wrap and centres it over both lines. */
+  .btn-block {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    text-wrap: balance;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 1.35;
+  }
+
   .btn-arrow {
     transition: transform .3s var(--ease-out-expo);
   }
@@ -1784,6 +1799,11 @@
     line-height: 1.5;
     color: var(--color-muted);
     margin: 10px 0 20px;
+  }
+  /* Tiers that don't publish a price open on the meta line, so it shouldn't
+     carry the top margin that exists to sit it under .eng-price. */
+  .eng-side .eng-meta:first-child {
+    margin-top: 0;
   }
   .eng-leave li {
     font-size: 16px;
