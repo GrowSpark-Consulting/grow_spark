@@ -368,24 +368,6 @@
     padding: 14px 26px;
   }
 
-  /* Below the desktop nav breakpoint the CTA sits between the logo and the
-     menu toggle, so it scales down to keep the header on one line. */
-  @media (max-width: 1023px) {
-    #site-header .site-nav__cta,
-    #site-header.is-scrolled .site-nav__cta {
-      padding: 11px 18px;
-      font-size: 12.5px;
-      white-space: nowrap;
-    }
-  }
-  @media (max-width: 400px) {
-    #site-header .site-nav__cta,
-    #site-header.is-scrolled .site-nav__cta {
-      padding: 10px 14px;
-      font-size: 11.5px;
-    }
-  }
-
   /* ---------- Hero carousel ---------- */
 
   /* Cinematic letterboxing for centered text: dark top (nav legibility) and
@@ -1491,6 +1473,17 @@
   }
   .inline-link:hover {
     text-decoration: underline;
+  }
+  /* Same slot and rhythm as a real inline link, but muted and inert — used
+     where the destination doesn't exist yet (placeholder leadership cards),
+     so the cards balance without offering a link that goes nowhere. Swap the
+     span for an <a href> and drop this class once the page is live. */
+  .inline-link.is-pending {
+    color: var(--color-muted);
+    cursor: default;
+  }
+  .inline-link.is-pending:hover {
+    text-decoration: none;
   }
   @media (min-width: 640px) {
     .industry-block {

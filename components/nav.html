@@ -3,9 +3,10 @@
 </a>
 
 <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-[background-color,border-color,box-shadow] duration-[400ms] ease-[var(--ease-standard)]">
-  <!-- Mobile is a three-part flex row: logo left, CTA centered in the space
-       between, hamburger hard right. At lg the same children become the
-       original 3-column grid (logo / nav / CTA), and the hamburger drops out. -->
+  <!-- Mobile is logo left, hamburger hard right — the CTA is hidden here and
+       lives at the bottom of the drawer instead, so the bar stays uncluttered.
+       At lg the children become a 3-column grid (logo / nav / CTA) and the
+       hamburger drops out. -->
   <div class="mx-auto max-w-[var(--container-wide)] px-6 sm:px-10 flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between transition-[padding] duration-300 ease-[var(--ease-standard)] py-8" id="nav-inner">
 
     <a href="/" class="site-nav__logo logo-lockup shrink-0 lg:justify-self-start" aria-label="Grow Spark Consulting — home">
@@ -37,7 +38,7 @@
       </div>
     </nav>
 
-    <div class="flex-1 lg:flex-none flex justify-center lg:justify-end min-w-0 px-3 lg:px-0 lg:col-start-3 lg:justify-self-end">
+    <div class="hidden lg:flex lg:justify-end lg:col-start-3 lg:justify-self-end">
       <a href="/contact/" class="btn site-nav__cta inline-flex shrink-0">Book Strategy Session</a>
     </div>
 

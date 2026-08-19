@@ -44,27 +44,18 @@
             class="w-full rounded-md border border-hairline-strong bg-paper px-4 py-3 text-[16px] text-ink placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent-tint transition-colors duration-200 resize-y"></textarea>
         </div>
         <div>
-          <label for="cf-budget" class="block text-[13px] font-semibold mb-2 text-ink">Budget Range</label>
-          <select id="cf-budget" name="budget" required
-            class="w-full rounded-md border border-hairline-strong bg-paper px-4 py-3 text-[16px] text-ink focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent-tint transition-colors duration-200">
-            <option value="" disabled selected>Select budget range</option>
-            <option value="under-10k">Under $10k</option>
-            <option value="10k-50k">$10k &ndash; $50k</option>
-            <option value="50k-150k">$50k &ndash; $150k</option>
-            <option value="150k-plus">$150k+</option>
-            <option value="not-sure">Not sure yet</option>
-          </select>
+          <label for="cf-website" class="block text-[13px] font-semibold mb-2 text-ink">Company Website / LinkedIn</label>
+          <input type="text" id="cf-website" name="website" autocomplete="url" placeholder="https://"
+            class="w-full rounded-md border border-hairline-strong bg-paper px-4 py-3 text-[16px] text-ink placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent-tint transition-colors duration-200">
         </div>
         <div>
-          <label for="cf-timeline" class="block text-[13px] font-semibold mb-2 text-ink">Timeline</label>
-          <select id="cf-timeline" name="timeline" required
+          <label for="cf-revenue" class="block text-[13px] font-semibold mb-2 text-ink">Approximate Annual Revenue Range</label>
+          <select id="cf-revenue" name="revenue" required
             class="w-full rounded-md border border-hairline-strong bg-paper px-4 py-3 text-[16px] text-ink focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent-tint transition-colors duration-200">
-            <option value="" disabled selected>Select timeline</option>
-            <option value="immediately">Immediately</option>
-            <option value="1-month">Within 1 month</option>
-            <option value="1-3-months">1&ndash;3 months</option>
-            <option value="3-plus-months">3+ months</option>
-            <option value="exploring">Just exploring</option>
+            <option value="under-50l">Under &#8377;50L</option>
+            <option value="50l-2cr">&#8377;50L &ndash; &#8377;2Cr</option>
+            <option value="2cr-10cr">&#8377;2Cr &ndash; &#8377;10Cr</option>
+            <option value="10cr-plus">&#8377;10Cr+</option>
           </select>
         </div>
         <div class="sm:col-span-2">
