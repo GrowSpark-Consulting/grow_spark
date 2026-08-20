@@ -1,0 +1,17 @@
+/*
+  Single stylesheet entry for the Next.js app.
+
+  base.css and tokens.css are the original stylesheets, moved from assets/css/
+  with their contents untouched — base.css still `@import`s ./tokens.css, which
+  still `@import`s "tailwindcss". Nothing was rewritten, so the generated CSS is
+  the same as before the Vite tree was removed.
+*/
+@import '../styles/base.css';
+
+/*
+  Explicit source globs rather than Tailwind v4's automatic detection, so the
+  scanned set is stated rather than inferred. All markup now lives in .tsx
+  under app/ and components/; the sections/ glob went with the .html partials.
+*/
+@source '../app';
+@source '../components';

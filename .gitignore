@@ -1,5 +1,19 @@
+# dependencies
 node_modules/
-dist/
-.DS_Store
+
+# Next.js build output
+.next/
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# tooling
+__pycache__/
+*.pyc
 *.log
+.DS_Store
 .claude/
+
+# environment — never commit secrets
+.env
+.env.*
+!.env.example
