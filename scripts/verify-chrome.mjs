@@ -1,6 +1,10 @@
 import { chromium } from 'playwright';
 
-const BASE = process.argv[2] || 'http://localhost:3001';
+const BASE = process.argv[2] || 'http://localhost:3000';
+// Route to exercise the chrome on. Defaults to '/', but any migrated route
+// works and a content-bearing one is preferable: the sticky-header assertions
+// need a page tall enough to actually scroll.
+const PATH = process.argv[3] || '/';
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'tablet', width: 768, height: 1024 },
@@ -23,7 +27,7 @@ for (const vp of VIEWPORTS) {
   });
   page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
 
-  await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+  await page.goto(BASE + PATH, { waitUntil: 'networkidle' });
   console.log(`\n  === ${vp.name} (${vp.width}x${vp.height}) ===`);
 
   const isDesktop = vp.width >= 1024; // Tailwind lg breakpoint
