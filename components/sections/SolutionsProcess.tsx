@@ -31,41 +31,51 @@ export default function SolutionsProcess() {
             {' '}
           </div>
           {' '}
-          <ol className="flex flex-wrap lg:flex-col gap-2.5 relative lg:before:content-[''] lg:before:absolute lg:before:left-[27px] lg:before:top-[21px] lg:before:bottom-[21px] lg:before:w-px lg:before:bg-hairline-strong">
+          <ol className="flex flex-wrap lg:flex-col gap-3 lg:gap-8 relative lg:before:content-[''] lg:before:absolute lg:before:left-6 lg:before:top-6 lg:before:bottom-6 lg:before:w-px lg:before:bg-hairline-strong">
             {' '}
-            <li className="framework-mini-step">
-              <span>
+            <li className="process-step">
+              <span className="process-node">
                 01
               </span>
-              Discover
+              <span className="process-label">
+                Discover
+              </span>
             </li>
             {' '}
-            <li className="framework-mini-step">
-              <span>
+            <li className="process-step">
+              <span className="process-node">
                 02
               </span>
-              Diagnose
+              <span className="process-label">
+                Diagnose
+              </span>
             </li>
             {' '}
-            <li className="framework-mini-step">
-              <span>
+            <li className="process-step">
+              <span className="process-node">
                 03
               </span>
-              Design
+              <span className="process-label">
+                Design
+              </span>
             </li>
             {' '}
-            <li className="framework-mini-step">
-              <span>
+            <li className="process-step">
+              <span className="process-node">
                 04
               </span>
-              Deploy
+              <span className="process-label">
+                Deploy
+              </span>
             </li>
             {' '}
-            <li className="framework-mini-step">
-              <span>
+            <li className="process-step">
+              <span className="process-node">
                 05
               </span>
-              Drive
+              <span className="process-label">
+                Drive
+              </span>
             </li>
             {' '}
           </ol>
