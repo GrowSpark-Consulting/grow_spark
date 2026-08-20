@@ -1,0 +1,22 @@
+/*
+  Single stylesheet entry for the Next.js app.
+
+  The existing stylesheets are imported unchanged rather than copied or
+  rewritten — assets/css/base.css still `@import`s ./tokens.css, which still
+  `@import`s "tailwindcss". Keeping that chain intact means the Vite build and
+  the Next build render from byte-identical CSS during the migration, so any
+  visual difference between the two is provably not a stylesheet difference.
+*/
+@import '../assets/css/base.css';
+
+/*
+  Explicit source globs instead of Tailwind v4's automatic detection. During
+  the migration both trees coexist: markup lives in .tsx under app/ and
+  components/ AND in the not-yet-converted .html partials under sections/ and
+  components/. Scanning both guarantees the generated utility set is a superset
+  of what either build needs, so no class can silently go missing mid-migration.
+  The .html globs come out in the final cleanup phase.
+*/
+@source '../app';
+@source '../components';
+@source '../sections';

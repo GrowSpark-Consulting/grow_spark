@@ -3,3 +3,8 @@ dist/
 .DS_Store
 *.log
 .claude/
+
+.next/
+next-env.d.ts
+scratch_meta.json
+tsconfig.tsbuildinfo
