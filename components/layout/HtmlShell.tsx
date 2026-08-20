@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import { FONT_HREF_DEFAULT } from '@/lib/site';
+import Nav from './Nav';
+import Footer from './Footer';
 import '@/app/globals.css';
 
 /**
@@ -39,7 +41,15 @@ export default function HtmlShell({
         className="bg-paper text-ink"
         {...(heroTheme ? { 'data-hero-theme': 'dark' } : {})}
       >
+        {/*
+          Every one of the 27 pages includes components/nav.html then its own
+          <main>, then components/footer.html. <main> stays with the page rather
+          than moving here: the homepage renders it unclassed for its full-bleed
+          hero, while the other 26 add pt-24 to clear the fixed header.
+        */}
+        <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );
