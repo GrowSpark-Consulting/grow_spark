@@ -47,3 +47,13 @@ Three custom plugins make that work:
 **Navigation**: `components/nav.html` carries the top-level links only (`/solutions/`, `/framework/`, `/industries/`, `/rnd/`, `/case-studies/`, plus a "Who We Are" mega panel), duplicated twice — desktop mega-menu and mobile drawer accordion. Keep both copies in sync when changing a top-level link. Individual solution links are *not* in the nav; they live in `sections/challenges.html` (the homepage challenge cards) and on `pages/solutions/index.html`, so adding a solution means adding the route directory plus an entry in each of those two places.
 
 **Assets**: `assetsInlineLimit: 0` in `vite.config.js` — videos/images are never base64-inlined, always emitted as separate files. Hero background videos live in `assets/videos/` and are lazy-loaded per-slide by `hero-carousel.js` (only the active + next slide's video gets a real `src`).
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

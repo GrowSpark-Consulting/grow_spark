@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { FONT_HREF_DEFAULT } from '@/lib/site';
 import Nav from './Nav';
 import Footer from './Footer';
+import SiteEffects from '@/components/effects/SiteEffects';
 import '@/app/globals.css';
 
 /**
@@ -50,6 +51,13 @@ export default function HtmlShell({
         <Nav />
         {children}
         <Footer />
+        {/*
+          Renders nothing — it is the client entry point that starts Lenis,
+          GSAP/ScrollTrigger, the scroll animations and the tab behaviour, the
+          way assets/js/main.js did. Mounted last so the markup it queries has
+          already been rendered.
+        */}
+        <SiteEffects />
       </body>
     </html>
   );
