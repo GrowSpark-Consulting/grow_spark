@@ -3,20 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Grow Spark Consulting — AI & Digital Transformation Consultancy website",
+  "description": "Grow Spark Consulting — AI & Digital Transformation Consultancy website (Next.js)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "dev:vite": "vite",
-    "build:vite": "vite build",
-    "preview:vite": "vite preview"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "gsap": "^3.12.7",
     "lenis": "^1.1.18",
-    "lucide": "^0.469.0",
     "lucide-react": "^0.469.0",
     "next": "^16.3.1",
     "razorpay": "^2.9.8",
@@ -33,7 +29,6 @@
     "playwright": "^1.62.1",
     "postcss": "^8.4.49",
     "tailwindcss": "^4.0.0",
-    "typescript": "^7.0.2",
-    "vite": "^6.0.7"
+    "typescript": "^7.0.2"
   }
 }
