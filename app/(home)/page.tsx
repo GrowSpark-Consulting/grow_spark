@@ -1,31 +1,44 @@
 import type { Metadata } from 'next';
+import CaseStudy from '@/components/sections/CaseStudy';
+import Challenges from '@/components/sections/Challenges';
+import ExecSummary from '@/components/sections/ExecSummary';
+import Framework from '@/components/sections/Framework';
+import Hero from '@/components/sections/Hero';
+import Industries from '@/components/sections/Industries';
+import Insights from '@/components/sections/Insights';
+import Leadership from '@/components/sections/Leadership';
+import Outcomes from '@/components/sections/Outcomes';
+import Pillars from '@/components/sections/Pillars';
+import TrustStats from '@/components/sections/TrustStats';
+import ValueStrip from '@/components/sections/ValueStrip';
+import WhyUs from '@/components/sections/WhyUs';
 
 /**
- * Metadata transcribed verbatim from pages/index.html. Titles/descriptions were
- * extracted programmatically from the source HTML rather than retyped, so the
- * em dashes and wording match the live site exactly.
+ * Transcribed from pages/index.html by scripts/html-to-tsx.py.
+ * Element tree, classes, content and metadata are unchanged; only the
+ * JSX-required attribute spellings differ from the source markup.
  */
 export const metadata: Metadata = {
   title: "Grow Spark Consulting — Building Companies That Outperform",
   description: "Grow Spark Consulting partners with founders and leadership teams on AI automation, digital transformation and business strategy — turning growth ambition into measurable enterprise value.",
   robots: { index: true, follow: true },
-  alternates: { canonical: '/' },
+  alternates: { canonical: "/" },
   openGraph: {
-    type: 'website',
+    type: "website",
     siteName: "Grow Spark Consulting",
     title: "Grow Spark Consulting — Building Companies That Outperform",
     description: "AI automation, digital transformation and business strategy for founders and leadership teams who refuse to settle for average.",
     url: "https://www.growsparkconsulting.com/",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: "Grow Spark Consulting — Building Companies That Outperform",
     description: "AI automation, digital transformation and business strategy for founders and leadership teams who refuse to settle for average.",
   },
 };
 
-/** Organization JSON-LD, preserved byte-for-byte from the existing homepage. */
-const organizationLd = {
+/** JSON-LD preserved verbatim from the source page. */
+const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Grow Spark Consulting",
@@ -47,15 +60,42 @@ const organizationLd = {
   ]
 } as const;
 
-export default function HomePage() {
+export default function Page() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* PHASE 6 — section partials from sections/*.html are migrated here. */}
-      <main id="main" />
+    <main id="main">
+      {' '}
+      <Hero />
+      {' '}
+      <ExecSummary />
+      {' '}
+      <TrustStats />
+      {' '}
+      <Challenges />
+      {' '}
+      <Outcomes />
+      {' '}
+      <Pillars />
+      {' '}
+      <Framework />
+      {' '}
+      <ValueStrip />
+      {' '}
+      <WhyUs />
+      {' '}
+      <Industries />
+      {' '}
+      <Insights />
+      {' '}
+      <CaseStudy />
+      {' '}
+      <Leadership />
+      {' '}
+    </main>
     </>
   );
 }

@@ -54,6 +54,59 @@ BOOLEAN = {
 
 NUMERIC = {'width', 'height', 'rows', 'cols', 'size', 'span', 'start', 'maxlength', 'minlength'}
 
+# html.parser lower-cases every name it sees, but SVG is case-sensitive and JSX
+# wants the DOM spelling. These restore the correct case; keys are what the
+# parser hands back.
+SVG_TAGS = {
+    'lineargradient': 'linearGradient', 'radialgradient': 'radialGradient',
+    'clippath': 'clipPath', 'textpath': 'textPath', 'foreignobject': 'foreignObject',
+    'feblend': 'feBlend', 'fegaussianblur': 'feGaussianBlur', 'femerge': 'feMerge',
+    'femergenode': 'feMergeNode', 'feoffset': 'feOffset', 'fedropshadow': 'feDropShadow',
+    'fecolormatrix': 'feColorMatrix', 'fecomposite': 'feComposite',
+}
+
+SVG_ATTRS = {
+    'viewbox': 'viewBox', 'stop-color': 'stopColor', 'stop-opacity': 'stopOpacity',
+    'stroke-width': 'strokeWidth', 'stroke-linecap': 'strokeLinecap',
+    'stroke-linejoin': 'strokeLinejoin', 'stroke-dasharray': 'strokeDasharray',
+    'stroke-dashoffset': 'strokeDashoffset', 'stroke-opacity': 'strokeOpacity',
+    'stroke-miterlimit': 'strokeMiterlimit', 'text-anchor': 'textAnchor',
+    'fill-rule': 'fillRule', 'fill-opacity': 'fillOpacity', 'clip-rule': 'clipRule',
+    'clip-path': 'clipPath', 'dominant-baseline': 'dominantBaseline',
+    'font-family': 'fontFamily', 'font-size': 'fontSize', 'font-weight': 'fontWeight',
+    'letter-spacing': 'letterSpacing', 'gradientunits': 'gradientUnits',
+    'gradienttransform': 'gradientTransform', 'patternunits': 'patternUnits',
+    'preserveaspectratio': 'preserveAspectRatio', 'markerwidth': 'markerWidth',
+    'markerheight': 'markerHeight', 'refx': 'refX', 'refy': 'refY',
+    'paint-order': 'paintOrder', 'vector-effect': 'vectorEffect',
+}
+
+INCLUDE_RE = re.compile(r'<!--@include:\s*([\w./-]+)\s*-->')
+
+
+def component_name(partial_path: str) -> str:
+    """sections/about-hero.html -> AboutHero"""
+    stem = os.path.basename(partial_path).rsplit('.', 1)[0]
+    return ''.join(p.capitalize() for p in re.split(r'[-_]', stem))
+
+
+def component_import(partial_path: str) -> str:
+    """Mirror the source layout: sections/ under components/sections/."""
+    name = component_name(partial_path)
+    folder = 'sections' if partial_path.startswith('sections/') else ''
+    path = f"@/components/{folder + '/' if folder else ''}{name}"
+    return f"import {name} from '{path}';"
+
+
+def mark_includes(html: str) -> str:
+    """Turn @include comments into a parseable placeholder element.
+
+    Vite splices the partial's text in at build time. Here the include becomes
+    a real component instead, so the boundary has to survive parsing rather
+    than being flattened away.
+    """
+    return INCLUDE_RE.sub(lambda m: f'<x-include src="{m.group(1)}"></x-include>', html)
+
 
 
 def pascal(name: str) -> str:
@@ -140,13 +193,14 @@ class Emitter:
     def __init__(self):
         self.icons: set[str] = set()
         self.unknown_attrs: set[str] = set()
+        self.partials: set[str] = set()
 
     def attr(self, name: str, value):
         if name == 'data-lucide':
             return None
         if name == 'style' and value:
             return f'style={style_to_object(value)}'
-        jsx = ATTR_MAP.get(name, name)
+        jsx = ATTR_MAP.get(name) or SVG_ATTRS.get(name) or name
         if name in BOOLEAN and (value is None or value == '' or value == name):
             return jsx
         if value is None:
@@ -190,6 +244,11 @@ class Emitter:
             return [f'{pad}{{/* {body} */}}']
 
         attrs = dict(node.attrs)
+        if node.tag == 'x-include':
+            src = attrs.get('src', '')
+            self.partials.add(src)
+            return [f'{pad}<{component_name(src)} />']
+
         # <i data-lucide="arrow-right" class="..."> is a placeholder the old
         # runtime swapped for an SVG; lucide-react renders it directly.
         if node.tag == 'i' and 'data-lucide' in attrs:
@@ -203,16 +262,17 @@ class Emitter:
         rendered = [self.attr(k, v) for k, v in node.attrs]
         rendered = [a for a in rendered if a]
         joined = (' ' + ' '.join(rendered)) if rendered else ''
+        tag = SVG_TAGS.get(node.tag, node.tag)
 
         if node.tag in VOID:
-            return [f'{pad}<{node.tag}{joined} />']
+            return [f'{pad}<{tag}{joined} />']
 
         inner: list[str] = []
         for child in node.children:
             inner.extend(self.emit(child, depth + 1))
         if not inner:
-            return [f'{pad}<{node.tag}{joined} />']
-        return [f'{pad}<{node.tag}{joined}>'] + inner + [f'{pad}</{node.tag}>']
+            return [f'{pad}<{tag}{joined} />']
+        return [f'{pad}<{tag}{joined}>'] + inner + [f'{pad}</{tag}>']
 
 
 def extract_metadata(src: str) -> dict:
@@ -269,6 +329,47 @@ def build_metadata_block(meta: dict, route: str) -> str:
     return '\n'.join(lines)
 
 
+def convert_partial(src_path: str, out_path: str) -> dict:
+    """sections/hero.html -> components/sections/Hero.tsx (a Server Component).
+
+    Partials have no single root element, so the body is emitted inside a
+    fragment. That keeps the original's leading/trailing whitespace nodes,
+    which the include used to splice in verbatim.
+    """
+    src = io.open(src_path, encoding='utf-8').read()
+    name = component_name(src_path)
+
+    builder = TreeBuilder()
+    builder.feed(f'<x-root>{mark_includes(src)}</x-root>')
+    builder.close()
+    root = next(c for c in builder.root.children if c.kind == 'el' and c.tag == 'x-root')
+
+    em = Emitter()
+    inner: list[str] = []
+    for child in root.children:
+        inner.extend(em.emit(child, 3))
+
+    imports = []
+    if em.icons:
+        imports.append(f"import {{ {', '.join(sorted(em.icons))} }} from 'lucide-react';")
+    imports.extend(sorted(component_import(p) for p in em.partials))
+
+    out = (
+        ('\n'.join(imports) + '\n\n' if imports else '')
+        + f'/**\n * Transcribed from {src_path} by scripts/html-to-tsx.py.\n'
+        ' * Server Component: the source partial carries no behaviour of its own,\n'
+        ' * so nothing here needs the browser. Markup, classes, ids, data\n'
+        ' * attributes and content are unchanged from the source.\n */\n'
+        f'export default function {name}() {{\n  return (\n    <>\n'
+        + '\n'.join(inner) + '\n'
+        + '    </>\n  );\n}\n'
+    )
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    io.open(out_path, 'w', encoding='utf-8', newline='\n').write(out)
+    return {'name': name, 'icons': sorted(em.icons), 'partials': sorted(em.partials),
+            'unknown': sorted(em.unknown_attrs), 'lines': out.count('\n')}
+
+
 def convert(src_path: str, route: str, out_path: str) -> dict:
     src = io.open(src_path, encoding='utf-8').read()
     m = re.search(r'<main\b([^>]*)>(.*?)</main>', src, re.S)
@@ -277,7 +378,7 @@ def convert(src_path: str, route: str, out_path: str) -> dict:
     main_attrs_raw, body = m.group(1), m.group(2)
 
     builder = TreeBuilder()
-    builder.feed(f'<main{main_attrs_raw}>{body}</main>')
+    builder.feed(f'<main{main_attrs_raw}>{mark_includes(body)}</main>')
     builder.close()
     main_node = next(c for c in builder.root.children if c.kind == 'el' and c.tag == 'main')
 
@@ -288,6 +389,7 @@ def convert(src_path: str, route: str, out_path: str) -> dict:
     imports = ["import type { Metadata } from 'next';"]
     if em.icons:
         imports.append(f"import {{ {', '.join(sorted(em.icons))} }} from 'lucide-react';")
+    imports.extend(sorted(component_import(p) for p in em.partials))
 
     ld_block = ''
     ld_render = ''
@@ -315,7 +417,7 @@ def convert(src_path: str, route: str, out_path: str) -> dict:
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     io.open(out_path, 'w', encoding='utf-8', newline='\n').write(out)
     return {'route': route, 'icons': sorted(em.icons), 'unknown': sorted(em.unknown_attrs),
-            'lines': out.count('\n')}
+            'partials': sorted(em.partials), 'lines': out.count('\n')}
 
 
 if __name__ == '__main__':

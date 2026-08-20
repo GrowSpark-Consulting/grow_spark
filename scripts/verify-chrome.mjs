@@ -131,15 +131,30 @@ for (const vp of VIEWPORTS) {
     // native details accordion still works
     await page.locator('#nav-toggle').click();
     await page.waitForTimeout(600);
-    await page.locator('.drawer-accordion summary').click();
+    await page.locator('[data-drawer-panel] .drawer-accordion summary').click();
     await page.waitForTimeout(120);
-    const open = await page.$eval('.drawer-accordion', (el) => el.open);
+    const open = await page.$eval('[data-drawer-panel] .drawer-accordion', (el) => el.open);
     note(open, 'Who We Are accordion opens (native <details>)');
   }
 
   // --- current page highlighting ---
-  const currentCount = await page.$$eval('.site-nav__link.is-current, .drawer-link.is-current', (els) => els.length);
-  note(currentCount === 2, `is-current applied to Home in both navs (found ${currentCount})`);
+  // Expected count is derived from the nav itself, not hardcoded: only routes
+  // that appear in the primary/drawer link lists get highlighted. /about/ is
+  // footer-only and /contact/ is a mega-link, and markCurrentPage never
+  // targeted those, so 0 is correct there — the original behaves the same.
+  const highlight = await page.evaluate(() => {
+    const norm = (p) => p.replace(/index\.html$/, '').replace(/\/+$/, '') || '/';
+    const here = norm(location.pathname);
+    const links = [...document.querySelectorAll('.site-nav__link, .drawer-link')];
+    return {
+      expected: links.filter((a) => norm(new URL(a.href, location.href).pathname) === here).length,
+      actual: links.filter((a) => a.classList.contains('is-current')).length,
+    };
+  });
+  note(
+    highlight.actual === highlight.expected,
+    `is-current on every matching nav link (${highlight.actual}/${highlight.expected})`,
+  );
 
   // --- footer ---
   note(await page.locator('footer a[href="/privacy/"]').count() === 1, 'broken /privacy/ link preserved');
