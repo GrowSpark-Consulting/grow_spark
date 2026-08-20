@@ -35,9 +35,11 @@ export default function Pillars() {
                 Build
               </h3>
               {' '}
-              <p className="text-ink-soft text-[16.5px] leading-relaxed">
-                Launch and structure new businesses correctly from day one — operating model, first hires, go-to-market — so growth compounds instead of stalling.
-              </p>
+              <div className="card-reveal">
+                <p className="text-ink-soft text-[16.5px] leading-relaxed">
+                  Launch and structure new businesses correctly from day one — operating model, first hires, go-to-market — so growth compounds instead of stalling.
+                </p>
+              </div>
               {' '}
             </div>
             {' '}
@@ -51,9 +53,11 @@ export default function Pillars() {
                 Transform
               </h3>
               {' '}
-              <p className="text-ink-soft text-[16.5px] leading-relaxed">
-                Modernise and restructure established businesses to improve margin, resilience and competitive position.
-              </p>
+              <div className="card-reveal">
+                <p className="text-ink-soft text-[16.5px] leading-relaxed">
+                  Modernise and restructure established businesses to improve margin, resilience and competitive position.
+                </p>
+              </div>
               {' '}
             </div>
             {' '}
@@ -67,9 +71,11 @@ export default function Pillars() {
                 Scale
               </h3>
               {' '}
-              <p className="text-ink-soft text-[16.5px] leading-relaxed">
-                Give companies the systems, AI and technology to sustain growth without breaking under it.
-              </p>
+              <div className="card-reveal">
+                <p className="text-ink-soft text-[16.5px] leading-relaxed">
+                  Give companies the systems, AI and technology to sustain growth without breaking under it.
+                </p>
+              </div>
               {' '}
             </div>
             {' '}

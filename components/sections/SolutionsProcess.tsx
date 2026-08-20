@@ -31,7 +31,7 @@ export default function SolutionsProcess() {
             {' '}
           </div>
           {' '}
-          <ol className="flex flex-wrap lg:flex-col gap-2.5">
+          <ol className="flex flex-wrap lg:flex-col gap-2.5 relative lg:before:content-[''] lg:before:absolute lg:before:left-[27px] lg:before:top-[21px] lg:before:bottom-[21px] lg:before:w-px lg:before:bg-hairline-strong">
             {' '}
             <li className="framework-mini-step">
               <span>

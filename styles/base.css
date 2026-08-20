@@ -716,6 +716,63 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Hover-reveal: title sits low against a bottom-anchored flex column, with the
+     description collapsed to zero height so its reserved space reads as empty
+     room above the title, not dead space below it. On hover the description
+     grows from 0 to its natural height (grid-rows trick — no fixed max-height to
+     guess, no clipping), which pushes the bottom-pinned title upward as the text
+     reveals beneath it. Card/box height stays put throughout. */
+  .why-card .card-reveal-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 6rem;
+  }
+  .pillar-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 300px;
+    transition: border-color .3s var(--ease-standard), transform .3s var(--ease-out-expo), background-color .3s var(--ease-standard);
+  }
+  @media (min-width: 640px) {
+    .pillar-card { min-height: 550px; }
+  }
+  @media (min-width: 1024px) {
+    .pillar-card { min-height: 300px; }
+  }
+
+  .card-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .55s var(--ease-out-expo);
+  }
+  .card-reveal > p {
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity .3s var(--ease-standard);
+  }
+  .why-card:hover .card-reveal,
+  .why-card:focus-within .card-reveal,
+  .pillar-card:hover .card-reveal,
+  .pillar-card:focus-within .card-reveal {
+    grid-template-rows: 1fr;
+  }
+  .why-card:hover .card-reveal > p,
+  .why-card:focus-within .card-reveal > p,
+  .pillar-card:hover .card-reveal > p,
+  .pillar-card:focus-within .card-reveal > p {
+    opacity: 1;
+    transition: opacity .4s var(--ease-standard) .15s;
+  }
+
+  .why-card {
+    transition: background-color .3s var(--ease-standard);
+  }
+  .why-card:hover {
+    background: var(--color-accent-tint);
+  }
+
   .industry-card {
     padding: 36px 26px;
     scroll-margin-top: 6rem;

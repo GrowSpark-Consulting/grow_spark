@@ -99,33 +99,67 @@ export default function Page() {
       {' '}
       {/* JUMP NAV */}
       {' '}
-      <nav aria-label="Industries" className="border-y border-hairline bg-paper-sunken py-6">
+      <nav aria-label="Industries" className="border-y border-hairline bg-paper-sunken py-10">
         {' '}
-        <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 flex flex-wrap items-center justify-center gap-2.5">
+        <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <a href="#ecommerce" className="anchor-pill">
-            E-Commerce & D2C
-          </a>
-          {' '}
-          <a href="#manufacturing" className="anchor-pill">
-            Manufacturing
-          </a>
-          {' '}
-          <a href="#food-beverage" className="anchor-pill">
-            Food & Beverage
-          </a>
-          {' '}
-          <a href="#education" className="anchor-pill">
-            Education & Training
-          </a>
-          {' '}
-          <a href="#b2b" className="anchor-pill">
-            B2B & Industrial
-          </a>
-          {' '}
-          <a href="#saas" className="anchor-pill">
-            Technology & SaaS
-          </a>
+          <div className="grid-hairline grid-cols-2 sm:grid-cols-3">
+            {' '}
+            <a href="#ecommerce" className="industry-card">
+              <span className="n">
+                01
+              </span>
+              <span className="block text-[16.5px] font-semibold">
+                E-Commerce & D2C
+              </span>
+            </a>
+            {' '}
+            <a href="#manufacturing" className="industry-card">
+              <span className="n">
+                02
+              </span>
+              <span className="block text-[16.5px] font-semibold">
+                Manufacturing
+              </span>
+            </a>
+            {' '}
+            <a href="#food-beverage" className="industry-card">
+              <span className="n">
+                03
+              </span>
+              <span className="block text-[16.5px] font-semibold">
+                Food & Beverage
+              </span>
+            </a>
+            {' '}
+            <a href="#education" className="industry-card">
+              <span className="n">
+                04
+              </span>
+              <span className="block text-[16.5px] font-semibold">
+                Education & Training
+              </span>
+            </a>
+            {' '}
+            <a href="#b2b" className="industry-card">
+              <span className="n">
+                05
+              </span>
+              <span className="block text-[16.5px] font-semibold">
+                B2B & Industrial
+              </span>
+            </a>
+            {' '}
+            <a href="#saas" className="industry-card">
+              <span className="n">
+                06
+              </span>
+              <span className="block text-[16.5px] font-semibold">
+                Technology & SaaS
+              </span>
+            </a>
+            {' '}
+          </div>
           {' '}
         </div>
         {' '}
