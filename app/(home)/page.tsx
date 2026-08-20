@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import CaseStudy from '@/components/sections/CaseStudy';
 import Challenges from '@/components/sections/Challenges';
 import ExecSummary from '@/components/sections/ExecSummary';
 import Framework from '@/components/sections/Framework';
@@ -90,8 +89,6 @@ export default function Page() {
       <Industries />
       {' '}
       <Insights />
-      {' '}
-      <CaseStudy />
       {' '}
       <Leadership />
       {' '}

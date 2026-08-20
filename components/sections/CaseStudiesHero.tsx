@@ -15,10 +15,6 @@ export default function CaseStudiesHero() {
           {' '}
           <div className="max-w-[820px] mx-auto text-center" data-reveal="">
             {' '}
-            <span className="eyebrow block mb-5">
-              Our Work
-            </span>
-            {' '}
             <h1 className="page-hero-heading mb-8 text-balance">
               {' '} We'd rather show you the method than promise you the outcome. {' '}
             </h1>

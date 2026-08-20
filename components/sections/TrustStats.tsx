@@ -23,7 +23,7 @@ export default function TrustStats() {
                 0
               </div>
               {' '}
-              <div className="stat-label">
+              <div className="stat-label text-[16px]">
                 Industries Served
               </div>
               {' '}
@@ -35,7 +35,7 @@ export default function TrustStats() {
                 0
               </div>
               {' '}
-              <div className="stat-label">
+              <div className="stat-label text-[16px]">
                 Proprietary Framework
               </div>
               {' '}
@@ -47,7 +47,7 @@ export default function TrustStats() {
                 0
               </div>
               {' '}
-              <div className="stat-label">
+              <div className="stat-label text-[16px]">
                 Framework Phases
               </div>
               {' '}
@@ -59,7 +59,7 @@ export default function TrustStats() {
                 0
               </div>
               {' '}
-              <div className="stat-label">
+              <div className="stat-label text-[16px]">
                 Countries Worked In
               </div>
               {' '}
@@ -71,7 +71,7 @@ export default function TrustStats() {
                 0
               </div>
               {' '}
-              <div className="stat-label">
+              <div className="stat-label text-[16px]">
                 Core Disciplines — Strategy, Technology, Execution
               </div>
               {' '}

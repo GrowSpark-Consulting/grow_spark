@@ -29,31 +29,31 @@ export default function Insights() {
           {' '}
           <div className="flex flex-wrap gap-2.5 justify-center mb-12" data-reveal="">
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               CEO Guides
             </span>
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               Business Transformation
             </span>
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               AI Research
             </span>
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               Industry Reports
             </span>
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               Executive Playbooks
             </span>
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               Whitepapers
             </span>
             {' '}
-            <span className="text-[12.5px] font-semibold text-ink-soft border border-hairline-strong px-4 py-2 rounded-full bg-paper-raised">
+            <span className="pill-label font-display font-semibold text-white bg-accent px-4 py-2.5 rounded-full">
               Perspectives
             </span>
             {' '}

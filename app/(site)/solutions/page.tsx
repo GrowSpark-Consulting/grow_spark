@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Challenges from '@/components/sections/Challenges';
-import Industries from '@/components/sections/Industries';
 import SolutionsCta from '@/components/sections/SolutionsCta';
 import SolutionsHero from '@/components/sections/SolutionsHero';
 import SolutionsProcess from '@/components/sections/SolutionsProcess';
@@ -54,8 +53,6 @@ export default function Page() {
       </nav>
       {' '}
       <SolutionsHero />
-      {' '}
-      <Industries />
       {' '}
       <Challenges />
       {' '}
