@@ -57,6 +57,16 @@ try {
     )
   `;
 
+  // Same reasoning as contact_submissions in 0001: Supabase exposes every
+  // public-schema table through PostgREST using an anon key that ships to
+  // browsers. This table holds only migration filenames, but leaking the
+  // schema history tells an attacker exactly what the database looks like.
+  // Enabled here rather than in a migration file because this table is created
+  // by the runner itself — doing it here means a fresh database is covered on
+  // the very first run instead of only once a later migration executes.
+  // Idempotent, and the runner connects as the owner, which bypasses RLS.
+  await sql`alter table schema_migrations enable row level security`;
+
   const applied = new Set(
     (await sql`select name from schema_migrations`).map((r) => r.name),
   );
