@@ -50,6 +50,15 @@ export const env = {
   get razorpayWebhookSecret() {
     return required('RAZORPAY_WEBHOOK_SECRET');
   },
+  get hubspotAccessToken() {
+    return required('HUBSPOT_ACCESS_TOKEN');
+  },
+  get hubspotDealPipelineId() {
+    return required('HUBSPOT_DEAL_PIPELINE_ID');
+  },
+  get hubspotDealStageId() {
+    return required('HUBSPOT_DEAL_STAGE_ID');
+  },
 };
 
 /** True when every variable the contact workflow needs is present. */
@@ -80,4 +89,27 @@ export function razorpayConfigured(): boolean {
 /** True when the webhook endpoint can verify incoming Razorpay events. */
 export function razorpayWebhookConfigured(): boolean {
   return Boolean(process.env.DATABASE_URL && process.env.RAZORPAY_WEBHOOK_SECRET);
+}
+
+/**
+ * True when contacts can be pushed to HubSpot.
+ *
+ * Only the token is required. The site is expected to run without a CRM — the
+ * contact form must keep working and keep storing leads whether or not HubSpot
+ * is configured, so this gates the sync step rather than the whole workflow.
+ */
+export function hubspotConfigured(): boolean {
+  return Boolean(process.env.HUBSPOT_ACCESS_TOKEN);
+}
+
+/**
+ * True when deals can also be created. Deals additionally need a pipeline and
+ * stage, which are portal-specific ids with no safe default.
+ */
+export function hubspotDealsConfigured(): boolean {
+  return Boolean(
+    process.env.HUBSPOT_ACCESS_TOKEN
+      && process.env.HUBSPOT_DEAL_PIPELINE_ID
+      && process.env.HUBSPOT_DEAL_STAGE_ID,
+  );
 }
