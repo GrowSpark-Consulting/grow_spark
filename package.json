@@ -8,21 +8,28 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "migrate": "node scripts/migrate.mjs",
+    "migrate:status": "node scripts/migrate.mjs --status"
   },
   "dependencies": {
     "gsap": "^3.12.7",
     "lenis": "^1.1.18",
     "lucide-react": "^0.469.0",
     "next": "^16.3.1",
+    "nodemailer": "^9.0.5",
+    "postgres": "^3.4.9",
     "razorpay": "^2.9.8",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "swiper": "^14.0.7"
+    "server-only": "^0.0.1",
+    "swiper": "^14.0.7",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^26.2.0",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "autoprefixer": "^10.4.20",
