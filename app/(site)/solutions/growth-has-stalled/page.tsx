@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import FooterCta from '@/components/layout/FooterCta';
 
 /**
  * Transcribed from pages/solutions/growth-has-stalled/index.html by scripts/html-to-tsx.py.
@@ -971,7 +972,7 @@ export default function Page() {
               Request Your Business Transformation Assessment™
             </a>
             {' '}
-            <a href="/contact/" className="btn btn-secondary btn-on-dark">
+            <a href="/strategy/" className="btn btn-secondary btn-on-dark">
               Book an Executive Strategy Session
             </a>
             {' '}
@@ -980,6 +981,8 @@ export default function Page() {
         </div>
         {' '}
       </section>
+      {' '}
+      <FooterCta />
       {' '}
     </main>
   );

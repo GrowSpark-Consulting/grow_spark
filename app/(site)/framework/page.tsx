@@ -1805,7 +1805,7 @@ export default function Page() {
               Request Your Business Transformation Assessment™
             </a>
             {' '}
-            <a href="/contact/" className="btn btn-secondary">
+            <a href="/strategy/" className="btn btn-secondary">
               Book An Executive Strategy Session
             </a>
             {' '}

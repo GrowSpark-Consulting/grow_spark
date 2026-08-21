@@ -6,6 +6,10 @@ import { Instagram, Linkedin } from 'lucide-react';
  * The only dynamic pieces were the two lucide <i data-lucide> placeholders,
  * which lucide-react renders directly, so this ships zero client JS.
  *
+ * The generic "Ready to Transform Your Business?" banner that used to open
+ * this element now lives in FooterCta.tsx and is rendered by individual
+ * pages (see that file's doc comment) rather than unconditionally here.
+ *
  * The Privacy / Terms / Cookie Policy links point at routes that do not exist
  * and 404 today. They are reproduced exactly as-is: fixing them would be a
  * content change, not a migration. Tracked as a known pre-existing issue.
@@ -13,23 +17,6 @@ import { Instagram, Linkedin } from 'lucide-react';
 export default function Footer() {
   return (
     <footer className="bg-ink text-white">
-      <div className="border-b border-white/10 py-20 sm:py-24 lg:py-28 text-center" data-reveal>
-        <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
-          <h2 className="text-white cta-heading mb-5">Ready to Transform Your Business?</h2>
-          <p className="text-[#9BA1A7] text-[17px] mb-10 max-w-[520px] mx-auto">
-            Speak with a transformation advisor and find out where to start.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a href="/contact/" className="btn btn-accent">
-              Book Executive Strategy Session
-            </a>
-            <a href="/contact/" className="btn btn-secondary btn-on-dark">
-              Request Business Assessment
-            </a>
-          </div>
-        </div>
-      </div>
-
       <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] gap-12 lg:gap-10">
           <div>

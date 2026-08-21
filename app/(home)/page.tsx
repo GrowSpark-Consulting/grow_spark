@@ -11,6 +11,7 @@ import Pillars from '@/components/sections/Pillars';
 import TrustStats from '@/components/sections/TrustStats';
 import ValueStrip from '@/components/sections/ValueStrip';
 import WhyUs from '@/components/sections/WhyUs';
+import FooterCta from '@/components/layout/FooterCta';
 
 /**
  * Transcribed from pages/index.html by scripts/html-to-tsx.py.
@@ -91,6 +92,8 @@ export default function Page() {
       <Insights />
       {' '}
       <Leadership />
+      {' '}
+      <FooterCta />
       {' '}
     </main>
     </>

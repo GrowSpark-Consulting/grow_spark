@@ -303,7 +303,7 @@ export default function Nav() {
           </nav>
 
           <div className="hidden lg:flex lg:justify-end lg:col-start-3 lg:justify-self-end">
-            <a href="/contact/" className="btn site-nav__cta inline-flex shrink-0">
+            <a href="/strategy/" className="btn site-nav__cta inline-flex shrink-0">
               Book Strategy Session
             </a>
           </div>
@@ -380,7 +380,7 @@ export default function Nav() {
             </details>
 
             <a
-              href="/contact/"
+              href="/strategy/"
               onClick={closeDrawer}
               className="btn btn-primary justify-center mt-6"
             >

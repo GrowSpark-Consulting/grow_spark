@@ -45,7 +45,7 @@ export default function SolutionsHero() {
             {' '}
             <div className="flex gap-4 justify-center flex-wrap">
               {' '}
-              <a href="/contact/" className="btn btn-primary">
+              <a href="/strategy/" className="btn btn-primary">
                 Book Executive Strategy Session
               </a>
               {' '}

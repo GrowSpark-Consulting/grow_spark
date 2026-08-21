@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import FooterCta from '@/components/layout/FooterCta';
 
 /**
  * Transcribed from pages/founder/index.html by scripts/html-to-tsx.py.
@@ -1097,6 +1098,8 @@ export default function Page() {
         </div>
         {' '}
       </section>
+      {' '}
+      <FooterCta />
       {' '}
     </main>
   );

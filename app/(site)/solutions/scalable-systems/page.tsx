@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
+import FooterCta from '@/components/layout/FooterCta';
 
 /**
  * Transcribed from pages/solutions/scalable-systems/index.html by scripts/html-to-tsx.py.
@@ -1161,7 +1162,7 @@ export default function Page() {
               Request Your Scalability Assessment™
             </a>
             {' '}
-            <a href="/contact/" className="btn btn-secondary btn-on-dark">
+            <a href="/strategy/" className="btn btn-secondary btn-on-dark">
               Book An Executive Strategy Session
             </a>
             {' '}
@@ -1170,6 +1171,8 @@ export default function Page() {
         </div>
         {' '}
       </section>
+      {' '}
+      <FooterCta />
       {' '}
     </main>
   );

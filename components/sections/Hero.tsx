@@ -37,7 +37,7 @@ export default function Hero() {
                     Building companies that outperform their competition.
                   </h1>
                   {' '}
-                  <a href="/contact/" className="btn btn-hero">
+                  <a href="/strategy/" className="btn btn-hero">
                     {' '} Book Executive Strategy Session {' '}
                     <ArrowRight className="w-4 h-4 btn-arrow" />
                     {' '}

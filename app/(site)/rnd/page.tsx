@@ -246,13 +246,13 @@ export default function Page() {
       {' '}
       {/* HOW WE RESEARCH */}
       {' '}
-      <section className="py-20 sm:py-24 lg:py-28 bg-ink">
+      <section className="py-20 sm:py-24 lg:py-28 border-b border-hairline">
         {' '}
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <div className="section-head on-dark" data-reveal="">
+          <div className="section-head" data-reveal="">
             {' '}
-            <span className="eyebrow !text-accent-bright block mb-3.5">
+            <span className="eyebrow block mb-3.5">
               How We Research
             </span>
             {' '}
@@ -264,49 +264,49 @@ export default function Page() {
           {' '}
           <div className="flex flex-wrap items-center justify-center gap-2.5 mb-11" data-reveal="">
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Field Observation
             </span>
             {' '}
-            <ArrowRight className="w-4 h-4 text-accent-bright shrink-0" aria-hidden="true" />
+            <ArrowRight className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Business Model Analysis
             </span>
             {' '}
-            <ArrowRight className="w-4 h-4 text-accent-bright shrink-0" aria-hidden="true" />
+            <ArrowRight className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Market Research
             </span>
             {' '}
-            <ArrowRight className="w-4 h-4 text-accent-bright shrink-0" aria-hidden="true" />
+            <ArrowRight className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Hypothesis
             </span>
             {' '}
-            <ArrowRight className="w-4 h-4 text-accent-bright shrink-0" aria-hidden="true" />
+            <ArrowRight className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Framework
             </span>
             {' '}
-            <ArrowRight className="w-4 h-4 text-accent-bright shrink-0" aria-hidden="true" />
+            <ArrowRight className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Field Testing
             </span>
             {' '}
-            <ArrowRight className="w-4 h-4 text-accent-bright shrink-0" aria-hidden="true" />
+            <ArrowRight className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
             {' '}
-            <span className="chip chip-on-dark">
+            <span className="chip">
               Perspective
             </span>
             {' '}
           </div>
           {' '}
-          <p className="text-center text-[#9BA1A7] text-[17px] leading-relaxed max-w-[760px] mx-auto" data-reveal="">
+          <p className="text-center text-ink-soft text-[17px] leading-relaxed max-w-[760px] mx-auto" data-reveal="">
             {' '} We learn from real businesses and markets, break business models into economic and operating components, study external evidence, form hypotheses, turn insights into practical frameworks and test ideas through consulting and implementation where appropriate. {' '}
           </p>
           {' '}

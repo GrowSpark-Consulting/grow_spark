@@ -21,7 +21,7 @@ export default function SolutionsCta() {
           {' '}
           <div className="flex gap-4 justify-center flex-wrap">
             {' '}
-            <a href="/contact/" className="btn btn-accent">
+            <a href="/strategy/" className="btn btn-accent">
               Book Executive Strategy Session
             </a>
             {' '}

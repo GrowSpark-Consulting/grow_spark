@@ -7,6 +7,7 @@ import AboutMission from '@/components/sections/AboutMission';
 import Framework from '@/components/sections/Framework';
 import Leadership from '@/components/sections/Leadership';
 import WhyUs from '@/components/sections/WhyUs';
+import FooterCta from '@/components/layout/FooterCta';
 
 /**
  * Transcribed from pages/about/index.html by scripts/html-to-tsx.py.
@@ -71,6 +72,8 @@ export default function Page() {
       <AboutExpertise />
       {' '}
       <AboutCta />
+      {' '}
+      <FooterCta />
       {' '}
     </main>
   );

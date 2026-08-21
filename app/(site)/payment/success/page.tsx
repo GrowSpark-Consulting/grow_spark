@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getStrategySessionBookingStatus } from '@/lib/db';
+import FooterCta from '@/components/layout/FooterCta';
 
 /**
  * /payment/success
@@ -26,6 +27,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <section className="py-20 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-[620px] px-5 sm:px-8 text-center">{children}</div>
       </section>
+      <FooterCta />
     </main>
   );
 }
