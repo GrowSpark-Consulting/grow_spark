@@ -103,77 +103,59 @@ export default function Page() {
         {' '}
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <div className="grid-hairline grid-cols-2 lg:grid-cols-4">
+          <div className="grid-hairline grid-cols-2 lg:grid-cols-3">
             {' '}
-            <a href="/contact/" id="industry-manufacturing" className="industry-card">
+            <a href="#ecommerce" id="industry-nav-ecommerce" className="industry-card">
               <span className="n">
                 01
               </span>
               <span className="block text-[16.5px] font-semibold">
-                Manufacturing
+                E-Commerce & D2C
               </span>
             </a>
             {' '}
-            <a href="/contact/" id="industry-healthcare" className="industry-card">
+            <a href="#manufacturing" id="industry-nav-manufacturing" className="industry-card">
               <span className="n">
                 02
               </span>
               <span className="block text-[16.5px] font-semibold">
-                Healthcare
+                Manufacturing & Product Businesses
               </span>
             </a>
             {' '}
-            <a href="/contact/" id="industry-retail" className="industry-card">
+            <a href="#food-beverage" id="industry-nav-food-beverage" className="industry-card">
               <span className="n">
                 03
               </span>
               <span className="block text-[16.5px] font-semibold">
-                Retail
+                Food & Beverage
               </span>
             </a>
             {' '}
-            <a href="/contact/" id="industry-education" className="industry-card">
+            <a href="#education" id="industry-nav-education" className="industry-card">
               <span className="n">
                 04
               </span>
               <span className="block text-[16.5px] font-semibold">
-                Education
+                Education, Training & Certification
               </span>
             </a>
             {' '}
-            <a href="/contact/" id="industry-professional-services" className="industry-card">
+            <a href="#b2b" id="industry-nav-b2b" className="industry-card">
               <span className="n">
                 05
               </span>
               <span className="block text-[16.5px] font-semibold">
-                Professional Services
+                B2B & Industrial Services
               </span>
             </a>
             {' '}
-            <a href="/contact/" id="industry-technology" className="industry-card">
+            <a href="#saas" id="industry-nav-saas" className="industry-card">
               <span className="n">
                 06
               </span>
               <span className="block text-[16.5px] font-semibold">
-                Technology
-              </span>
-            </a>
-            {' '}
-            <a href="/contact/" id="industry-construction" className="industry-card">
-              <span className="n">
-                07
-              </span>
-              <span className="block text-[16.5px] font-semibold">
-                Construction
-              </span>
-            </a>
-            {' '}
-            <a href="/contact/" id="industry-hospitality" className="industry-card">
-              <span className="n">
-                08
-              </span>
-              <span className="block text-[16.5px] font-semibold">
-                Hospitality
+                Technology, SaaS & Digital Businesses
               </span>
             </a>
             {' '}
