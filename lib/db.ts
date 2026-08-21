@@ -103,3 +103,205 @@ export async function recentSubmissionCount(
   `;
   return Number(row?.count ?? 0);
 }
+
+/**
+ * Founder Strategy Session bookings + Razorpay payment state.
+ *
+ * Mirrors the contact_submissions functions above: insert first (the lead
+ * record), attach the Razorpay Order once it exists, then move status forward
+ * only on a verified result. Every status transition here is idempotent —
+ * calling it twice with the same inputs is safe — because both the Checkout
+ * verify route and the webhook route can legitimately race to update the same
+ * booking.
+ */
+
+export type StrategySessionBookingInput = {
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  website: string | null;
+  revenue: string | null;
+  challenge: string | null;
+  date: string | null;
+  time: string | null;
+  source_page: string | null;
+  ip: string | null;
+  user_agent: string | null;
+};
+
+export type StrategySessionBookingRow = {
+  id: string;
+  created_at: Date;
+};
+
+export type StrategySessionBooking = {
+  id: string;
+  razorpay_order_id: string | null;
+  status: 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED';
+};
+
+/** Insert the booking. Runs before the Razorpay Order is created. */
+export async function insertStrategySessionBooking(
+  input: StrategySessionBookingInput,
+): Promise<StrategySessionBookingRow> {
+  const sql = db();
+  const {
+    date,
+    time,
+    ...rest
+  } = input;
+  const [row] = await sql<StrategySessionBookingRow[]>`
+    insert into strategy_session_bookings ${sql({
+      ...rest,
+      preferred_date: date,
+      preferred_time: time,
+    })}
+    returning id, created_at
+  `;
+  return row;
+}
+
+/** Attaches the server-created Razorpay Order ID to an existing booking row. */
+export async function attachRazorpayOrder(bookingId: string, orderId: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update strategy_session_bookings
+       set razorpay_order_id = ${orderId}
+     where id = ${bookingId}
+  `;
+}
+
+export async function getStrategySessionBookingById(
+  bookingId: string,
+): Promise<StrategySessionBooking | null> {
+  const sql = db();
+  const [row] = await sql<StrategySessionBooking[]>`
+    select id, razorpay_order_id, status
+      from strategy_session_bookings
+     where id = ${bookingId}
+  `;
+  return row ?? null;
+}
+
+/**
+ * Used only by the payment-success page to decide what to render. Deliberately
+ * returns nothing beyond id/status — the success page must not become a way
+ * to read back a stranger's contact details from a guessed or shared URL.
+ */
+export async function getStrategySessionBookingStatus(
+  bookingId: string,
+): Promise<'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED' | null> {
+  const sql = db();
+  const [row] = await sql<{ status: StrategySessionBooking['status'] }[]>`
+    select status
+      from strategy_session_bookings
+     where id = ${bookingId}
+  `;
+  return row?.status ?? null;
+}
+
+/**
+ * Marks a booking paid by its own id, used by the Checkout verify route
+ * immediately after signature + payment-status verification succeed.
+ * `status <> 'PAID'` makes a second call (e.g. the browser retrying verify
+ * after a network hiccup) a safe no-op rather than an error.
+ */
+export async function markBookingPaid(bookingId: string, paymentId: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update strategy_session_bookings
+       set status = 'PAID', razorpay_payment_id = ${paymentId}, paid_at = now()
+     where id = ${bookingId}
+       and status <> 'PAID'
+  `;
+}
+
+/**
+ * Marks a booking paid by Razorpay Order ID, used by the webhook handler,
+ * which never sees the booking id — only what Razorpay itself reports.
+ */
+export async function markBookingPaidByOrderId(
+  orderId: string,
+  paymentId: string | null,
+): Promise<void> {
+  const sql = db();
+  await sql`
+    update strategy_session_bookings
+       set status = 'PAID',
+           razorpay_payment_id = coalesce(${paymentId}, razorpay_payment_id),
+           paid_at = now()
+     where razorpay_order_id = ${orderId}
+       and status <> 'PAID'
+  `;
+}
+
+/**
+ * Marks a booking failed by Razorpay Order ID. Guarded to only ever move a
+ * booking out of PENDING: a `payment.failed` webhook that arrives after the
+ * booking was already marked PAID (out-of-order delivery, or a retried
+ * payment on the same order) must never downgrade a successful booking.
+ */
+export async function markBookingFailedByOrderId(orderId: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update strategy_session_bookings
+       set status = 'FAILED'
+     where razorpay_order_id = ${orderId}
+       and status = 'PENDING'
+  `;
+}
+
+/** Bookings from one IP within the window, used for rate limiting. */
+export async function recentBookingCount(ip: string, windowMinutes: number): Promise<number> {
+  const sql = db();
+  const [row] = await sql<{ count: string }[]>`
+    select count(*)::text as count
+      from strategy_session_bookings
+     where ip = ${ip}
+       and created_at > now() - (${windowMinutes} * interval '1 minute')
+  `;
+  return Number(row?.count ?? 0);
+}
+
+/**
+ * Claims a webhook event for processing.
+ *
+ * Returns 'new' the first time an event id is seen (caller should process it),
+ * 'retry' if the event was claimed before but never finished processing
+ * (caller should safely reprocess — the booking updates it drives are
+ * idempotent), and 'duplicate' if it was already fully processed (caller
+ * should acknowledge and do nothing).
+ */
+export async function claimWebhookEvent(
+  eventId: string,
+  eventType: string,
+  payload: Record<string, unknown>,
+): Promise<'new' | 'retry' | 'duplicate'> {
+  const sql = db();
+  // The payload is an arbitrary Razorpay-shaped object decoded from JSON, not
+  // a type postgres's recursive JSONValue can express structurally — this
+  // boundary is where dynamic JSON meets a typed query, so the cast is
+  // intentional rather than a type-safety gap.
+  const [inserted] = await sql<{ id: string }[]>`
+    insert into razorpay_webhook_events (event_id, event_type, payload)
+    values (${eventId}, ${eventType}, ${sql.json(payload as never)})
+    on conflict (event_id) do nothing
+    returning id
+  `;
+  if (inserted) return 'new';
+
+  const [existing] = await sql<{ processed_at: Date | null }[]>`
+    select processed_at from razorpay_webhook_events where event_id = ${eventId}
+  `;
+  return existing?.processed_at ? 'duplicate' : 'retry';
+}
+
+export async function markWebhookEventProcessed(eventId: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update razorpay_webhook_events
+       set processed_at = now()
+     where event_id = ${eventId}
+  `;
+}

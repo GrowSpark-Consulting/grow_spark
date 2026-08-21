@@ -41,6 +41,15 @@ export const env = {
   get contactEmail() {
     return required('CONTACT_EMAIL');
   },
+  get razorpay() {
+    return {
+      keyId: required('RAZORPAY_KEY_ID'),
+      keySecret: required('RAZORPAY_KEY_SECRET'),
+    };
+  },
+  get razorpayWebhookSecret() {
+    return required('RAZORPAY_WEBHOOK_SECRET');
+  },
 };
 
 /** True when every variable the contact workflow needs is present. */
@@ -53,4 +62,22 @@ export function contactWorkflowConfigured(): boolean {
       && process.env.SMTP_FROM
       && process.env.CONTACT_EMAIL,
   );
+}
+
+/**
+ * True when order creation and payment verification can run. Checked
+ * separately from the webhook secret below: the booking form must keep
+ * working even on a deployment where the webhook has not been configured yet.
+ */
+export function razorpayConfigured(): boolean {
+  return Boolean(
+    process.env.DATABASE_URL
+      && process.env.RAZORPAY_KEY_ID
+      && process.env.RAZORPAY_KEY_SECRET,
+  );
+}
+
+/** True when the webhook endpoint can verify incoming Razorpay events. */
+export function razorpayWebhookConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL && process.env.RAZORPAY_WEBHOOK_SECRET);
 }

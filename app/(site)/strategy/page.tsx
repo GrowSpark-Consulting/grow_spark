@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
+import StrategySessionForm from '@/components/sections/StrategySessionForm';
 
 /**
  * Transcribed from pages/strategy/index.html by scripts/html-to-tsx.py.
@@ -1133,107 +1134,7 @@ export default function Page() {
               ₹9,999 · 60 minutes · Private · Direct access to Pragadeesh
             </p>
             {' '}
-            {/* Front-end only: this project has no backend (see CLAUDE.md). Wire `action` to a form service before this goes live. */}
-            {' '}
-            <form action="/api/strategy-session" method="post" className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-date">
-                  Preferred Date
-                </label>
-                <input className="form-input" type="date" id="s-date" name="date" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-time">
-                  Preferred Time
-                </label>
-                <input className="form-input" type="time" id="s-time" name="time" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-name">
-                  Founder Name
-                </label>
-                <input className="form-input" type="text" id="s-name" name="name" autoComplete="name" placeholder="Your full name" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-email">
-                  Email
-                </label>
-                <input className="form-input" type="email" id="s-email" name="email" autoComplete="email" placeholder="you@company.com" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-phone">
-                  Phone / WhatsApp
-                </label>
-                <input className="form-input" type="tel" id="s-phone" name="phone" autoComplete="tel" placeholder="+91" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-company">
-                  Company Name
-                </label>
-                <input className="form-input" type="text" id="s-company" name="company" autoComplete="organization" placeholder="Company" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="s-website">
-                  Company Website / LinkedIn
-                </label>
-                <input className="form-input" type="text" id="s-website" name="website" placeholder="https://" />
-              </div>
-              {' '}
-              <div>
-                {' '}
-                <label className="form-label" htmlFor="s-revenue">
-                  Approximate Annual Revenue Range
-                </label>
-                {' '}
-                <select className="form-input" id="s-revenue" name="revenue">
-                  {' '}
-                  <option>
-                    Under ₹50L
-                  </option>
-                  {' '}
-                  <option>
-                    ₹50L – ₹2Cr
-                  </option>
-                  {' '}
-                  <option>
-                    ₹2Cr – ₹10Cr
-                  </option>
-                  {' '}
-                  <option>
-                    ₹10Cr+
-                  </option>
-                  {' '}
-                </select>
-                {' '}
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="s-challenge">
-                  Primary Challenge
-                </label>
-                <textarea className="form-input" id="s-challenge" name="challenge" placeholder="What's the one problem you want to work through?" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                {' '}
-                <button type="submit" className="btn btn-primary btn-block">
-                  Continue To Payment
-                </button>
-                {' '}
-                <p className="text-[12.5px] text-muted mt-4 text-center">
-                  Payment link will be provided at checkout. [Booking/payment integration to be connected.]
-                </p>
-                {' '}
-              </div>
-              {' '}
-            </form>
+            <StrategySessionForm />
             {' '}
           </div>
           {' '}
