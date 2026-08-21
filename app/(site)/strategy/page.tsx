@@ -378,6 +378,10 @@ export default function Page() {
               {' '}
               <div className="eng-side">
                 {' '}
+                <div className="eng-price">
+                  ₹15,999
+                </div>
+                {' '}
                 <p className="eng-meta">
                   2 hours · Deep-dive working session · Direct access to Pragadeesh
                 </p>
@@ -1147,108 +1151,10 @@ export default function Page() {
             </h3>
             {' '}
             <p className="text-[16px] text-muted mb-8">
-              2 hours · Deep-dive working session · Direct access to Pragadeesh
+              ₹15,999 · 2 hours · Deep-dive working session · Direct access to Pragadeesh
             </p>
             {' '}
-            <form action="/api/growth-intensive" method="post" className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-date">
-                  Preferred Date
-                </label>
-                <input className="form-input" type="date" id="i-date" name="date" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-time">
-                  Preferred Time
-                </label>
-                <input className="form-input" type="time" id="i-time" name="time" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-name">
-                  Founder Name
-                </label>
-                <input className="form-input" type="text" id="i-name" name="name" autoComplete="name" placeholder="Your full name" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-email">
-                  Email
-                </label>
-                <input className="form-input" type="email" id="i-email" name="email" autoComplete="email" placeholder="you@company.com" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-phone">
-                  Phone / WhatsApp
-                </label>
-                <input className="form-input" type="tel" id="i-phone" name="phone" autoComplete="tel" placeholder="+91" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-company">
-                  Company Name
-                </label>
-                <input className="form-input" type="text" id="i-company" name="company" autoComplete="organization" placeholder="Company" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="i-website">
-                  Company Website / LinkedIn
-                </label>
-                <input className="form-input" type="text" id="i-website" name="website" placeholder="https://" />
-              </div>
-              {' '}
-              <div>
-                {' '}
-                <label className="form-label" htmlFor="i-revenue">
-                  Approximate Annual Revenue Range
-                </label>
-                {' '}
-                <select className="form-input" id="i-revenue" name="revenue">
-                  {' '}
-                  <option>
-                    Under ₹50L
-                  </option>
-                  {' '}
-                  <option>
-                    ₹50L – ₹2Cr
-                  </option>
-                  {' '}
-                  <option>
-                    ₹2Cr – ₹10Cr
-                  </option>
-                  {' '}
-                  <option>
-                    ₹10Cr+
-                  </option>
-                  {' '}
-                </select>
-                {' '}
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="i-challenge">
-                  Primary Challenge
-                </label>
-                <textarea className="form-input" id="i-challenge" name="challenge" placeholder="What's the complex problem you want to unpack?" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                {' '}
-                <button type="submit" className="btn btn-primary btn-block">
-                  Continue To Payment
-                </button>
-                {' '}
-                <p className="text-[12.5px] text-muted mt-4 text-center">
-                  Payment link will be provided at checkout. [Booking/payment integration to be connected.]
-                </p>
-                {' '}
-              </div>
-              {' '}
-            </form>
+            <StrategySessionForm engagement="growth_intensive" />
             {' '}
           </div>
           {' '}

@@ -3,14 +3,19 @@
 import { useRef, useState } from 'react';
 
 /**
- * Founder Strategy Session booking form + Razorpay Standard Checkout.
- *
- * Extracted from the session panel in app/(site)/strategy/page.tsx — same
- * move ContactForm.tsx made when its backend landed — because payment needs
- * client-side state and the Razorpay Checkout script. Markup, ids, labels and
- * field names are unchanged except the revenue <option>s, which now carry the
- * slug `value`s lib/validation/strategy-session.ts validates against
- * (visible text is untouched).
+ * Booking form + Razorpay Standard Checkout for the two 1:1 paid engagements
+ * on the Strategy Sessions page: the ₹9,999 Founder Strategy Session and the
+ * ₹15,999 Founder Growth Intensive. Originally built for the Strategy Session
+ * alone (extracted from that panel in app/(site)/strategy/page.tsx — same
+ * move ContactForm.tsx made when its backend landed) and generalized via the
+ * `engagement` prop rather than duplicated when the Growth Intensive booking
+ * needed the same flow: same fields, same Checkout handling, same
+ * verify/error/retry states — only the API endpoint, id prefix, Checkout
+ * description and price label differ, and those live in ENGAGEMENT_CONFIG
+ * below. Markup, ids, labels and field names for the default (session) engagement
+ * are unchanged from the original — the revenue <option>s carry the slug
+ * `value`s lib/validation/strategy-session.ts validates against (visible text
+ * is untouched).
  *
  * Unlike ContactForm, this form has no no-JS fallback: Razorpay Checkout is a
  * JavaScript popup, so `action`/`method` are dropped rather than kept for
@@ -76,6 +81,30 @@ function loadRazorpayCheckout(): Promise<void> {
   });
 }
 
+type Engagement = 'strategy_session' | 'growth_intensive';
+
+type EngagementConfig = {
+  apiEndpoint: string;
+  idPrefix: string;
+  checkoutDescription: string;
+  priceLabel: string;
+};
+
+const ENGAGEMENT_CONFIG: Record<Engagement, EngagementConfig> = {
+  strategy_session: {
+    apiEndpoint: '/api/strategy-session/',
+    idPrefix: 's',
+    checkoutDescription: 'Founder Strategy Session',
+    priceLabel: '₹9,999',
+  },
+  growth_intensive: {
+    apiEndpoint: '/api/growth-intensive/',
+    idPrefix: 'i',
+    checkoutDescription: 'Founder Growth Intensive',
+    priceLabel: '₹15,999',
+  },
+};
+
 type Status =
   | { kind: 'idle' }
   | { kind: 'booking' }
@@ -84,7 +113,14 @@ type Status =
   | { kind: 'error'; message: string }
   | { kind: 'cancelled' };
 
-export default function StrategySessionForm() {
+export default function StrategySessionForm({
+  engagement = 'strategy_session',
+}: {
+  engagement?: Engagement;
+}) {
+  const config = ENGAGEMENT_CONFIG[engagement];
+  const idFor = (field: string) => `${config.idPrefix}-${field}`;
+
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const busy = status.kind === 'booking' || status.kind === 'paying' || status.kind === 'verifying';
@@ -106,7 +142,7 @@ export default function StrategySessionForm() {
     };
     try {
       // Trailing slash on purpose: next.config.ts sets trailingSlash: true.
-      const response = await fetch('/api/strategy-session/', {
+      const response = await fetch(config.apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -151,7 +187,7 @@ export default function StrategySessionForm() {
       currency: order.currency,
       order_id: order.orderId,
       name: 'Grow Spark Consulting',
-      description: 'Founder Strategy Session',
+      description: config.checkoutDescription,
       prefill: { name, email, contact: phone },
       notes: { booking_id: order.bookingId },
       theme: { color: '#0d9488' },
@@ -215,25 +251,25 @@ export default function StrategySessionForm() {
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
       <div>
-        <label className="form-label" htmlFor="s-date">
+        <label className="form-label" htmlFor={idFor('date')}>
           Preferred Date
         </label>
-        <input className="form-input" type="date" id="s-date" name="date" disabled={busy} />
+        <input className="form-input" type="date" id={idFor('date')} name="date" disabled={busy} />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-time">
+        <label className="form-label" htmlFor={idFor('time')}>
           Preferred Time
         </label>
-        <input className="form-input" type="time" id="s-time" name="time" disabled={busy} />
+        <input className="form-input" type="time" id={idFor('time')} name="time" disabled={busy} />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-name">
+        <label className="form-label" htmlFor={idFor('name')}>
           Founder Name
         </label>
         <input
           className="form-input"
           type="text"
-          id="s-name"
+          id={idFor('name')}
           name="name"
           autoComplete="name"
           placeholder="Your full name"
@@ -242,13 +278,13 @@ export default function StrategySessionForm() {
         />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-email">
+        <label className="form-label" htmlFor={idFor('email')}>
           Email
         </label>
         <input
           className="form-input"
           type="email"
-          id="s-email"
+          id={idFor('email')}
           name="email"
           autoComplete="email"
           placeholder="you@company.com"
@@ -257,13 +293,13 @@ export default function StrategySessionForm() {
         />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-phone">
+        <label className="form-label" htmlFor={idFor('phone')}>
           Phone / WhatsApp
         </label>
         <input
           className="form-input"
           type="tel"
-          id="s-phone"
+          id={idFor('phone')}
           name="phone"
           autoComplete="tel"
           placeholder="+91"
@@ -271,13 +307,13 @@ export default function StrategySessionForm() {
         />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-company">
+        <label className="form-label" htmlFor={idFor('company')}>
           Company Name
         </label>
         <input
           className="form-input"
           type="text"
-          id="s-company"
+          id={idFor('company')}
           name="company"
           autoComplete="organization"
           placeholder="Company"
@@ -285,23 +321,29 @@ export default function StrategySessionForm() {
         />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-website">
+        <label className="form-label" htmlFor={idFor('website')}>
           Company Website / LinkedIn
         </label>
         <input
           className="form-input"
           type="text"
-          id="s-website"
+          id={idFor('website')}
           name="website"
           placeholder="https://"
           disabled={busy}
         />
       </div>
       <div>
-        <label className="form-label" htmlFor="s-revenue">
+        <label className="form-label" htmlFor={idFor('revenue')}>
           Approximate Annual Revenue Range
         </label>
-        <select className="form-input" id="s-revenue" name="revenue" defaultValue="" disabled={busy}>
+        <select
+          className="form-input"
+          id={idFor('revenue')}
+          name="revenue"
+          defaultValue=""
+          disabled={busy}
+        >
           <option value="" disabled>
             Select a range
           </option>
@@ -312,14 +354,18 @@ export default function StrategySessionForm() {
         </select>
       </div>
       <div className="sm:col-span-2">
-        <label className="form-label" htmlFor="s-challenge">
+        <label className="form-label" htmlFor={idFor('challenge')}>
           Primary Challenge
         </label>
         <textarea
           className="form-input"
-          id="s-challenge"
+          id={idFor('challenge')}
           name="challenge"
-          placeholder="What's the one problem you want to work through?"
+          placeholder={
+            engagement === 'growth_intensive'
+              ? "What's the complex problem you want to unpack?"
+              : "What's the one problem you want to work through?"
+          }
           disabled={busy}
         />
       </div>
@@ -344,7 +390,7 @@ export default function StrategySessionForm() {
         )}
         {(status.kind === 'idle' || status.kind === 'booking') && (
           <p className="text-[12.5px] text-muted mt-4 text-center">
-            ₹9,999 · Secure payment via Razorpay
+            {config.priceLabel} · Secure payment via Razorpay
           </p>
         )}
       </div>

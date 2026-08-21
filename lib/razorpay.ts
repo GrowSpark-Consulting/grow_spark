@@ -22,11 +22,12 @@ export function razorpayClient(): Razorpay {
 }
 
 /**
- * Only the Founder Strategy Session is in scope. The amount is a server
- * constant on purpose — it must never be derived from anything the browser
- * sends.
+ * One constant per paid engagement. Both are server constants on purpose —
+ * neither must ever be derived from anything the browser sends. Currency is
+ * shared: both engagements bill in INR.
  */
 export const STRATEGY_SESSION_AMOUNT_PAISE = 999900;
+export const GROWTH_INTENSIVE_AMOUNT_PAISE = 1599900;
 export const STRATEGY_SESSION_CURRENCY = 'INR';
 
 /**

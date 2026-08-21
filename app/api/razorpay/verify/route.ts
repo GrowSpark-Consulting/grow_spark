@@ -3,12 +3,7 @@ import { z } from 'zod';
 import { getStrategySessionBookingById, markBookingPaid } from '@/lib/db';
 import { razorpayConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
-import {
-  razorpayClient,
-  STRATEGY_SESSION_AMOUNT_PAISE,
-  STRATEGY_SESSION_CURRENCY,
-  verifyPaymentSignature,
-} from '@/lib/razorpay';
+import { razorpayClient, verifyPaymentSignature } from '@/lib/razorpay';
 
 /**
  * POST /api/razorpay/verify
@@ -101,8 +96,11 @@ export async function POST(request: Request) {
     return fail(502, 'We could not confirm your payment status. Please contact us.');
   }
 
-  const amountOk = Number(payment.amount) === STRATEGY_SESSION_AMOUNT_PAISE;
-  const currencyOk = payment.currency === STRATEGY_SESSION_CURRENCY;
+  // Checked against what *this booking* was actually created for, not a
+  // hardcoded constant — the same route verifies both the ₹9,999 Founder
+  // Strategy Session and the ₹15,999 Founder Growth Intensive this way.
+  const amountOk = Number(payment.amount) === booking.amount;
+  const currencyOk = payment.currency === booking.currency;
   const orderOk = payment.order_id === razorpay_order_id;
   const capturedOk = payment.status === 'captured';
 

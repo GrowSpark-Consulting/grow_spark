@@ -115,6 +115,8 @@ export async function recentSubmissionCount(
  * booking.
  */
 
+export type StrategySessionEngagement = 'strategy_session' | 'growth_intensive';
+
 export type StrategySessionBookingInput = {
   name: string;
   email: string;
@@ -128,6 +130,15 @@ export type StrategySessionBookingInput = {
   source_page: string | null;
   ip: string | null;
   user_agent: string | null;
+  /** Defaults to 'strategy_session' (the ₹9,999 Founder Strategy Session) when omitted. */
+  engagement?: StrategySessionEngagement;
+  /**
+   * Overrides the table's own default (999900 / 'INR'). Omit for the ₹9,999
+   * Founder Strategy Session; set explicitly for any other engagement, e.g.
+   * GROWTH_INTENSIVE_AMOUNT_PAISE for the Founder Growth Intensive.
+   */
+  amount?: number;
+  currency?: string;
 };
 
 export type StrategySessionBookingRow = {
@@ -139,6 +150,8 @@ export type StrategySessionBooking = {
   id: string;
   razorpay_order_id: string | null;
   status: 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED';
+  amount: number;
+  currency: string;
 };
 
 /** Insert the booking. Runs before the Razorpay Order is created. */
@@ -149,6 +162,7 @@ export async function insertStrategySessionBooking(
   const {
     date,
     time,
+    engagement,
     ...rest
   } = input;
   const [row] = await sql<StrategySessionBookingRow[]>`
@@ -156,6 +170,7 @@ export async function insertStrategySessionBooking(
       ...rest,
       preferred_date: date,
       preferred_time: time,
+      engagement: engagement ?? 'strategy_session',
     })}
     returning id, created_at
   `;
@@ -172,33 +187,48 @@ export async function attachRazorpayOrder(bookingId: string, orderId: string): P
   `;
 }
 
+/**
+ * Used by the Checkout verify route to confirm a Checkout callback belongs to
+ * this exact booking and to know the amount/currency *that booking* was
+ * actually created for — not a hardcoded constant — so the same route can
+ * verify a ₹9,999 Founder Strategy Session payment and a ₹15,999 Founder
+ * Growth Intensive payment without knowing engagement-specific amounts.
+ */
 export async function getStrategySessionBookingById(
   bookingId: string,
 ): Promise<StrategySessionBooking | null> {
   const sql = db();
   const [row] = await sql<StrategySessionBooking[]>`
-    select id, razorpay_order_id, status
+    select id, razorpay_order_id, status, amount, currency
       from strategy_session_bookings
      where id = ${bookingId}
   `;
   return row ?? null;
 }
 
+export type StrategySessionBookingSummary = {
+  status: 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED';
+  engagement: StrategySessionEngagement;
+  amount: number;
+};
+
 /**
  * Used only by the payment-success page to decide what to render. Deliberately
- * returns nothing beyond id/status — the success page must not become a way
- * to read back a stranger's contact details from a guessed or shared URL.
+ * returns nothing beyond status/engagement/amount — the success page must not
+ * become a way to read back a stranger's contact details from a guessed or
+ * shared URL. engagement/amount let the page show the right product name and
+ * price instead of assuming every booking is the Founder Strategy Session.
  */
-export async function getStrategySessionBookingStatus(
+export async function getStrategySessionBookingSummary(
   bookingId: string,
-): Promise<'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED' | null> {
+): Promise<StrategySessionBookingSummary | null> {
   const sql = db();
-  const [row] = await sql<{ status: StrategySessionBooking['status'] }[]>`
-    select status
+  const [row] = await sql<StrategySessionBookingSummary[]>`
+    select status, engagement, amount
       from strategy_session_bookings
      where id = ${bookingId}
   `;
-  return row?.status ?? null;
+  return row ?? null;
 }
 
 /**

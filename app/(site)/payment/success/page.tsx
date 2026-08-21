@@ -1,6 +1,16 @@
 import type { Metadata } from 'next';
-import { getStrategySessionBookingStatus } from '@/lib/db';
+import { getStrategySessionBookingSummary } from '@/lib/db';
 import FooterCta from '@/components/layout/FooterCta';
+
+/** Display-only names, keyed the same way as the `engagement` column. */
+const ENGAGEMENT_NAMES: Record<string, string> = {
+  strategy_session: 'Founder Strategy Session',
+  growth_intensive: 'Founder Growth Intensive',
+};
+
+function formatInr(paise: number): string {
+  return `₹${(paise / 100).toLocaleString('en-IN')}`;
+}
 
 /**
  * /payment/success
@@ -43,9 +53,9 @@ export default async function Page({
     ? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(bookingId)
     : false;
 
-  const status = isUuid && bookingId ? await getStrategySessionBookingStatus(bookingId) : null;
+  const summary = isUuid && bookingId ? await getStrategySessionBookingSummary(bookingId) : null;
 
-  if (status !== 'PAID') {
+  if (summary?.status !== 'PAID') {
     return (
       <Shell>
         <span className="eyebrow block mb-5">Payment Not Confirmed</span>
@@ -64,11 +74,15 @@ export default async function Page({
     );
   }
 
+  const engagementName = ENGAGEMENT_NAMES[summary.engagement] ?? ENGAGEMENT_NAMES.strategy_session;
+
   return (
     <Shell>
       <span className="eyebrow block mb-5">Payment Successful</span>
-      <h1 className="page-hero-heading mb-6 text-balance">Your Founder Strategy Session Is Booked</h1>
-      <p className="text-[17px] text-ink-soft leading-relaxed mb-2">Founder Strategy Session · ₹9,999</p>
+      <h1 className="page-hero-heading mb-6 text-balance">Your {engagementName} Is Booked</h1>
+      <p className="text-[17px] text-ink-soft leading-relaxed mb-2">
+        {engagementName} · {formatInr(summary.amount)}
+      </p>
       <p className="text-[13px] text-muted mb-8">
         Booking reference: <span className="font-mono">{bookingId}</span>
       </p>
