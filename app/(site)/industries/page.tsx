@@ -267,10 +267,6 @@ export default function Page() {
             {' '}
             <article id="ecommerce" className="industry-block" data-reveal="">
               {' '}
-              <span className="ic-num">
-                01 · E-Commerce & D2C
-              </span>
-              {' '}
               <h3 className="subsection-heading">
                 E-Commerce & D2C
               </h3>
@@ -335,10 +331,6 @@ export default function Page() {
             </article>
             {' '}
             <article id="manufacturing" className="industry-block" data-reveal="">
-              {' '}
-              <span className="ic-num">
-                02 · Manufacturing & Product Businesses
-              </span>
               {' '}
               <h3 className="subsection-heading">
                 Manufacturing & Product Businesses
@@ -405,10 +397,6 @@ export default function Page() {
             {' '}
             <article id="food-beverage" className="industry-block" data-reveal="">
               {' '}
-              <span className="ic-num">
-                03 · Food & Beverage
-              </span>
-              {' '}
               <h3 className="subsection-heading">
                 Food & Beverage
               </h3>
@@ -474,10 +462,6 @@ export default function Page() {
             {' '}
             <article id="education" className="industry-block" data-reveal="">
               {' '}
-              <span className="ic-num">
-                04 · Education, Training & Certification
-              </span>
-              {' '}
               <h3 className="subsection-heading">
                 Education, Training & Certification
               </h3>
@@ -527,10 +511,6 @@ export default function Page() {
             {' '}
             <article id="b2b" className="industry-block" data-reveal="">
               {' '}
-              <span className="ic-num">
-                05 · B2B & Industrial Services
-              </span>
-              {' '}
               <h3 className="subsection-heading">
                 B2B & Industrial Services
               </h3>
@@ -579,10 +559,6 @@ export default function Page() {
             </article>
             {' '}
             <article id="saas" className="industry-block" data-reveal="">
-              {' '}
-              <span className="ic-num">
-                06 · Technology, SaaS & Digital Businesses
-              </span>
               {' '}
               <h3 className="subsection-heading">
                 Technology, SaaS & Digital Businesses
