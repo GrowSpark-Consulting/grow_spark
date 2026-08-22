@@ -131,17 +131,15 @@ export async function syncStrategyBookingToHubSpot(
 /**
  * Engagement application -> HubSpot contact.
  *
- * This form collects no email address. HubSpot identifies contacts by email,
- * so without one there is no key to upsert against: creating a contact anyway
- * would mint a fresh orphan record on every submission and there would be no
- * way to recognise the same founder twice. That directly contradicts the
- * no-duplicate-contacts rule, so the sync declines instead.
+ * The form now collects an email, so this upserts by email exactly like the
+ * contact form and stays idempotent: the same founder applying twice, or a
+ * retry of a half-finished sync, lands on one HubSpot contact.
  *
- * It declines *loudly* — ok:false without `skipped`, so the reason lands in
- * engagement_applications.hubspot_sync_error and shows up in the pending
- * index. A silent skip would leave these applications looking merely unsynced,
- * indistinguishable from a CRM outage. This is a product gap, not a transient
- * fault: adding an email field to the form is what fixes it.
+ * The no-email branch below is kept rather than deleted. Rows captured before
+ * the email field existed have none, and a backfill or retry over those rows
+ * must decline rather than mint an orphan contact per row. It declines loudly —
+ * ok:false without `skipped` — so the reason lands in hubspot_sync_error and
+ * shows in the pending index instead of looking like a CRM outage.
  */
 export async function syncEngagementApplicationToHubSpot(
   applicationId: string,

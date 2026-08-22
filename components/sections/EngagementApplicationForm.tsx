@@ -30,6 +30,21 @@ export default function EngagementApplicationForm() {
                       <input className="form-input" type="text" id="a-name" name="name" autoComplete="name" placeholder="Your full name" />
                     </div>
                     {' '}
+                    {/*
+                      Added deliberately. The panel promises Grow Spark "follows up with
+                      appropriate next steps", but the form collected no contact channel
+                      at all — no email, no phone — so there was no way to keep that
+                      promise. Email is also the key HubSpot identifies a contact by:
+                      without it the sync could only have created orphan records, which
+                      is why it previously declined to run.
+                    */}
+                    <div>
+                      <label className="form-label" htmlFor="a-email">
+                        Email
+                      </label>
+                      <input className="form-input" type="email" id="a-email" name="email" autoComplete="email" placeholder="you@company.com" required />
+                    </div>
+                    {' '}
                     <div>
                       <label className="form-label" htmlFor="a-company">
                         Company

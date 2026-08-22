@@ -6,11 +6,11 @@ import { z } from 'zod';
  * Field names and select values are taken from the live markup in
  * app/(site)/strategy/page.tsx so the client and server cannot drift.
  *
- * Only `name` is required. The markup marks nothing required, and this is a
- * qualifier rather than a contact form — a founder part-way through it is still
- * a lead worth keeping. Note there is deliberately no email field on this form;
- * the follow-up happens through whatever channel the enquiry arrived on, which
- * is why HubSpot sync here is best-effort (see the route).
+ * Name and email are required; everything else is optional, because this is a
+ * qualifier rather than a contact form and a founder part-way through it is
+ * still a lead worth keeping. Email was added after the fact — the panel
+ * promises a follow-up and the form previously collected no contact channel at
+ * all, so neither a human nor the CRM could act on a submission.
  */
 
 // These <option> elements carry NO value attribute, so the browser submits the
@@ -72,6 +72,15 @@ const optionalEnum = <T extends readonly [string, ...string[]]>(values: T) =>
 
 export const engagementSchema = z.object({
   name: requiredText(120, 'Please enter your name.'),
+  /**
+   * Required, unlike almost everything else on this form. The panel promises a
+   * follow-up and the CRM identifies contacts by email — an application with no
+   * way to reply to it is not an application.
+   */
+  email: z
+    .string({ message: 'Please provide a valid email address.' })
+    .transform((v) => v.replace(CONTROL_CHARS, '').trim().toLowerCase())
+    .pipe(z.email({ message: 'Please provide a valid email address.' }).max(254)),
   company: optionalText(200),
   website: optionalText(500),
   industry: optionalText(200),

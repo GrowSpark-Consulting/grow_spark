@@ -20,11 +20,11 @@ import { engagementSchema } from '@/lib/validation/engagement';
  * validate, persist, notify, then sync to the CRM. The row is committed before
  * anything downstream runs, and neither mail nor HubSpot failure rolls it back.
  *
- * Unlike the contact form this one collects no email address — the design asks
- * for company, budget and intent instead. That has a real consequence for the
- * CRM: HubSpot identifies contacts by email, so without one there is nothing to
- * upsert against. The sync therefore only runs when a website is present to
- * derive nothing from, and otherwise records why it was skipped. See sync.ts.
+ * The form now collects an email. It did not originally, which left the panel
+ * promising a follow-up nobody could make and gave the CRM sync no key to
+ * upsert against, so the sync declined rather than create orphan contacts. With
+ * an email present it behaves exactly like /api/contact: idempotent by email,
+ * never fatal, and recorded either way.
  */
 
 export const dynamic = 'force-dynamic';
@@ -98,6 +98,7 @@ export async function POST(request: Request) {
   try {
     application = await insertEngagementApplication({
       name: data.name,
+      email: data.email,
       company: data.company,
       website: data.website,
       industry: data.industry,
@@ -125,8 +126,10 @@ export async function POST(request: Request) {
     await sendFormNotification({
       title: 'New engagement application',
       subject: `New engagement application — ${data.name}${data.company ? `, ${data.company}` : ''}`,
+      replyTo: data.email,
       rows: [
         ['Name', data.name],
+        ['Email', data.email],
         ['Company', data.company],
         ['Website', data.website],
         ['Industry', data.industry],

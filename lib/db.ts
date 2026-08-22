@@ -436,7 +436,7 @@ export async function insertEngagementApplication(
   const [row] = await sql<{ id: string; created_at: Date }[]>`
     insert into engagement_applications ${sql(
       input,
-      'name', 'company', 'website', 'industry', 'revenue', 'team_size',
+      'name', 'email', 'company', 'website', 'industry', 'revenue', 'team_size',
       'challenge', 'already_tried', 'desired_outcome',
       'investment_readiness', 'preferred_engagement',
       'source_page', 'ip', 'user_agent',
