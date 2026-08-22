@@ -599,15 +599,18 @@
   .stat-num {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 32px;
+    font-size: var(--fs-stat-figure);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
     color: var(--color-ink);
     font-variant-numeric: tabular-nums;
   }
   .stat-label {
-    font-size: 14px;
-    color: var(--color-ink-soft);
-    margin-top: 6px;
-    line-height: 1.4;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-top: 10px;
+    line-height: 1.45;
   }
 
   /* ---------- Card system ----------
