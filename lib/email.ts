@@ -247,3 +247,98 @@ export async function sendFormNotification(n: FormNotification): Promise<void> {
     html,
   });
 }
+
+export type AppointmentConfirmationInput = {
+  id: string;
+  name: string;
+  email: string;
+  engagement: string;
+  preferredDate?: string | null;
+  preferredTime?: string | null;
+  amount?: number;
+  currency?: string;
+};
+
+/**
+ * Send an appointment notification email to Admin (env.contactEmail) via SMTP
+ * after successful payment / booking confirmation.
+ */
+export async function sendAppointmentConfirmationEmail(n: AppointmentConfirmationInput): Promise<void> {
+  const engagementName =
+    n.engagement === 'growth_intensive'
+      ? 'Founder Growth Intensive'
+      : n.engagement === 'strategy_session'
+      ? 'Founder Strategy Session'
+      : n.engagement;
+
+  const formattedAmount = n.amount
+    ? `${n.currency ?? 'INR'} ${(n.amount / 100).toLocaleString('en-IN')}`
+    : 'Confirmed';
+
+  const text = [
+    `New Confirmed Appointment Booking Received!`,
+    '',
+    `Customer Name: ${n.name}`,
+    `Customer Email: ${n.email}`,
+    `Service / Engagement: ${engagementName}`,
+    `Preferred Date: ${n.preferredDate ?? '—'}`,
+    `Preferred Time: ${n.preferredTime ?? '—'}`,
+    `Payment Status: PAID (${formattedAmount})`,
+    `Booking ID: ${n.id}`,
+  ].join('\n');
+
+  const html = `<!doctype html>
+<html><body style="margin:0;padding:24px;background:#FAFAF8;font-family:'Open Sans',Segoe UI,Arial,sans-serif;color:#14171A;">
+  <div style="max-width:640px;margin:0 auto;background:#FFFFFF;border:1px solid #E4E6E8;border-radius:10px;padding:28px;">
+    <p style="margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0B5E45;">Grow Spark Consulting</p>
+    <h1 style="margin:0 0 16px;font-size:20px;font-weight:800;">New Confirmed Appointment</h1>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 20px;">A new payment has been confirmed for an appointment. Details below:</p>
+    
+    <div style="background:#F4F6F8;border:1px solid #E4E6E8;border-radius:8px;padding:18px;margin-bottom:24px;">
+      <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#0B5E45;text-transform:uppercase;letter-spacing:.05em;">Appointment & Customer Details</h2>
+      <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;font-size:14px;border-collapse:collapse;">
+        <tr>
+          <td style="padding:6px 0;color:#696D72;width:140px;">Customer Name:</td>
+          <td style="padding:6px 0;font-weight:600;">${esc(n.name)}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#696D72;">Customer Email:</td>
+          <td style="padding:6px 0;"><a href="mailto:${esc(n.email)}" style="color:#0B5E45;">${esc(n.email)}</a></td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#696D72;">Service:</td>
+          <td style="padding:6px 0;font-weight:600;">${esc(engagementName)}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#696D72;">Preferred Date:</td>
+          <td style="padding:6px 0;font-weight:600;">${esc(n.preferredDate ?? 'Not specified')}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#696D72;">Preferred Time:</td>
+          <td style="padding:6px 0;font-weight:600;">${esc(n.preferredTime ?? 'Not specified')}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#696D72;">Booking ID:</td>
+          <td style="padding:6px 0;"><code style="font-family:ui-monospace,Menlo,monospace;">${esc(n.id)}</code></td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#696D72;">Payment:</td>
+          <td style="padding:6px 0;color:#0B5E45;font-weight:600;">PAID (${esc(formattedAmount)})</td>
+        </tr>
+      </table>
+    </div>
+
+    <hr style="border:0;border-top:1px solid #E4E6E8;margin:24px 0 16px;">
+    <p style="margin:0;font-size:12px;color:#696D72;">Grow Spark Consulting — Internal Appointment System</p>
+  </div>
+</body></html>`;
+
+  await transporter().sendMail({
+    from: env.smtp.from,
+    to: env.contactEmail,
+    replyTo: headerSafe(n.email),
+    subject: headerSafe(`New Confirmed Appointment — ${n.name} (${engagementName})`),
+    text,
+    html,
+  });
+}

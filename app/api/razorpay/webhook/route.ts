@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import {
   claimWebhookEvent,
+  getFullStrategySessionBookingByOrderId,
   markBookingFailedByOrderId,
   markBookingPaidByOrderId,
   markWebhookEventProcessed,
 } from '@/lib/db';
+import { sendAppointmentConfirmationEmail } from '@/lib/email';
 import { razorpayWebhookConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
 import { verifyWebhookSignature } from '@/lib/razorpay';
@@ -100,7 +102,28 @@ export async function POST(request: Request) {
     const paymentStatus = entity?.status;
 
     if (orderId && paymentStatus === 'captured') {
-      await markBookingPaidByOrderId(orderId, paymentId);
+      const fullBooking = await getFullStrategySessionBookingByOrderId(orderId);
+      const transitioned = await markBookingPaidByOrderId(orderId, paymentId);
+      if (transitioned && fullBooking) {
+        try {
+          await sendAppointmentConfirmationEmail({
+            id: fullBooking.id,
+            name: fullBooking.name,
+            email: fullBooking.email,
+            engagement: fullBooking.engagement,
+            preferredDate: fullBooking.preferred_date,
+            preferredTime: fullBooking.preferred_time,
+            amount: fullBooking.amount,
+            currency: fullBooking.currency,
+          });
+          log.info('razorpay_webhook.admin_email_sent', { orderId });
+        } catch (emailErr) {
+          log.error('razorpay_webhook.admin_email_failed', {
+            orderId,
+            error: redact(emailErr instanceof Error ? emailErr.message : String(emailErr)),
+          });
+        }
+      }
     } else if (orderId && eventType === 'payment.failed') {
       await markBookingFailedByOrderId(orderId);
     }

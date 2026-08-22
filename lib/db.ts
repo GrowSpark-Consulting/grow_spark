@@ -250,6 +250,44 @@ export async function getStrategySessionBookingById(
   return row ?? null;
 }
 
+export type FullStrategySessionBooking = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  preferred_date: string | null;
+  preferred_time: string | null;
+  amount: number;
+  currency: string;
+  engagement: StrategySessionEngagement;
+  status: 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED';
+};
+
+export async function getFullStrategySessionBookingById(
+  bookingId: string,
+): Promise<FullStrategySessionBooking | null> {
+  const sql = db();
+  const [row] = await sql<FullStrategySessionBooking[]>`
+    select id, name, email, phone, company, preferred_date, preferred_time, amount, currency, engagement, status
+      from strategy_session_bookings
+     where id = ${bookingId}
+  `;
+  return row ?? null;
+}
+
+export async function getFullStrategySessionBookingByOrderId(
+  orderId: string,
+): Promise<FullStrategySessionBooking | null> {
+  const sql = db();
+  const [row] = await sql<FullStrategySessionBooking[]>`
+    select id, name, email, phone, company, preferred_date, preferred_time, amount, currency, engagement, status
+      from strategy_session_bookings
+     where razorpay_order_id = ${orderId}
+  `;
+  return row ?? null;
+}
+
 export type StrategySessionBookingSummary = {
   status: 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED';
   engagement: StrategySessionEngagement;
@@ -276,38 +314,40 @@ export async function getStrategySessionBookingSummary(
 }
 
 /**
- * Marks a booking paid by its own id, used by the Checkout verify route
- * immediately after signature + payment-status verification succeed.
- * `status <> 'PAID'` makes a second call (e.g. the browser retrying verify
- * after a network hiccup) a safe no-op rather than an error.
+ * Marks a booking paid by its own id, used by the Checkout verify route.
+ * Returns true ONLY if this call transitioned the status to PAID (atomic check).
  */
-export async function markBookingPaid(bookingId: string, paymentId: string): Promise<void> {
+export async function markBookingPaid(bookingId: string, paymentId: string): Promise<boolean> {
   const sql = db();
-  await sql`
+  const [row] = await sql<{ id: string }[]>`
     update strategy_session_bookings
        set status = 'PAID', razorpay_payment_id = ${paymentId}, paid_at = now()
      where id = ${bookingId}
        and status <> 'PAID'
+    returning id
   `;
+  return Boolean(row);
 }
 
 /**
- * Marks a booking paid by Razorpay Order ID, used by the webhook handler,
- * which never sees the booking id — only what Razorpay itself reports.
+ * Marks a booking paid by Razorpay Order ID, used by the webhook handler.
+ * Returns true ONLY if this call transitioned the status to PAID (atomic check).
  */
 export async function markBookingPaidByOrderId(
   orderId: string,
   paymentId: string | null,
-): Promise<void> {
+): Promise<boolean> {
   const sql = db();
-  await sql`
+  const [row] = await sql<{ id: string }[]>`
     update strategy_session_bookings
        set status = 'PAID',
            razorpay_payment_id = coalesce(${paymentId}, razorpay_payment_id),
            paid_at = now()
      where razorpay_order_id = ${orderId}
        and status <> 'PAID'
+    returning id
   `;
+  return Boolean(row);
 }
 
 /**

@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getStrategySessionBookingById, markBookingPaid } from '@/lib/db';
+import {
+  getFullStrategySessionBookingById,
+  getStrategySessionBookingById,
+  markBookingPaid,
+} from '@/lib/db';
+import { sendAppointmentConfirmationEmail } from '@/lib/email';
 import { razorpayConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
 import { razorpayClient, verifyPaymentSignature } from '@/lib/razorpay';
@@ -110,7 +115,30 @@ export async function POST(request: Request) {
   }
 
   try {
-    await markBookingPaid(booking.id, razorpay_payment_id);
+    const transitioned = await markBookingPaid(booking.id, razorpay_payment_id);
+    if (transitioned) {
+      try {
+        const fullBooking = await getFullStrategySessionBookingById(booking.id);
+        if (fullBooking) {
+          await sendAppointmentConfirmationEmail({
+            id: fullBooking.id,
+            name: fullBooking.name,
+            email: fullBooking.email,
+            engagement: fullBooking.engagement,
+            preferredDate: fullBooking.preferred_date,
+            preferredTime: fullBooking.preferred_time,
+            amount: fullBooking.amount,
+            currency: fullBooking.currency,
+          });
+          log.info('razorpay_verify.admin_email_sent', { bookingId: booking.id });
+        }
+      } catch (emailErr) {
+        log.error('razorpay_verify.admin_email_failed', {
+          bookingId: booking.id,
+          error: redact(emailErr instanceof Error ? emailErr.message : String(emailErr)),
+        });
+      }
+    }
   } catch (e) {
     log.error('razorpay_verify.mark_paid_failed', {
       bookingId,
