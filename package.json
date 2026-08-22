@@ -13,7 +13,8 @@
     "migrate:status": "node scripts/migrate.mjs --status",
     "test": "vitest run",
     "test:watch": "vitest",
-    "hubspot:setup": "node --env-file=.env.local scripts/hubspot-setup.mjs"
+    "hubspot:setup": "node --env-file=.env.local scripts/hubspot-setup.mjs",
+    "hubspot:backfill": "node --env-file=.env.local scripts/hubspot-backfill.mjs"
   },
   "dependencies": {
     "@hubspot/api-client": "^14.0.1",

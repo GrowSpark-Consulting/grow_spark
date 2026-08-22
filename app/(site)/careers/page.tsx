@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
+import CareersApplicationForm from '@/components/sections/CareersApplicationForm';
 
 /**
  * Transcribed from pages/careers/index.html by scripts/html-to-tsx.py.
@@ -724,77 +725,7 @@ export default function Page() {
             {' '}
             {/* Front-end only: this project has no backend (see CLAUDE.md). Wire `action` to a form service before this goes live. */}
             {' '}
-            <form action="/api/careers-application" method="post" className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="c-name">
-                  Name
-                </label>
-                <input className="form-input" type="text" id="c-name" name="name" autoComplete="name" placeholder="Your full name" />
-              </div>
-              {' '}
-              <div>
-                <label className="form-label" htmlFor="c-email">
-                  Email
-                </label>
-                <input className="form-input" type="email" id="c-email" name="email" autoComplete="email" placeholder="you@email.com" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="c-what">
-                  What You Do
-                </label>
-                <input className="form-input" type="text" id="c-what" name="what_you_do" placeholder="Your current role / focus" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="c-good">
-                  What You're Unusually Good At
-                </label>
-                <textarea className="form-input" id="c-good" name="strengths" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="c-enjoy">
-                  What Kind Of Problems You Enjoy Solving
-                </label>
-                <textarea className="form-input" id="c-enjoy" name="problems" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="c-why">
-                  Why Grow Spark
-                </label>
-                <textarea className="form-input" id="c-why" name="why_grow_spark" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="c-build">
-                  What You Want To Build Or Learn
-                </label>
-                <textarea className="form-input" id="c-build" name="build_or_learn" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                <label className="form-label" htmlFor="c-link">
-                  Portfolio / LinkedIn / Resume Link
-                </label>
-                <input className="form-input" type="text" id="c-link" name="link" placeholder="https://" />
-              </div>
-              {' '}
-              <div className="sm:col-span-2">
-                {' '}
-                <button type="submit" className="btn btn-primary btn-block">
-                  Submit General Application
-                </button>
-                {' '}
-                <p className="text-[13px] text-muted mt-4 text-center">
-                  [Application submission integration to be connected.]
-                </p>
-                {' '}
-              </div>
-              {' '}
-            </form>
+            <CareersApplicationForm />
             {' '}
           </div>
           {' '}
