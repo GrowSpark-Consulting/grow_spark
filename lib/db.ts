@@ -211,11 +211,11 @@ export async function insertStrategySessionBooking(
   } = input;
   const [row] = await sql<StrategySessionBookingRow[]>`
     insert into strategy_session_bookings ${sql({
-      ...rest,
-      preferred_date: date,
-      preferred_time: time,
-      engagement: engagement ?? 'strategy_session',
-    })}
+    ...rest,
+    preferred_date: date,
+    preferred_time: time,
+    engagement: engagement ?? 'strategy_session',
+  })}
     returning id, created_at
   `;
   return row;
@@ -388,11 +388,11 @@ export async function insertCareersApplication(
   const sql = db();
   const [row] = await sql<{ id: string; created_at: Date }[]>`
     insert into careers_applications ${sql(
-      input,
-      'name', 'email', 'what_you_do', 'strengths', 'problems',
-      'why_grow_spark', 'build_or_learn', 'link',
-      'source_page', 'ip', 'user_agent',
-    )}
+    input,
+    'name', 'email', 'what_you_do', 'strengths', 'problems',
+    'why_grow_spark', 'build_or_learn', 'link',
+    'source_page', 'ip', 'user_agent',
+  )}
     returning id, created_at
   `;
   return row!;
@@ -435,12 +435,12 @@ export async function insertEngagementApplication(
   const sql = db();
   const [row] = await sql<{ id: string; created_at: Date }[]>`
     insert into engagement_applications ${sql(
-      input,
-      'name', 'email', 'company', 'website', 'industry', 'revenue', 'team_size',
-      'challenge', 'already_tried', 'desired_outcome',
-      'investment_readiness', 'preferred_engagement',
-      'source_page', 'ip', 'user_agent',
-    )}
+    input,
+    'name', 'email', 'company', 'website', 'industry', 'revenue', 'team_size',
+    'challenge', 'already_tried', 'desired_outcome',
+    'investment_readiness', 'preferred_engagement',
+    'source_page', 'ip', 'user_agent',
+  )}
     returning id, created_at
   `;
   return row!;

@@ -127,17 +127,16 @@ export async function sendContactNotification(n: ContactNotification): Promise<v
     <h1 style="margin:0 0 20px;font-size:20px;font-weight:800;">New contact form submission</h1>
     <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">
       ${rows
-        .map(
-          ([k, v]) => `<tr>
+      .map(
+        ([k, v]) => `<tr>
         <td style="padding:8px 12px 8px 0;color:#696D72;white-space:nowrap;vertical-align:top;width:170px;">${esc(k)}</td>
-        <td style="padding:8px 0;vertical-align:top;">${
-          k === 'Email'
+        <td style="padding:8px 0;vertical-align:top;">${k === 'Email'
             ? `<a href="mailto:${esc(v)}" style="color:#0B5E45;">${esc(v)}</a>`
             : esc(v)
-        }</td>
+          }</td>
       </tr>`,
-        )
-        .join('')}
+      )
+      .join('')}
     </table>
     <h2 style="margin:24px 0 6px;font-size:13px;font-weight:700;color:#696D72;text-transform:uppercase;letter-spacing:.06em;">Challenge</h2>
     <p style="margin:0;white-space:pre-wrap;line-height:1.6;">${esc(data.challenge)}</p>
@@ -213,17 +212,16 @@ export async function sendFormNotification(n: FormNotification): Promise<void> {
     <h1 style="margin:0 0 20px;font-size:20px;font-weight:800;">${esc(n.title)}</h1>
     <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">
       ${n.rows
-        .map(
-          ([k, v]) => `<tr>
+      .map(
+        ([k, v]) => `<tr>
         <td style="padding:8px 12px 8px 0;color:#696D72;white-space:nowrap;vertical-align:top;width:170px;">${esc(k)}</td>
-        <td style="padding:8px 0;vertical-align:top;">${
-          k === 'Email' && v
+        <td style="padding:8px 0;vertical-align:top;">${k === 'Email' && v
             ? `<a href="mailto:${esc(v)}" style="color:#0B5E45;">${esc(v)}</a>`
             : esc(v)
-        }</td>
+          }</td>
       </tr>`,
-        )
-        .join('')}
+      )
+      .join('')}
     </table>
     ${sections
       .map(

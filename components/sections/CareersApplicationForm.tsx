@@ -84,7 +84,7 @@ export default function CareersApplicationForm() {
                       <button type="submit" className="btn btn-primary btn-block" disabled={sending}>{sending ? 'Sending…' : 'Submit General Application'}</button>
                       {' '}
                       <p className="text-[13px] text-muted mt-4 text-center">
-                        [Application submission integration to be connected.]
+                        We'll review your application and get back to you.
                       </p>
                       {' '}
                     </div>
