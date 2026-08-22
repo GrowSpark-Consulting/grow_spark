@@ -6,15 +6,11 @@ import { env } from '@/lib/env';
  * Deal creation and contact association, for the strategy-session and
  * engagement workflows.
  *
- * NOTE: nothing calls this yet. Those four forms (/api/strategy-session,
- * /api/growth-intensive, /api/engagement-application, /api/careers-application)
- * have no backend — they still 404 on submit, exactly as they did before the
- * migration. This module is written so the CRM half is ready the moment those
- * routes are built, and so the pipeline/stage configuration lives in one place
- * rather than being invented later inside a route handler.
- *
- * Careers deliberately has no function here: a job applicant must never enter
- * the sales pipeline.
+ * Called by the strategy-session and growth-intensive booking routes when
+ * HUBSPOT_DEAL_PIPELINE_ID and HUBSPOT_DEAL_STAGE_ID are configured. The
+ * engagement-application route syncs contacts only (no deal). The
+ * careers-application route deliberately has no function here: a job
+ * applicant must never enter the sales pipeline.
  */
 
 /** HubSpot's association type id for deal -> contact. */

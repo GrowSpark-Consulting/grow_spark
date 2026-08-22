@@ -74,8 +74,8 @@ export type StrategyBookingInput = {
 /**
  * Strategy session / engagement -> HubSpot contact *and* deal.
  *
- * Written ahead of its caller: the four booking routes do not exist yet. When
- * they are built they should call this rather than talking to HubSpot directly.
+ * Called when deal creation is enabled: booking routes sync contact and deal
+ * through this entry point rather than talking to HubSpot directly.
  *
  * A partial success is reported as a failure with the contact id preserved by
  * the caller, so a retry updates the same contact and creates only the missing
