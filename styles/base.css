@@ -430,8 +430,8 @@
     line-height: 1.14;
     letter-spacing: -0.005em;
     text-wrap: balance;
-    max-width: 19ch;
-    margin: 0 auto clamp(28px, 3vw, 44px);
+    max-width: 17ch;
+    margin: 0 0 clamp(28px, 3vw, 44px);
   }
 
   .btn-hero {
@@ -2009,4 +2009,32 @@
     min-height: 120px;
     resize: vertical;
   }
+}
+
+/*
+  Dark bands carry the particle texture instead of flat ink.
+
+  Deliberately unlayered so it wins over Tailwind's `bg-ink` utility without
+  an !important — the utility still supplies the background-color underneath,
+  which is both the fallback before the image loads and the colour the texture
+  fades into at its edges.
+
+  The gradient on top is not decoration: it holds the band dark enough that
+  white copy keeps its contrast wherever the image's teal glow happens to land
+  after `cover` crops it, which varies with each band's height.
+*/
+.bg-ink,
+.bg-accent-deep {
+  background-image:
+    linear-gradient(rgba(20, 23, 26, 0.55), rgba(20, 23, 26, 0.55)),
+    url('/framee.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* The hero paints its own full-bleed still over the top, so the texture would
+   never be seen there — skip the extra decode. */
+#hero.bg-ink {
+  background-image: none;
 }
