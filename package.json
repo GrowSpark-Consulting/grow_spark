@@ -10,9 +10,13 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "migrate": "node scripts/migrate.mjs",
-    "migrate:status": "node scripts/migrate.mjs --status"
+    "migrate:status": "node scripts/migrate.mjs --status",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "hubspot:setup": "node --env-file=.env.local scripts/hubspot-setup.mjs"
   },
   "dependencies": {
+    "@hubspot/api-client": "^14.0.1",
     "gsap": "^3.12.7",
     "lenis": "^1.1.18",
     "lucide-react": "^0.469.0",
@@ -36,6 +40,7 @@
     "playwright": "^1.62.1",
     "postcss": "^8.4.49",
     "tailwindcss": "^4.0.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
   }
 }

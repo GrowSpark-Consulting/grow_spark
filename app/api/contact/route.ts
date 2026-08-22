@@ -4,10 +4,13 @@ import {
   insertContactSubmission,
   markEmailFailed,
   markEmailSent,
+  markHubspotFailed,
+  markHubspotSynced,
   recentSubmissionCount,
 } from '@/lib/db';
 import { sendContactNotification } from '@/lib/email';
 import { contactWorkflowConfigured } from '@/lib/env';
+import { syncContactSubmissionToHubSpot } from '@/lib/hubspot/sync';
 import { log, redact } from '@/lib/logger';
 import { contactSchema } from '@/lib/validation/contact';
 
@@ -154,6 +157,28 @@ export async function POST(request: Request) {
     // Still a success for the visitor: their message is stored.
   }
 
+  // 7 — Push to the CRM. Downstream of both the row and the email, and
+  // deliberately last: HubSpot being unreachable must not change what the
+  // visitor sees or what is stored. syncContactSubmissionToHubSpot never
+  // throws, so failure arrives as data and is recorded for retry.
+  const crm = await syncContactSubmissionToHubSpot(submission.id, data);
+  try {
+    if (crm.ok) {
+      await markHubspotSynced(submission.id, crm.contactId, crm.dealId ?? null);
+    } else if (!crm.skipped) {
+      // `skipped` means no token is configured, which is a valid way to run
+      // this site — not a failure worth recording on every single row.
+      await markHubspotFailed(submission.id, crm.error);
+    }
+  } catch (e) {
+    log.error('contact.hubspot_status_update_failed', {
+      id: submission.id,
+      error: redact(e instanceof Error ? e.message : String(e)),
+    });
+  }
+
+  // The response shape is unchanged: the visitor's outcome depends only on the
+  // row having been committed.
   return NextResponse.json({
     success: true,
     message: 'Your message has been submitted successfully.',

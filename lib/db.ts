@@ -89,6 +89,50 @@ export async function markEmailFailed(id: string, error: string): Promise<void> 
   `;
 }
 
+/**
+ * Record a successful HubSpot sync.
+ *
+ * Clearing hubspot_sync_error matters: it is what takes the row out of the
+ * retry set once a previously failing sync finally lands.
+ */
+export async function markHubspotSynced(
+  id: string,
+  contactId: string,
+  dealId?: string | null,
+): Promise<void> {
+  const sql = db();
+  await sql`
+    update contact_submissions
+       set hubspot_contact_id = ${contactId},
+           hubspot_deal_id    = ${dealId ?? null},
+           hubspot_synced_at  = now(),
+           hubspot_sync_error = null
+     where id = ${id}
+  `;
+}
+
+/**
+ * Record why a HubSpot sync failed. hubspot_synced_at stays null, which is what
+ * contact_submissions_hubspot_pending_idx indexes, so the row remains findable
+ * for retry. A contact id is still stored when the contact succeeded and only
+ * the deal failed — that way a retry updates the same contact instead of
+ * creating a second one.
+ */
+export async function markHubspotFailed(
+  id: string,
+  error: string,
+  contactId?: string | null,
+): Promise<void> {
+  const sql = db();
+  await sql`
+    update contact_submissions
+       set hubspot_sync_error = ${error.slice(0, 500)},
+           hubspot_synced_at  = null,
+           hubspot_contact_id = coalesce(${contactId ?? null}, hubspot_contact_id)
+     where id = ${id}
+  `;
+}
+
 /** Submissions from one IP within the window, used for rate limiting. */
 export async function recentSubmissionCount(
   ip: string,
