@@ -379,3 +379,140 @@ export async function markWebhookEventProcessed(eventId: string): Promise<void> 
      where event_id = ${eventId}
   `;
 }
+
+/* ── Careers applications ─────────────────────────────────────────────────── */
+
+export async function insertCareersApplication(
+  input: Record<string, string | null>,
+): Promise<{ id: string; created_at: Date }> {
+  const sql = db();
+  const [row] = await sql<{ id: string; created_at: Date }[]>`
+    insert into careers_applications ${sql(
+      input,
+      'name', 'email', 'what_you_do', 'strengths', 'problems',
+      'why_grow_spark', 'build_or_learn', 'link',
+      'source_page', 'ip', 'user_agent',
+    )}
+    returning id, created_at
+  `;
+  return row!;
+}
+
+export async function markCareersEmailSent(id: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update careers_applications
+       set email_sent = true, email_sent_at = now(), email_error = null
+     where id = ${id}
+  `;
+}
+
+export async function markCareersEmailFailed(id: string, error: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update careers_applications
+       set email_sent = false, email_sent_at = null, email_error = ${error.slice(0, 500)}
+     where id = ${id}
+  `;
+}
+
+export async function recentCareersCount(ip: string, windowMinutes: number): Promise<number> {
+  const sql = db();
+  const [row] = await sql<{ count: number }[]>`
+    select count(*)::int as count
+      from careers_applications
+     where ip = ${ip}
+       and created_at > now() - (${windowMinutes} || ' minutes')::interval
+  `;
+  return row?.count ?? 0;
+}
+
+/* ── Engagement applications ──────────────────────────────────────────────── */
+
+export async function insertEngagementApplication(
+  input: Record<string, string | null>,
+): Promise<{ id: string; created_at: Date }> {
+  const sql = db();
+  const [row] = await sql<{ id: string; created_at: Date }[]>`
+    insert into engagement_applications ${sql(
+      input,
+      'name', 'company', 'website', 'industry', 'revenue', 'team_size',
+      'challenge', 'already_tried', 'desired_outcome',
+      'investment_readiness', 'preferred_engagement',
+      'source_page', 'ip', 'user_agent',
+    )}
+    returning id, created_at
+  `;
+  return row!;
+}
+
+export async function markEngagementEmailSent(id: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update engagement_applications
+       set email_sent = true, email_sent_at = now(), email_error = null
+     where id = ${id}
+  `;
+}
+
+export async function markEngagementEmailFailed(id: string, error: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update engagement_applications
+       set email_sent = false, email_sent_at = null, email_error = ${error.slice(0, 500)}
+     where id = ${id}
+  `;
+}
+
+export async function recentEngagementCount(ip: string, windowMinutes: number): Promise<number> {
+  const sql = db();
+  const [row] = await sql<{ count: number }[]>`
+    select count(*)::int as count
+      from engagement_applications
+     where ip = ${ip}
+       and created_at > now() - (${windowMinutes} || ' minutes')::interval
+  `;
+  return row?.count ?? 0;
+}
+
+/**
+ * HubSpot sync state for any of the submission tables.
+ *
+ * One helper rather than three near-identical pairs: the columns are the same
+ * shape everywhere by design, and the table name is a fixed literal from the
+ * caller, never user input.
+ */
+type SyncTable = 'engagement_applications' | 'strategy_session_bookings';
+
+export async function markTableHubspotSynced(
+  table: SyncTable,
+  id: string,
+  contactId: string,
+  dealId?: string | null,
+): Promise<void> {
+  const sql = db();
+  await sql`
+    update ${sql(table)}
+       set hubspot_contact_id = ${contactId},
+           hubspot_deal_id    = ${dealId ?? null},
+           hubspot_synced_at  = now(),
+           hubspot_sync_error = null
+     where id = ${id}
+  `;
+}
+
+export async function markTableHubspotFailed(
+  table: SyncTable,
+  id: string,
+  error: string,
+  contactId?: string | null,
+): Promise<void> {
+  const sql = db();
+  await sql`
+    update ${sql(table)}
+       set hubspot_sync_error = ${error.slice(0, 500)},
+           hubspot_synced_at  = null,
+           hubspot_contact_id = coalesce(${contactId ?? null}, hubspot_contact_id)
+     where id = ${id}
+  `;
+}

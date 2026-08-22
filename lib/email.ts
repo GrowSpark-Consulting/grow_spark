@@ -161,3 +161,91 @@ export async function sendContactNotification(n: ContactNotification): Promise<v
     html,
   });
 }
+
+/* ────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * Generic submission notification.
+ *
+ * sendContactNotification predates this and stays as it is — it is in
+ * production and its wording is tuned. Rather than duplicate that whole
+ * template per form, later forms describe themselves as rows plus long-form
+ * sections and share one renderer. A new form should need a shape, not a
+ * second copy of the HTML.
+ *
+ * Every interpolated value goes through esc(); subject and Reply-To go through
+ * headerSafe(), because a newline in a name is a header-injection attempt.
+ */
+export type FormNotification = {
+  /** Shown in the subject and as the heading. */
+  title: string;
+  subject: string;
+  /** Short key/value pairs rendered as a table. */
+  rows: Array<[string, string | null]>;
+  /** Long free-text answers, rendered as their own blocks. */
+  sections?: Array<[string, string | null]>;
+  /** Set when the form collected an address worth replying to. */
+  replyTo?: string | null;
+  submittedAt: Date;
+  sourcePage?: string | null;
+  id: string;
+};
+
+export async function sendFormNotification(n: FormNotification): Promise<void> {
+  const when = formatWhen(n.submittedAt);
+  const sections = n.sections ?? [];
+
+  const text = [
+    n.title,
+    '',
+    ...n.rows.map(([k, v]) => `${k}: ${v ?? '—'}`),
+    '',
+    ...sections.flatMap(([k, v]) => [`${k}:`, v ?? '—', '']),
+    `Submitted At: ${when}`,
+    `Source Page: ${n.sourcePage ?? '—'}`,
+    `Submission ID: ${n.id}`,
+  ].join('\n');
+
+  const html = `<!doctype html>
+<html><body style="margin:0;padding:24px;background:#FAFAF8;font-family:'Open Sans',Segoe UI,Arial,sans-serif;color:#14171A;">
+  <div style="max-width:640px;margin:0 auto;background:#FFFFFF;border:1px solid #E4E6E8;border-radius:10px;padding:28px;">
+    <p style="margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0B5E45;">Grow Spark Consulting</p>
+    <h1 style="margin:0 0 20px;font-size:20px;font-weight:800;">${esc(n.title)}</h1>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">
+      ${n.rows
+        .map(
+          ([k, v]) => `<tr>
+        <td style="padding:8px 12px 8px 0;color:#696D72;white-space:nowrap;vertical-align:top;width:170px;">${esc(k)}</td>
+        <td style="padding:8px 0;vertical-align:top;">${
+          k === 'Email' && v
+            ? `<a href="mailto:${esc(v)}" style="color:#0B5E45;">${esc(v)}</a>`
+            : esc(v)
+        }</td>
+      </tr>`,
+        )
+        .join('')}
+    </table>
+    ${sections
+      .map(
+        ([k, v]) => `<h2 style="margin:24px 0 6px;font-size:13px;font-weight:700;color:#696D72;text-transform:uppercase;letter-spacing:.06em;">${esc(k)}</h2>
+    <p style="margin:0;white-space:pre-wrap;line-height:1.6;">${esc(v)}</p>`,
+      )
+      .join('')}
+    <hr style="border:0;border-top:1px solid #E4E6E8;margin:26px 0 16px;">
+    <p style="margin:0;font-size:12px;color:#696D72;line-height:1.8;">
+      Submitted at ${esc(when)}<br>
+      Source page ${esc(n.sourcePage)}<br>
+      Submission ID <code style="font-family:ui-monospace,Menlo,monospace;">${esc(n.id)}</code>
+    </p>
+  </div>
+</body></html>`;
+
+  await transporter().sendMail({
+    from: env.smtp.from,
+    to: env.contactEmail,
+    ...(n.replyTo ? { replyTo: headerSafe(n.replyTo) } : {}),
+    subject: headerSafe(n.subject),
+    text,
+    html,
+  });
+}

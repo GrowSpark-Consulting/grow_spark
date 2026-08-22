@@ -6,6 +6,8 @@ import {
 } from '@/lib/db';
 import { env, razorpayConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
+import { markTableHubspotFailed, markTableHubspotSynced } from '@/lib/db';
+import { syncBookingToHubSpot } from '@/lib/hubspot/sync';
 import {
   GROWTH_INTENSIVE_AMOUNT_PAISE,
   razorpayClient,
@@ -161,6 +163,37 @@ export async function POST(request: Request) {
   }
 
   log.info('growth_intensive.order_created', { id: booking.id, orderId: order.id });
+
+  // The CRM comes after the order, never before it: a HubSpot problem must
+  // not stop someone paying. This is the step the booking flow was missing —
+  // bookings were reaching Postgres and the inbox but never the CRM.
+  const crm = await syncBookingToHubSpot(booking.id, {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    company: data.company,
+    website: data.website,
+    revenue: data.revenue,
+    challenge: data.challenge,
+    engagement: 'Growth Intensive',
+  });
+  try {
+    if (crm.ok) {
+      await markTableHubspotSynced(
+        'strategy_session_bookings',
+        booking.id,
+        crm.contactId,
+        crm.dealId ?? null,
+      );
+    } else if (!crm.skipped) {
+      await markTableHubspotFailed('strategy_session_bookings', booking.id, crm.error);
+    }
+  } catch (e) {
+    log.error('growth_intensive.hubspot_status_update_failed', {
+      id: booking.id,
+      error: redact(e instanceof Error ? e.message : String(e)),
+    });
+  }
 
   return NextResponse.json({
     success: true,
