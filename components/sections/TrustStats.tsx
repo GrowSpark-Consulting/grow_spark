@@ -11,7 +11,7 @@ export default function TrustStats() {
         {' '}
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <p className="text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-muted mb-10">
+          <p className="text-center text-[13px] font-bold uppercase tracking-[0.12em] text-ink-soft mb-12">
             Built On Methodology, Not Claims
           </p>
           {' '}

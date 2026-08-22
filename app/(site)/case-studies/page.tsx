@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import CaseStudiesCta from '@/components/sections/CaseStudiesCta';
 import CaseStudiesHero from '@/components/sections/CaseStudiesHero';
+import IndustryDetails from '@/components/sections/IndustryDetails';
 import CaseStudiesStandard from '@/components/sections/CaseStudiesStandard';
 import CaseStudy from '@/components/sections/CaseStudy';
 
@@ -55,6 +56,8 @@ export default function Page() {
       <CaseStudiesHero />
       {' '}
       <CaseStudy />
+      {' '}
+      <IndustryDetails />
       {' '}
       <CaseStudiesStandard />
       {' '}
