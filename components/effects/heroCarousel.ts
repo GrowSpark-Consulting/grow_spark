@@ -32,15 +32,20 @@ export function initHeroCarousel(): () => void {
 
   // Per-instance, not module-level — see the note above.
   let kenBurnsTween: gsap.core.Tween | null = null;
-  let kenBurnsTarget: HTMLVideoElement | null = null;
+  let kenBurnsTarget: HTMLElement | null = null;
+
+  function getMedia(slideEl: HTMLElement | undefined): HTMLElement | null {
+    if (!slideEl) return null;
+    return (
+      slideEl.querySelector<HTMLElement>('[data-hero-img]') ??
+      slideEl.querySelector<HTMLElement>('[data-hero-video]')
+    );
+  }
 
   function loadVideo(slideEl: HTMLElement | undefined): HTMLVideoElement | null {
     if (!slideEl) return null;
     const video = slideEl.querySelector<HTMLVideoElement>('[data-hero-video]');
     const src = slideEl.dataset.videoSrc;
-    // Explicit flag rather than reading back video.src — the flag records
-    // intent ("have we told this element to load") instead of relying on the
-    // browser's resolved-URL readback.
     if (!video || !src || video.dataset.loaded === 'true') return video;
     video.src = src;
     video.dataset.loaded = 'true';
@@ -48,33 +53,40 @@ export function initHeroCarousel(): () => void {
     return video;
   }
 
-  function startKenBurns(video: HTMLVideoElement | null) {
-    if (!video) return;
-    if (kenBurnsTarget === video && kenBurnsTween) {
+  function startKenBurns(element: HTMLElement | null) {
+    if (!element) return;
+    if (kenBurnsTarget === element && kenBurnsTween) {
       kenBurnsTween.resume();
       return;
     }
     kenBurnsTween?.kill();
-    if (kenBurnsTarget && kenBurnsTarget !== video) gsap.set(kenBurnsTarget, { scale: 1 });
-    kenBurnsTarget = video;
-    gsap.set(video, { scale: 1, transformOrigin: '50% 50%' });
-    kenBurnsTween = gsap.to(video, {
+    if (kenBurnsTarget && kenBurnsTarget !== element) gsap.set(kenBurnsTarget, { scale: 1 });
+    kenBurnsTarget = element;
+    gsap.set(element, { scale: 1, transformOrigin: '50% 50%' });
+    kenBurnsTween = gsap.to(element, {
       scale: KEN_BURNS_SCALE,
       duration: AUTOPLAY_DELAY / 1000,
       ease: 'none',
     });
   }
 
-  function playVideo(video: HTMLVideoElement | null) {
-    if (!video) return;
-    const playPromise = video.play();
-    if (playPromise?.catch) playPromise.catch(() => {});
-    startKenBurns(video);
+  function playMedia(slideEl: HTMLElement | undefined) {
+    if (!slideEl) return;
+    const video = loadVideo(slideEl);
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise?.catch) playPromise.catch(() => {});
+    }
+    const media = getMedia(slideEl);
+    startKenBurns(media);
   }
 
-  function pauseVideo(video: HTMLVideoElement | null) {
+  function pauseMedia(slideEl: HTMLElement | undefined) {
+    if (!slideEl) return;
+    const video = slideEl.querySelector<HTMLVideoElement>('[data-hero-video]');
     video?.pause();
-    if (video && video === kenBurnsTarget) kenBurnsTween?.pause();
+    const media = getMedia(slideEl);
+    if (media && media === kenBurnsTarget) kenBurnsTween?.pause();
   }
 
   function animateSlideText(slideEl: HTMLElement | undefined) {
@@ -102,18 +114,15 @@ export function initHeroCarousel(): () => void {
     pagination: {
       el: '[data-hero-pagination]',
       clickable: true,
-      renderBullet: (index: number, className: string) =>
+      renderBullet: (_index: number, className: string) =>
         `<span class="${className}"><span class="hero-pagination-fill"></span></span>`,
     },
     keyboard: { enabled: true, onlyInViewport: true },
     a11y: { enabled: true },
   });
 
-  // First slide's video already has its real src in the markup; start it
-  // (unless the visitor prefers reduced motion) and begin buffering slide two.
-  const firstVideo = swiper.slides[0]?.querySelector<HTMLVideoElement>('[data-hero-video]');
   if (!reducedMotion) {
-    playVideo(firstVideo ?? null);
+    playMedia(swiper.slides[0]);
     animateSlideText(swiper.slides[0]);
   }
   if (swiper.slides[1]) loadVideo(swiper.slides[1]);
@@ -127,14 +136,13 @@ export function initHeroCarousel(): () => void {
 
   swiper.on('slideChangeTransitionStart', () => {
     const activeSlide = swiper.slides[swiper.activeIndex];
-    const activeVideo = loadVideo(activeSlide);
-    playVideo(activeVideo);
+    playMedia(activeSlide);
     animateSlideText(activeSlide);
     resetFills();
 
     swiper.slides.forEach((slide, index) => {
       if (index !== swiper.activeIndex) {
-        pauseVideo(slide.querySelector<HTMLVideoElement>('[data-hero-video]'));
+        pauseMedia(slide);
       }
     });
 
@@ -152,14 +160,12 @@ export function initHeroCarousel(): () => void {
   });
 
   const onVisibilityChange = () => {
-    const activeVideo =
-      swiper.slides[swiper.activeIndex]?.querySelector<HTMLVideoElement>('[data-hero-video]') ??
-      null;
+    const activeSlide = swiper.slides[swiper.activeIndex];
     if (document.hidden) {
-      pauseVideo(activeVideo);
+      pauseMedia(activeSlide);
       swiper.autoplay?.stop();
     } else {
-      playVideo(activeVideo);
+      playMedia(activeSlide);
       if (!reducedMotion) swiper.autoplay?.start();
     }
   };
@@ -171,23 +177,21 @@ export function initHeroCarousel(): () => void {
   let isPaused = reducedMotion;
 
   const applyToggleState = () => {
-    const activeVideo =
-      swiper.slides[swiper.activeIndex]?.querySelector<HTMLVideoElement>('[data-hero-video]') ??
-      null;
+    const activeSlide = swiper.slides[swiper.activeIndex];
     if (isPaused) {
-      pauseVideo(activeVideo);
+      pauseMedia(activeSlide);
       swiper.autoplay?.stop();
       iconPause?.classList.add('hidden');
       iconPlay?.classList.remove('hidden');
       toggle?.setAttribute('aria-pressed', 'true');
-      toggle?.setAttribute('aria-label', 'Play background video slideshow');
+      toggle?.setAttribute('aria-label', 'Play background slideshow');
     } else {
-      playVideo(activeVideo);
+      playMedia(activeSlide);
       swiper.autoplay?.start();
       iconPause?.classList.remove('hidden');
       iconPlay?.classList.add('hidden');
       toggle?.setAttribute('aria-pressed', 'false');
-      toggle?.setAttribute('aria-label', 'Pause background video slideshow');
+      toggle?.setAttribute('aria-label', 'Pause background slideshow');
     }
   };
 
@@ -206,13 +210,10 @@ export function initHeroCarousel(): () => void {
     toggle?.removeEventListener('click', onToggleClick);
     kenBurnsTween?.kill();
     if (kenBurnsTarget) {
-      kenBurnsTarget.pause();
       gsap.set(kenBurnsTarget, { clearProps: 'transform' });
     }
     kenBurnsTween = null;
     kenBurnsTarget = null;
-    // destroy(deleteInstance, cleanStyles) — clean the styles Swiper wrote so
-    // the markup returns to what the server rendered.
     if (!swiper.destroyed) swiper.destroy(true, true);
   };
 }
