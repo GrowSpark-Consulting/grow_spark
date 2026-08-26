@@ -201,27 +201,25 @@ export default function Page() {
         {' '}
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <div className="section-head" data-reveal="">
-            {' '}
-            <span className="eyebrow block mb-3.5">
-              Founder
-            </span>
-            {' '}
-            <h2>
-              Pragadeesh
-            </h2>
-            {' '}
-          </div>
-          {' '}
           <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-start max-w-[980px] mx-auto" data-reveal="">
             {' '}
             <div className="flex justify-center lg:block">
               {' '}
-              <div className="portrait-frame lg:w-[320px]">
+              <a
+                href="/founder/"
+                className="portrait-frame lg:w-[320px] group"
+                aria-label="Read Pragadeesh's founder profile"
+              >
                 {' '}
-                <span className="initial">
-                  P
-                </span>
+                <img
+                  src="/pragadeesh.jpg"
+                  alt="Pragadeesh, Founder of Grow Spark Consulting"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
+                />
                 {' '}
                 <div className="caption">
                   {' '}
@@ -235,7 +233,7 @@ export default function Page() {
                   {' '}
                 </div>
                 {' '}
-              </div>
+              </a>
               {' '}
             </div>
             {' '}
@@ -246,7 +244,9 @@ export default function Page() {
               </span>
               {' '}
               <h3 className="subsection-heading mb-2">
-                Pragadeesh
+                <a href="/founder/" className="transition-colors hover:text-accent">
+                  Pragadeesh
+                </a>
               </h3>
               {' '}
               <p className="font-display font-semibold text-[17px] text-muted mb-6">

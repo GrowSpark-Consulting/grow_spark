@@ -1297,21 +1297,43 @@
   }
   .portrait-frame .corner {
     position: absolute;
-    top: 20px;
-    left: 22px;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 22px 30px;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
+    /* Same reason as the caption below: the label sits over the top of a
+       photograph, and this one lands on a bright studio background. The strip
+       spans the full width so the gradient has somewhere to fade, leaving the
+       text where it always sat. */
+    background: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 0.6) 0%,
+      rgb(0 0 0 / 0) 100%
+    );
   }
   .portrait-frame .caption {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 22px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 44px 22px 22px;
+    /* The frame holds a photograph, so the caption sits over whatever the
+       bottom of that photograph happens to be — a white shirt swallowed the
+       role line entirely. This scrim keeps both lines legible over any image,
+       and reads as nothing over a frame whose background is still solid ink.
+       It also replaces the hairline that used to separate the caption: over a
+       photograph that rule read as a seam cutting across the subject. */
+    background: linear-gradient(
+      to top,
+      rgb(0 0 0 / 0.78) 0%,
+      rgb(0 0 0 / 0.55) 55%,
+      rgb(0 0 0 / 0) 100%
+    );
   }
   .portrait-frame .caption .name {
     font-family: var(--font-display);

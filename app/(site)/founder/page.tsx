@@ -63,7 +63,7 @@ export default function Page() {
         {' '}
         <div className="relative mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-center" data-reveal="">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-start" data-reveal="">
             {' '}
             <div>
               {' '}
@@ -133,12 +133,18 @@ export default function Page() {
               {' '}
               <div className="portrait-frame">
                 {' '}
+                <img
+                  src="/pragadeesh.jpg"
+                  alt="Pragadeesh, Founder of Grow Spark Consulting"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+                {' '}
                 <span className="corner">
                   Founder
-                </span>
-                {' '}
-                <span className="initial">
-                  P
                 </span>
                 {' '}
                 <div className="caption">
