@@ -1,58 +1,19 @@
 import { ArrowRight } from 'lucide-react';
 
 /**
- * The six primary industry blocks, with the numbered grid above them acting
- * as an in-page jump nav. Lifted out of the Industries page so Our Work can
- * carry the sector detail; the anchors and the links that target them now
- * live together in one component, so they cannot drift apart.
+ * The six primary industry blocks. Lifted out of the Industries page so Our
+ * Work can carry the sector detail.
+ *
+ * A numbered 01-06 grid used to sit above these as an in-page jump nav; it
+ * was removed. Each block keeps its id (#ecommerce, #manufacturing, …) so
+ * external deep links into a sector still land, but nothing on the site
+ * links to them now.
  *
  * Server Component: no behaviour of its own.
  */
 export default function IndustryDetails() {
   return (
     <>
-      <nav aria-label="Industries" className="border-y border-hairline bg-paper-sunken py-10">
-        {' '}
-        <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
-          {' '}
-          <div className="grid-hairline grid-cols-2 lg:grid-cols-3">
-            {' '}
-            <a href="#ecommerce" className="industry-card">
-              <span className="n">01</span>
-              <span className="block text-[16.5px] font-semibold">E-Commerce &amp; D2C</span>
-            </a>
-            {' '}
-            <a href="#manufacturing" className="industry-card">
-              <span className="n">02</span>
-              <span className="block text-[16.5px] font-semibold">Manufacturing &amp; Product Businesses</span>
-            </a>
-            {' '}
-            <a href="#food-beverage" className="industry-card">
-              <span className="n">03</span>
-              <span className="block text-[16.5px] font-semibold">Food &amp; Beverage</span>
-            </a>
-            {' '}
-            <a href="#education" className="industry-card">
-              <span className="n">04</span>
-              <span className="block text-[16.5px] font-semibold">Education, Training &amp; Certification</span>
-            </a>
-            {' '}
-            <a href="#b2b" className="industry-card">
-              <span className="n">05</span>
-              <span className="block text-[16.5px] font-semibold">B2B &amp; Industrial Services</span>
-            </a>
-            {' '}
-            <a href="#saas" className="industry-card">
-              <span className="n">06</span>
-              <span className="block text-[16.5px] font-semibold">Technology, SaaS &amp; Digital Businesses</span>
-            </a>
-            {' '}
-          </div>
-          {' '}
-        </div>
-        {' '}
-      </nav>
-      {' '}
       <section className="py-20 sm:py-24 lg:py-28 bg-paper-sunken">
         {' '}
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
