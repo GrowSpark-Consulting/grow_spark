@@ -331,8 +331,16 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar">
-                P
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/pragadeesh.jpg"
+                  alt="Pragadeesh, Founder of Grow Spark Consulting"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
@@ -364,20 +372,20 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar">
+                S
               </div>
               {' '}
               <h3>
-                [Leader 2 Name]
+                Susshinder S.A.
               </h3>
               {' '}
-              <p className="!text-muted !font-medium mb-3">
-                [Leader 2 Title]
+              <p className="!text-accent !font-medium mb-3">
+                Chief Marketing Officer
               </p>
               {' '}
               <p className="mb-4">
-                [Leader 2 bio to be added — verified details pending.]
+                Works at the intersection of people, marketing, technology and growth — helping businesses understand their customers and communicate the real value of what they offer.
               </p>
               {' '}
               <span className="eyebrow block mb-2">
@@ -385,13 +393,13 @@ export default function Page() {
               </span>
               {' '}
               <p className="mb-5">
-                [Leader 2 responsibilities]
+                Marketing Strategy · Brand · Customer Acquisition · Market Research
               </p>
               {' '}
-              <span className="inline-link is-pending">
+              <a href="/cmo/" className="inline-link">
                 View Profile {' '}
                 <ArrowRight className="w-4 h-4" />
-              </span>
+              </a>
               {' '}
             </div>
             {' '}

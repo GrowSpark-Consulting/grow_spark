@@ -55,6 +55,7 @@ const ROUTES = [
   '/rnd/revenue-without-profit/',
   '/leadership/',
   '/founder/',
+  '/cmo/',
   '/alliances/',
   '/careers/',
   '/strategy/',
