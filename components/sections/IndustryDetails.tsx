@@ -18,18 +18,6 @@ export default function IndustryDetails() {
         {' '}
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <div className="section-head" data-reveal="">
-            {' '}
-            <span className="eyebrow block mb-3.5">
-              Where We Focus
-            </span>
-            {' '}
-            <h2>
-              Six primary industries
-            </h2>
-            {' '}
-          </div>
-          {' '}
           <div className="flex flex-col gap-6 lg:gap-8">
             {' '}
             <article id="ecommerce" className="industry-block" data-reveal="">

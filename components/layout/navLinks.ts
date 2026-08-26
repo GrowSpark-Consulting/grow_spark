@@ -7,7 +7,8 @@
 export type NavLink = { href: string; label: string };
 
 export const PRIMARY_LINKS: NavLink[] = [
-  { href: '/', label: 'Home' },
+  // No Home entry: the logo lockup to the left of this list is the link home,
+  // on both the desktop bar and the mobile drawer.
   { href: '/case-studies/', label: 'Our Works' },
   { href: '/solutions/', label: 'Solutions' },
   { href: '/framework/', label: 'Our Framework' },
