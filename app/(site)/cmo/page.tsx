@@ -269,21 +269,21 @@ export default function Page() {
       {' '}
       <section className="py-20 sm:py-24 lg:py-28 bg-paper-sunken">
         {' '}
-        <div className="mx-auto max-w-[760px] px-5 sm:px-8">
+        <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8">
           {' '}
-          <div className="section-head" data-reveal="">
+          <div className="section-head max-w-[980px]" data-reveal="">
             {' '}
             <span className="eyebrow block mb-3.5">
               My Approach
             </span>
             {' '}
-            <h2>
+            <h2 className="whitespace-normal lg:whitespace-nowrap">
               People → Problem → Product → Communication → Growth
             </h2>
             {' '}
           </div>
           {' '}
-          <div data-reveal="">
+          <div className="max-w-[760px] mx-auto" data-reveal="">
             {' '}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-10">
               {' '}
