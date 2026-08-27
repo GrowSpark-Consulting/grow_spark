@@ -71,8 +71,8 @@ export default function OurTeam() {
                 <img
                   src="/dhatri.jpg"
                   alt="Dhatri, part of the Grow Spark Consulting team"
-                  width={1200}
-                  height={1200}
+                  width={645}
+                  height={645}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"
@@ -104,8 +104,8 @@ export default function OurTeam() {
                 <img
                   src="/nithisha.jpg"
                   alt="Nithisha, part of the Grow Spark Consulting team"
-                  width={1200}
-                  height={1200}
+                  width={801}
+                  height={801}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"
@@ -137,8 +137,8 @@ export default function OurTeam() {
                 <img
                   src="/shaaz.jpg"
                   alt="Shaaz, part of the Grow Spark Consulting team"
-                  width={1200}
-                  height={1200}
+                  width={927}
+                  height={927}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"
