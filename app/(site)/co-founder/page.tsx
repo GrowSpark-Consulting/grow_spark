@@ -119,12 +119,18 @@ export default function Page() {
               {' '}
               <div className="portrait-frame">
                 {' '}
+                <img
+                  src="/raja.png"
+                  alt="Raja V., Co-Founder of Grow Spark Consulting"
+                  width={896}
+                  height={1050}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+                {' '}
                 <span className="corner">
                   Co-Founder, Technology & Operations
-                </span>
-                {' '}
-                <span className="initial">
-                  R
                 </span>
                 {' '}
                 <div className="caption">

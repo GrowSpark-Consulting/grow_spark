@@ -413,8 +413,16 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar">
-                R
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/raja.png"
+                  alt="Raja V., Co-Founder of Grow Spark Consulting"
+                  width={896}
+                  height={1050}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
