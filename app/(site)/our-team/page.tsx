@@ -7,11 +7,14 @@ import { ArrowRight } from 'lucide-react';
  * same photo, bio and "Leads" line — so he isn't described two different
  * ways depending on which page a visitor lands on.
  *
- * The other three are real people whose names, roles and bios haven't been
- * supplied yet. Rendered as pending detail-cards — the same convention
- * /leadership/ already used for Raja before his profile was filled in —
- * rather than invented. Update each card in place once the details land;
- * nothing else on the page needs to change.
+ * The other three — Dhatri, Nithisha and Shaaz — have real photos, framed
+ * and flattened to the same 1200x1200 headshot treatment as everyone else
+ * on this page, but no confirmed title or bio yet, so those two fields
+ * stay bracketed pending text rather than invented. Same convention
+ * /leadership/ used for Raja before his profile was filled in. Fill in
+ * each card's title and bio in place once they're supplied, and swap
+ * `is-pending` for a real `<a>` if/when each person gets their own
+ * profile page — nothing else needs to change.
  *
  * Server Component: no behaviour of its own.
  */
@@ -141,12 +144,20 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/dhatri.jpg"
+                  alt="Dhatri, part of the Grow Spark Consulting team"
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
-                [Team Member Name]
+                Dhatri
               </h3>
               {' '}
               <p className="!text-muted !font-medium mb-3">
@@ -166,12 +177,20 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/nithisha.jpg"
+                  alt="Nithisha, part of the Grow Spark Consulting team"
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
-                [Team Member Name]
+                Nithisha
               </h3>
               {' '}
               <p className="!text-muted !font-medium mb-3">
@@ -191,12 +210,20 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/shaaz.jpg"
+                  alt="Shaaz, part of the Grow Spark Consulting team"
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
-                [Team Member Name]
+                Shaaz
               </h3>
               {' '}
               <p className="!text-muted !font-medium mb-3">

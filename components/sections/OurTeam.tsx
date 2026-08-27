@@ -2,10 +2,12 @@ import { ArrowRight } from 'lucide-react';
 
 /**
  * The home page's team teaser, sitting right after Leadership. Same
- * detail-card grid the /our-team/ page itself uses — Raja's card is
- * identical content in both places, and the other three are pending
- * placeholders (see /our-team/'s own doc comment) rather than invented,
- * closed off with a link to the full page.
+ * detail-card grid the /our-team/ page itself uses, with identical
+ * content for all four people in both places.
+ *
+ * Dhatri, Nithisha and Shaaz have real photos but no title or bio yet —
+ * see /our-team/'s own doc comment for why those stay bracketed rather
+ * than invented. Closed off with a link to the full page.
  *
  * Server Component: no behaviour of its own.
  */
@@ -65,12 +67,20 @@ export default function OurTeam() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/dhatri.jpg"
+                  alt="Dhatri, part of the Grow Spark Consulting team"
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
-                [Team Member Name]
+                Dhatri
               </h3>
               {' '}
               <p className="!text-muted !font-medium mb-3">
@@ -90,12 +100,20 @@ export default function OurTeam() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/nithisha.jpg"
+                  alt="Nithisha, part of the Grow Spark Consulting team"
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
-                [Team Member Name]
+                Nithisha
               </h3>
               {' '}
               <p className="!text-muted !font-medium mb-3">
@@ -115,12 +133,20 @@ export default function OurTeam() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/shaaz.jpg"
+                  alt="Shaaz, part of the Grow Spark Consulting team"
+                  width={1200}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>
-                [Team Member Name]
+                Shaaz
               </h3>
               {' '}
               <p className="!text-muted !font-medium mb-3">
