@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 /**
- * The Chief Marketing Officer profile, built on the same section vocabulary as
+ * The Co-Founder & Chief Marketing Officer profile, built on the same section vocabulary as
  * /founder/ — hero with portrait frame, alternating paper and sunken bands, two
  * ink sections carrying the philosophy and the closing word, and the signature
  * block closing the page.
@@ -13,20 +13,20 @@ import type { Metadata } from 'next';
  * Server Component: no behaviour of its own.
  */
 export const metadata: Metadata = {
-  title: "Meet Susshinder S.A. — Chief Marketing Officer | Grow Spark Consulting",
-  description: "Susshinder S.A. is Chief Marketing Officer at Grow Spark Consulting, working at the intersection of people, marketing, technology and growth — helping businesses understand their customers and communicate real value.",
+  title: "Meet Susshinder S.A. — Co-Founder & Chief Marketing Officer | Grow Spark Consulting",
+  description: "Susshinder S.A. is Co-Founder & Chief Marketing Officer at Grow Spark Consulting, working at the intersection of people, marketing, technology and growth — helping businesses understand their customers and communicate real value.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/cmo/" },
   openGraph: {
     type: "profile",
     siteName: "Grow Spark Consulting",
-    title: "Meet Susshinder S.A. — Chief Marketing Officer | Grow Spark Consulting",
+    title: "Meet Susshinder S.A. — Co-Founder & Chief Marketing Officer | Grow Spark Consulting",
     description: "“Turning meaningful products into meaningful connections.” Marketing strategy, brand building and human-centred growth.",
     url: "https://www.growsparkconsulting.com/cmo/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Meet Susshinder S.A. — Chief Marketing Officer | Grow Spark Consulting",
+    title: "Meet Susshinder S.A. — Co-Founder & Chief Marketing Officer | Grow Spark Consulting",
     description: "“Turning meaningful products into meaningful connections.” Marketing strategy, brand building and human-centred growth.",
   },
 };
@@ -53,7 +53,7 @@ export default function Page() {
           {' '}
           <li>
             <span aria-current="page">
-              Chief Marketing Officer
+              Co-Founder & Chief Marketing Officer
             </span>
           </li>
           {' '}
@@ -74,7 +74,7 @@ export default function Page() {
             <div>
               {' '}
               <span className="eyebrow block mb-5">
-                Chief Marketing Officer — Grow Spark Consulting
+                Co-Founder & Chief Marketing Officer — Grow Spark Consulting
               </span>
               {' '}
               <h1 className="page-hero-heading mb-4">
@@ -109,7 +109,7 @@ export default function Page() {
                 {' '}
                 <img
                   src="/susshinder.png"
-                  alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
+                  alt="Susshinder S.A., Co-Founder & Chief Marketing Officer of Grow Spark Consulting"
                   width={1200}
                   height={1200}
                   loading="lazy"
@@ -118,7 +118,7 @@ export default function Page() {
                 />
                 {' '}
                 <span className="corner">
-                  Chief Marketing Officer
+                  Co-Founder & Chief Marketing Officer
                 </span>
                 {' '}
                 <div className="caption">
@@ -128,7 +128,7 @@ export default function Page() {
                   </div>
                   {' '}
                   <div className="role2">
-                    Chief Marketing Officer, Grow Spark Consulting
+                    Co-Founder & Chief Marketing Officer, Grow Spark Consulting
                   </div>
                   {' '}
                 </div>
@@ -164,7 +164,7 @@ export default function Page() {
           <div data-reveal="">
             {' '}
             <p className="text-[16.5px] text-ink-soft leading-relaxed mb-4">
-              I'm Susshinder S.A., Chief Marketing Officer at Grow Spark Consulting.
+              I'm Susshinder S.A., Co-Founder & Chief Marketing Officer at Grow Spark Consulting.
             </p>
             {' '}
             <p className="text-[16.5px] text-ink-soft leading-relaxed mb-8">
@@ -616,7 +616,7 @@ export default function Page() {
             </p>
             {' '}
             <p className="text-[16.5px] text-ink-soft leading-relaxed mb-8">
-              Today, as Chief Marketing Officer at Grow Spark Consulting, I bring these perspectives together.
+              Today, as Co-Founder & Chief Marketing Officer at Grow Spark Consulting, I bring these perspectives together.
             </p>
             {' '}
             <div className="flex flex-wrap gap-2.5 mb-8">
@@ -896,7 +896,7 @@ export default function Page() {
             </div>
             {' '}
             <div className="sig-role">
-              Chief Marketing Officer · Grow Spark Consulting
+              Co-Founder & Chief Marketing Officer · Grow Spark Consulting
             </div>
             {' '}
             <div className="sig-line">

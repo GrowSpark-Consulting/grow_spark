@@ -375,7 +375,7 @@ export default function Page() {
               <div className="lead-avatar overflow-hidden">
                 <img
                   src="/susshinder.png"
-                  alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
+                  alt="Susshinder S.A., Co-Founder & Chief Marketing Officer of Grow Spark Consulting"
                   width={1200}
                   height={1200}
                   loading="lazy"
@@ -389,7 +389,7 @@ export default function Page() {
               </h3>
               {' '}
               <p className="!text-accent !font-medium mb-3">
-                Chief Marketing Officer
+                Co-Founder & Chief Marketing Officer
               </p>
               {' '}
               <p className="mb-4">
