@@ -56,6 +56,7 @@ const ROUTES = [
   '/leadership/',
   '/founder/',
   '/cmo/',
+  '/co-founder/',
   '/alliances/',
   '/careers/',
   '/strategy/',

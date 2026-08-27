@@ -120,20 +120,20 @@ export default function Leadership() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar !bg-paper-sunken !text-muted">
-                +
+              <div className="lead-avatar">
+                R
               </div>
               {' '}
               <h3>
-                [Leader 3 Name]
+                Raja V.
               </h3>
               {' '}
-              <p className="!text-muted !font-medium mb-3">
-                [Leader 3 Title]
+              <p className="!text-accent !font-medium mb-3">
+                Co-Founder, Technology & Operations
               </p>
               {' '}
               <p className="mb-4">
-                [Leader 3 bio to be added — verified details pending.]
+                I sit at the point where a business decision has to become something real — a website, an automation, a system, a launch — and I make sure it actually gets built, without the founder having to become a technologist to make that happen.
               </p>
               {' '}
               <span className="eyebrow block mb-2">
@@ -141,13 +141,13 @@ export default function Leadership() {
               </span>
               {' '}
               <p className="mb-5">
-                [Leader 3 responsibilities]
+                Positioning · Systems · Websites · Automation · AI Tools · Delivery · Operations
               </p>
               {' '}
-              <span className="inline-link is-pending">
+              <a href="/co-founder/" className="inline-link">
                 View Profile {' '}
                 <ArrowRight className="w-4 h-4" />
-              </span>
+              </a>
               {' '}
             </div>
             {' '}
