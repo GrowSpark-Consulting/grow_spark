@@ -18,6 +18,7 @@ export const PRIMARY_LINKS: NavLink[] = [
 
 export const WHO_WE_ARE_LINKS: NavLink[] = [
   { href: '/leadership/', label: 'Leadership' },
+  { href: '/our-team/', label: 'Our Team' },
   { href: '/contact/', label: 'Contact' },
   { href: '/alliances/', label: 'Alliances' },
   { href: '/careers/', label: 'Careers' },
