@@ -1,8 +1,15 @@
+import { ArrowRight } from 'lucide-react';
+
 /**
- * Transcribed from sections/leadership.html by scripts/html-to-tsx.py.
- * Server Component: the source partial carries no behaviour of its own,
- * so nothing here needs the browser. Markup, classes, ids, data
- * attributes and content are unchanged from the source.
+ * The home page's leadership teaser. Originally four initials-only avatar
+ * tiles (Founder, Senior Advisor, Transformation Consultant, Technology
+ * Specialist) that didn't correspond to real people. It now mirrors the
+ * three real detail-cards on /leadership/ verbatim — same photos, bios,
+ * "Leads" line and links — so the same person isn't described two different
+ * ways depending on which page a visitor lands on. The fourth generic role
+ * is dropped rather than invented a name for.
+ *
+ * Server Component: no behaviour of its own.
  */
 export default function Leadership() {
   return (
@@ -27,68 +34,111 @@ export default function Leadership() {
             {' '}
           </div>
           {' '}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7" data-reveal="">
+          <div className="grid-hairline grid-cols-1 sm:grid-cols-3" data-reveal="">
             {' '}
-            <a href="/founder/" className="block text-center group" aria-label="Meet Pragadeesh, Founder of Grow Spark Consulting">
+            <div className="detail-card">
               {' '}
-              <div className="lead-avatar transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-y-1">
-                GS
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/pragadeesh.jpg"
+                  alt="Pragadeesh, Founder of Grow Spark Consulting"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
-              <h3 className="text-[16px] mb-1 font-display font-semibold transition-colors duration-200 group-hover:text-accent">
-                Founder
+              <h3>
+                Pragadeesh
               </h3>
               {' '}
-              <span className="text-[13px] text-accent font-semibold">
-                Business Strategy & Vision
+              <p className="!text-accent !font-medium mb-3">
+                Founder & Growth Strategist
+              </p>
+              {' '}
+              <p className="mb-4">
+                Leads Grow Spark's overall growth methodology and founder-facing strategy work.
+              </p>
+              {' '}
+              <span className="eyebrow block mb-2">
+                Leads
               </span>
               {' '}
-            </a>
-            {' '}
-            <div className="text-center">
+              <p className="mb-5">
+                Strategy · Growth · Founder Engagements
+              </p>
               {' '}
-              <div className="lead-avatar">
-                SA
-              </div>
-              {' '}
-              <h3 className="text-[16px] mb-1 font-display font-semibold">
-                Senior Advisor
-              </h3>
-              {' '}
-              <span className="text-[13px] text-accent font-semibold">
-                Enterprise Transformation
-              </span>
+              <a href="/founder/" className="inline-link">
+                View Profile {' '}
+                <ArrowRight className="w-4 h-4" />
+              </a>
               {' '}
             </div>
             {' '}
-            <div className="text-center">
+            <div className="detail-card">
               {' '}
               <div className="lead-avatar">
-                TC
+                S
               </div>
               {' '}
-              <h3 className="text-[16px] mb-1 font-display font-semibold">
-                Transformation Consultant
+              <h3>
+                Susshinder S.A.
               </h3>
               {' '}
-              <span className="text-[13px] text-accent font-semibold">
-                Operating Model Design
+              <p className="!text-accent !font-medium mb-3">
+                Chief Marketing Officer
+              </p>
+              {' '}
+              <p className="mb-4">
+                Works at the intersection of people, marketing, technology and growth — helping businesses understand their customers and communicate the real value of what they offer.
+              </p>
+              {' '}
+              <span className="eyebrow block mb-2">
+                Leads
               </span>
+              {' '}
+              <p className="mb-5">
+                Marketing Strategy · Brand · Customer Acquisition · Market Research
+              </p>
+              {' '}
+              <a href="/cmo/" className="inline-link">
+                View Profile {' '}
+                <ArrowRight className="w-4 h-4" />
+              </a>
               {' '}
             </div>
             {' '}
-            <div className="text-center">
+            <div className="detail-card">
               {' '}
-              <div className="lead-avatar">
-                TS
+              <div className="lead-avatar !bg-paper-sunken !text-muted">
+                +
               </div>
               {' '}
-              <h3 className="text-[16px] mb-1 font-display font-semibold">
-                Technology Specialist
+              <h3>
+                [Leader 3 Name]
               </h3>
               {' '}
-              <span className="text-[13px] text-accent font-semibold">
-                AI & Systems Implementation
+              <p className="!text-muted !font-medium mb-3">
+                [Leader 3 Title]
+              </p>
+              {' '}
+              <p className="mb-4">
+                [Leader 3 bio to be added — verified details pending.]
+              </p>
+              {' '}
+              <span className="eyebrow block mb-2">
+                Leads
+              </span>
+              {' '}
+              <p className="mb-5">
+                [Leader 3 responsibilities]
+              </p>
+              {' '}
+              <span className="inline-link is-pending">
+                View Profile {' '}
+                <ArrowRight className="w-4 h-4" />
               </span>
               {' '}
             </div>
