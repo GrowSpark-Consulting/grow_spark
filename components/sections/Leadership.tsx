@@ -83,8 +83,8 @@ export default function Leadership() {
                 <img
                   src="/susshinder.png"
                   alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
-                  width={1254}
-                  height={1254}
+                  width={1002}
+                  height={1163}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"
