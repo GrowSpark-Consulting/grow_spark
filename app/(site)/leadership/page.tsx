@@ -372,8 +372,16 @@ export default function Page() {
             {' '}
             <div className="detail-card">
               {' '}
-              <div className="lead-avatar">
-                S
+              <div className="lead-avatar overflow-hidden">
+                <img
+                  src="/susshinder.png"
+                  alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {' '}
               <h3>

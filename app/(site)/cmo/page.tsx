@@ -107,12 +107,18 @@ export default function Page() {
               {' '}
               <div className="portrait-frame">
                 {' '}
+                <img
+                  src="/susshinder.png"
+                  alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+                {' '}
                 <span className="corner">
                   Chief Marketing Officer
-                </span>
-                {' '}
-                <span className="initial">
-                  S
                 </span>
                 {' '}
                 <div className="caption">
