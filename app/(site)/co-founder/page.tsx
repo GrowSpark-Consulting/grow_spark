@@ -122,8 +122,8 @@ export default function Page() {
                 <img
                   src="/raja.png"
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
-                  width={896}
-                  height={1050}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover object-top"

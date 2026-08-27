@@ -214,8 +214,8 @@ export default function Page() {
                 <img
                   src="/pragadeesh.jpg"
                   alt="Pragadeesh, Founder of Grow Spark Consulting"
-                  width={1254}
-                  height={1254}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
@@ -335,8 +335,8 @@ export default function Page() {
                 <img
                   src="/pragadeesh.jpg"
                   alt="Pragadeesh, Founder of Grow Spark Consulting"
-                  width={1254}
-                  height={1254}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"
@@ -376,8 +376,8 @@ export default function Page() {
                 <img
                   src="/susshinder.png"
                   alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
-                  width={1002}
-                  height={1163}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"
@@ -417,8 +417,8 @@ export default function Page() {
                 <img
                   src="/raja.png"
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
-                  width={896}
-                  height={1050}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover object-top"

@@ -136,8 +136,8 @@ export default function Page() {
                 <img
                   src="/pragadeesh.jpg"
                   alt="Pragadeesh, Founder of Grow Spark Consulting"
-                  width={1254}
-                  height={1254}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover object-top"

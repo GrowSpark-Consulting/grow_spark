@@ -110,8 +110,8 @@ export default function Page() {
                 <img
                   src="/susshinder.png"
                   alt="Susshinder S.A., Chief Marketing Officer of Grow Spark Consulting"
-                  width={1002}
-                  height={1163}
+                  width={1200}
+                  height={1200}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover object-top"
