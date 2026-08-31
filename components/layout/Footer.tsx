@@ -87,7 +87,6 @@ export default function Footer() {
             </h3>
             <div className="flex flex-col gap-3.5">
               <a href="/leadership/" className="footer-link">Leadership</a>
-              <a href="/our-team/" className="footer-link">Our Team</a>
               <a href="/alliances/" className="footer-link">Alliances</a>
               <a href="/careers/" className="footer-link">Careers</a>
               <a href="/founder/" className="footer-link">Founder</a>

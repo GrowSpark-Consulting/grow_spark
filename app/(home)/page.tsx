@@ -7,7 +7,6 @@ import Industries from '@/components/sections/Industries';
 import Insights from '@/components/sections/Insights';
 import Leadership from '@/components/sections/Leadership';
 import Outcomes from '@/components/sections/Outcomes';
-import OurTeam from '@/components/sections/OurTeam';
 import Pillars from '@/components/sections/Pillars';
 import TrustStats from '@/components/sections/TrustStats';
 import ValueStrip from '@/components/sections/ValueStrip';
@@ -93,8 +92,6 @@ export default function Page() {
       <Insights />
       {' '}
       <Leadership />
-      {' '}
-      <OurTeam />
       {' '}
       <FooterCta />
       {' '}
