@@ -14,6 +14,7 @@ export const PRIMARY_LINKS: NavLink[] = [
   { href: '/framework/', label: 'Our Framework' },
   { href: '/rnd/', label: 'R&D' },
   { href: '/industries/', label: 'Industries' },
+  { href: '/blog/', label: 'Blog' },
 ];
 
 export const WHO_WE_ARE_LINKS: NavLink[] = [
