@@ -59,6 +59,9 @@ export const env = {
   get hubspotDealStageId() {
     return required('HUBSPOT_DEAL_STAGE_ID');
   },
+  get sanityRevalidateSecret() {
+    return required('SANITY_REVALIDATE_SECRET');
+  },
 };
 
 /** True when every variable the contact workflow needs is present. */
@@ -112,4 +115,9 @@ export function hubspotDealsConfigured(): boolean {
       && process.env.HUBSPOT_DEAL_PIPELINE_ID
       && process.env.HUBSPOT_DEAL_STAGE_ID,
   );
+}
+
+/** True when the Sanity webhook can verify its signature and revalidate. */
+export function sanityRevalidateConfigured(): boolean {
+  return Boolean(process.env.SANITY_REVALIDATE_SECRET);
 }
