@@ -20,6 +20,12 @@
   --color-accent-tint: #E6EFEA;
   --color-accent-ink: #FFFFFF;
   --color-accent-bright: #4FCB9B;
+  /* Warning register for the case-study pages — the "before" column,
+     constraint badges and risk tags. Muted rust so it reads as caution
+     next to the emerald accent rather than as an error state. */
+  --color-caution: #9A3B2E;
+  --color-caution-tint: #F7EAE7;
+  --color-caution-line: #E8C9B8;
   /* Deloitte Sans is a proprietary corporate typeface: not on Google Fonts,
      not self-hostable without a licence. It leads the stack so it is used
      wherever installed, or as soon as licensed .woff2 files are added behind

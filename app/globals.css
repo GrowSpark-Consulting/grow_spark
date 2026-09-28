@@ -7,6 +7,7 @@
   the same as before the Vite tree was removed.
 */
 @import '../styles/base.css';
+@import '../styles/case-study.css';
 
 /*
   Explicit source globs rather than Tailwind v4's automatic detection, so the
