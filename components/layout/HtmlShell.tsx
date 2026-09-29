@@ -20,10 +20,17 @@ export default function HtmlShell({
   children,
   fontHref = FONT_HREF_DEFAULT,
   heroTheme = false,
+  siteChrome = true,
 }: {
   children: ReactNode;
   fontHref?: string;
   heroTheme?: boolean;
+  /**
+   * Render the global <Nav /> and <Footer />. The standalone landing layout,
+   * app/(landing)/, turns this off and supplies its own minimal header and
+   * footer; every other route keeps the default.
+   */
+  siteChrome?: boolean;
 }) {
   return (
     <html lang="en">
@@ -48,9 +55,9 @@ export default function HtmlShell({
           than moving here: the homepage renders it unclassed for its full-bleed
           hero, while the other 26 add pt-24 to clear the fixed header.
         */}
-        <Nav />
+        {siteChrome && <Nav />}
         {children}
-        <Footer />
+        {siteChrome && <Footer />}
         {/*
           Renders nothing — it is the client entry point that starts Lenis,
           GSAP/ScrollTrigger, the scroll animations and the tab behaviour, the

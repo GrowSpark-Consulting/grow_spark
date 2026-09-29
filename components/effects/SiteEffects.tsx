@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { initSmoothScroll } from './smoothScroll';
 import { initAnchorLinks, initServiceTabs, initBookingTabs } from './interactions';
+import { initShowMore } from './showMore';
 import {
   initScrollReveal,
   initCounters,
@@ -50,6 +51,7 @@ export default function SiteEffects() {
     cleanups.push(initAnchorLinks(lenis));
     cleanups.push(initServiceTabs());
     cleanups.push(initBookingTabs());
+    cleanups.push(initShowMore());
     cleanups.push(initScrollReveal());
     cleanups.push(initCounters());
     cleanups.push(initFrameworkLine());
