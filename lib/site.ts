@@ -15,3 +15,9 @@ export const FONT_HREF_DEFAULT =
   'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap';
 export const FONT_HREF_HOME =
   'https://fonts.googleapis.com/css2?family=Manrope:wght@300&family=Open+Sans:wght@400;500;600;700;800&display=swap';
+/**
+ * The Transformation Framework landing page sets every element in Poppins
+ * (--font-landing), so it requests Poppins alone rather than Open Sans.
+ */
+export const FONT_HREF_LANDING =
+  'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap';

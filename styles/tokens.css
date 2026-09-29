@@ -111,4 +111,57 @@
   --z-header: 50;
   --z-drawer: 60;
   --z-skip-link: 200;
+
+  /*
+    Transformation Framework landing page (/growspark-transformation-framework/,
+    styles/landing.css). A deliberately separate direct-response register —
+    navy bands, purple/lavender accents, a yellow action colour and heavy
+    uppercase display type — modelled on the reference audited in
+    docs/acquisition-workshop4b-ui-audit.md (§C). Consumed only by
+    landing.css; nothing else on the site references these.
+  */
+  --font-landing: 'Poppins', 'Open Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --lp-navy: #131628;
+  --lp-navy-raised: #1D2138;
+  --lp-navy-line: rgba(255, 255, 255, 0.14);
+  --lp-slate: #272D51;
+  --lp-ink: #141527;
+  --lp-body: #3A3B46;
+  --lp-muted: #6A6A75;
+  --lp-on-dark-muted: #B8B7C2;
+  --lp-on-dark-dim: #B2B2B2;
+  --lp-purple: #7000FF;
+  --lp-purple-deep: #5A00CC;
+  --lp-lavender: #9B6BFF;
+  --lp-purple-tint: #F3EDFF;
+  --lp-action: #F6D234;
+  --lp-action-hover: #FFE066;
+  --lp-action-ink: #000000;
+  --lp-orange: #FFAA00;
+  --lp-grey: #EFEFEF;
+  --lp-band-from: #9B6BFF;
+  --lp-band-to: #7000FF;
+  --lp-letter-ink: #1F223C;
+  --lp-hairline: #DFDFDE;
+  --lp-card-line: rgba(20, 21, 39, 0.1);
+  --lp-error: #B42318;
+
+  --lp-radius: 16px;
+  --lp-radius-sm: 8px;
+  --lp-shadow-card: 0 10px 30px -22px rgba(20, 21, 39, 0.4);
+
+  /* Each clamp() hits the reference's measured size at 390px and 1440px. */
+  --fs-lp-hero: clamp(1.875rem, 1.53rem + 1.43vw, 2.8125rem);          /* 30 → 45 */
+  --fs-lp-display-xl: clamp(2rem, 1.06rem + 3.85vw, 4.5rem);           /* 32 → 72 */
+  --fs-lp-display-lg: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);          /* 32 → 60 */
+  --fs-lp-display-md: clamp(2rem, 1.63rem + 1.52vw, 3rem);             /* 32 → 48 */
+  --fs-lp-band: clamp(2rem, 1.12rem + 3.62vw, 4.375rem);               /* 32 → 70 */
+  --fs-lp-card-num: clamp(2rem, 1.81rem + 0.76vw, 2.5rem);             /* 32 → 40 */
+  --fs-lp-card-title: clamp(1.25rem, 1.16rem + 0.38vw, 1.5rem);        /* 20 → 24 */
+  --fs-lp-lead: clamp(1rem, 0.95rem + 0.19vw, 1.125rem);               /* 16 → 18 */
+  --fs-lp-cta: clamp(1.0625rem, 0.99rem + 0.29vw, 1.25rem);            /* 17 → 20 */
+  --space-lp-section: clamp(2rem, 1.3rem + 2.8vw, 4rem);
+  --space-lp-section-lg: clamp(3.5rem, 3rem + 2vw, 5rem);
+  --space-lp-gutter: clamp(1rem, 0.6rem + 2vw, 2.8125rem);
 }
