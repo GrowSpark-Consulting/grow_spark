@@ -21,3 +21,6 @@ export const FONT_HREF_HOME =
  */
 export const FONT_HREF_LANDING =
   'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap';
+
+/** Google Tag Manager container, loaded on every route by HtmlShell. */
+export const GTM_ID = 'GTM-T44BDVHX';
