@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
+import { responsiveImage, SIZES_PORTRAIT } from '@/lib/images';
 
 /**
  * The Co-Founder, Technology & Operations profile — Raja V., Leader 3.
@@ -30,6 +33,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/co-founder/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "profile",
     siteName: "Grow Spark Consulting",
     title: "Meet Raja V. — Co-Founder, Technology & Operations | Grow Spark Consulting",
@@ -47,6 +51,13 @@ export default function Page() {
   return (
     <main id="main" className="pt-24">
       {' '}
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Leadership', '/leadership/'],
+          ['Co-Founder, Technology & Operations', '/co-founder/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         {' '}
         <ol className="breadcrumb">
@@ -120,7 +131,7 @@ export default function Page() {
               <div className="portrait-frame">
                 {' '}
                 <img
-                  src="/raja.png"
+                  {...responsiveImage('/raja.png', 1200, 1200, SIZES_PORTRAIT)}
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 
 /**
  * Ported from case-study-founder-dependency.html. Content is unchanged; the
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/case-studies/founder-dependency/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "article",
     siteName: "Grow Spark Consulting",
     title: "Case Study: The Business Was Growing, The Founder Was Drowning | Grow Spark Consulting",
@@ -29,6 +32,13 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main id="main" className="pt-24 cs-page">
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Our Work', '/case-studies/'],
+          ['Founder Dependency', '/case-studies/founder-dependency/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         <ol className="breadcrumb">
           <li><a href="/">Home</a></li>

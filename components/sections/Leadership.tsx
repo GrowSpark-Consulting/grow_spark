@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { responsiveImage, SIZES_AVATAR_3COL } from '@/lib/images';
 
 /**
  * The home page's leadership teaser. Originally four initials-only avatar
@@ -40,7 +41,7 @@ export default function Leadership() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/pragadeesh.jpg"
+                  {...responsiveImage('/pragadeesh.jpg', 1200, 1200, SIZES_AVATAR_3COL)}
                   alt="Pragadeesh, Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}
@@ -81,7 +82,7 @@ export default function Leadership() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/susshinder.png"
+                  {...responsiveImage('/susshinder.png', 1200, 1200, SIZES_AVATAR_3COL)}
                   alt="Susshinder S.A., Co-Founder & Chief Marketing Officer of Grow Spark Consulting"
                   width={1200}
                   height={1200}
@@ -122,7 +123,7 @@ export default function Leadership() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/raja.png"
+                  {...responsiveImage('/raja.png', 1200, 1200, SIZES_AVATAR_3COL)}
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}

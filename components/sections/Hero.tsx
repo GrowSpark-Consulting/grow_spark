@@ -1,4 +1,5 @@
 import { ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
+import { responsiveImage, SIZES_FULL_BLEED } from '@/lib/images';
 
 /**
  * The four hero slides now share one still background instead of a video per
@@ -10,6 +11,10 @@ import { ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
  * the same line as the header logo and sits in the dark left third of the
  * image rather than over its bright focal point.
  *
+ * Only the first slide's headline is the page's <h1>; slides 2–4 use <h2>
+ * with the same class, so all four look identical but the page keeps a single
+ * top-level heading.
+ *
  * Server Component: heroCarousel.ts drives the Swiper from the client.
  */
 export default function Hero() {
@@ -20,7 +25,7 @@ export default function Hero() {
           <div className="swiper-wrapper h-full">
             <div className="swiper-slide relative h-full overflow-hidden" role="group" aria-roledescription="slide" aria-label="1 of 4">
               <img
-                src="/pic1.png"
+                {...responsiveImage('/pic1.png', 1672, 941, SIZES_FULL_BLEED)}
                 alt=""
                 aria-hidden="true"
                 fetchPriority="high"
@@ -48,7 +53,7 @@ export default function Hero() {
 
             <div className="swiper-slide relative h-full overflow-hidden" role="group" aria-roledescription="slide" aria-label="2 of 4">
               <img
-                src="/pic2.png"
+                {...responsiveImage('/pic2.png', 1672, 941, SIZES_FULL_BLEED)}
                 alt=""
                 aria-hidden="true"
                 loading="eager"
@@ -62,9 +67,9 @@ export default function Hero() {
                     <span className="hero-eyebrow">
                       What We Do
                     </span>
-                    <h1 className="hero-headline">
+                    <h2 className="hero-headline">
                       AI automation, custom software, and full-stack digital delivery.
-                    </h1>
+                    </h2>
                     <a href="/solutions/" className="btn btn-hero">
                       View All Services
                       <ArrowRight className="w-4 h-4 btn-arrow" />
@@ -76,7 +81,7 @@ export default function Hero() {
 
             <div className="swiper-slide relative h-full overflow-hidden" role="group" aria-roledescription="slide" aria-label="3 of 4">
               <img
-                src="/pic3.png"
+                {...responsiveImage('/pic3.png', 1672, 941, SIZES_FULL_BLEED)}
                 alt=""
                 aria-hidden="true"
                 loading="eager"
@@ -90,9 +95,9 @@ export default function Hero() {
                     <span className="hero-eyebrow">
                       Our Methodology
                     </span>
-                    <h1 className="hero-headline">
+                    <h2 className="hero-headline">
                       The Grow Spark Business Transformation Framework™
-                    </h1>
+                    </h2>
                     <a href="#framework" className="btn btn-hero">
                       Explore The Framework
                       <ArrowRight className="w-4 h-4 btn-arrow" />
@@ -104,7 +109,7 @@ export default function Hero() {
 
             <div className="swiper-slide relative h-full overflow-hidden" role="group" aria-roledescription="slide" aria-label="4 of 4">
               <img
-                src="/pic4.png"
+                {...responsiveImage('/pic4.png', 1672, 941, SIZES_FULL_BLEED)}
                 alt=""
                 aria-hidden="true"
                 loading="eager"
@@ -118,9 +123,9 @@ export default function Hero() {
                     <span className="hero-eyebrow">
                       Case Study
                     </span>
-                    <h1 className="hero-headline">
+                    <h2 className="hero-headline">
                       Reducing production downtime through a redesigned operating model.
-                    </h1>
+                    </h2>
                     <a href="/rnd/" className="btn btn-hero">
                       R &amp; D
                       <ArrowRight className="w-4 h-4 btn-arrow" />

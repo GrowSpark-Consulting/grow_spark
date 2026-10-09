@@ -3,6 +3,9 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/site';
+import { client } from '@/lib/sanity/client';
+import { BLOG_SITEMAP_QUERY } from '@/lib/sanity/queries';
+import type { BlogSitemapEntry } from '@/lib/sanity/types';
 
 /**
  * The public, indexable routes of the site, in navigation order.
@@ -16,6 +19,9 @@ import { SITE_URL } from '@/lib/site';
  *                          force-dynamic. Listing a noindex URL in a sitemap
  *                          is a Search Console warning.
  *   - /api/*             — route handlers, not pages.
+ *   - /growspark-transformation-framework/
+ *                        — the (landing) campaign page; noindex while it
+ *                          carries placeholder copy.
  *   - /privacy/, /terms/, /cookie-policy/
  *                        — the footer links to these on all 27 pages, but the
  *                          routes do not exist yet (documented in CLAUDE.md).
@@ -27,6 +33,9 @@ import { SITE_URL } from '@/lib/site';
  * path used here. The trailing slashes are required: `trailingSlash: true` in
  * next.config.ts means `/about` 301s to `/about/`, and a sitemap must never
  * list a redirecting URL.
+ *
+ * Blog posts are not listed here: they come from Sanity at build time (see
+ * `blogEntries`), using the same "published" filter as the blog routes.
  *
  * `__tests__/sitemap.test.ts` enforces all of that, so this list cannot
  * silently drift out of sync with the routes.
@@ -56,6 +65,7 @@ const ROUTES = [
   '/rnd/founder-dependency-index/',
   '/rnd/margin-architecture/',
   '/rnd/revenue-without-profit/',
+  '/blog/',
   '/leadership/',
   '/founder/',
   '/cmo/',
@@ -109,13 +119,32 @@ function lastModified(): (route: string) => Date | undefined {
   };
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+/**
+ * One entry per published post, dated by Sanity's own `_updatedAt`. A fetch
+ * failure is left to throw: at build time that fails the build exactly as the
+ * blog routes themselves would, and on a background revalidation Next keeps
+ * serving the previous sitemap rather than one with the posts missing.
+ */
+async function blogEntries(): Promise<MetadataRoute.Sitemap> {
+  const posts = await client.fetch<BlogSitemapEntry[]>(BLOG_SITEMAP_QUERY);
+  return posts.map((post) => ({
+    url: new URL(`/blog/${post.slug}/`, SITE_URL).href,
+    lastModified: new Date(post._updatedAt),
+  }));
+}
+
+/** Same ISR window as the blog routes, so a new post is listed within a minute. */
+export const revalidate = 60;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const resolve = lastModified();
 
   // No <changefreq> or <priority>: Google ignores both, and a stale
   // hand-maintained priority column is worse than none.
-  return ROUTES.map((route) => ({
+  const pages = ROUTES.map((route) => ({
     url: new URL(route, SITE_URL).href,
     lastModified: resolve(route),
   }));
+
+  return [...pages, ...(await blogEntries())];
 }

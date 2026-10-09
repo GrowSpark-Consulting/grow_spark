@@ -22,5 +22,24 @@ export const FONT_HREF_HOME =
 export const FONT_HREF_LANDING =
   'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap';
 
+/**
+ * Fallback social-sharing image for every page without one of its own: the
+ * homepage hero still (public/pic1.png) cropped to 1200×630 with the white
+ * logo, saved as public/og-default.jpg. Each page has to list it in its own
+ * `openGraph.images`, because Next replaces a parent's `openGraph` object
+ * wholesale rather than merging it. `twitter:image` is filled from it
+ * automatically.
+ */
+export const DEFAULT_OG_IMAGE = {
+  url: '/og-default.jpg',
+  width: 1200,
+  height: 630,
+  alt: 'Grow Spark Consulting',
+};
+
+/** Stable `@id`s so JSON-LD on any page can reference the homepage entities. */
+export const ORG_ID = `${SITE_URL}/#organization`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
+
 /** Google Tag Manager container, loaded on every route by HtmlShell. */
 export const GTM_ID = 'GTM-T44BDVHX';

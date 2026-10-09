@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
 import LandingHeader from '@/components/landing/LandingHeader';
 import LandingFooter from '@/components/landing/LandingFooter';
 import HeroSection from '@/components/landing/sections/HeroSection';
@@ -33,6 +34,15 @@ export const metadata: Metadata = {
   // need the (landing) group added — the sitemap test will fail until then).
   robots: { index: false, follow: true },
   alternates: { canonical: '/growspark-transformation-framework/' },
+  // A campaign page gets shared even while noindex, so it carries a preview.
+  openGraph: {
+    images: [DEFAULT_OG_IMAGE],
+    type: 'website',
+    siteName: 'Grow Spark Consulting',
+    title: 'Grow Spark Transformation Framework | Grow Spark Consulting',
+    url: 'https://www.growsparkconsulting.com/growspark-transformation-framework/',
+  },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function Page() {

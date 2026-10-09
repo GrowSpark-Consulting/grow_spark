@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { responsiveImage, SIZES_AVATAR_4COL } from '@/lib/images';
 
 /**
  * The home page's team teaser, sitting right after Leadership. Same
@@ -36,7 +37,7 @@ export default function OurTeam() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/raja.png"
+                  {...responsiveImage('/raja.png', 1200, 1200, SIZES_AVATAR_4COL)}
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}

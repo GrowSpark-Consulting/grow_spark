@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
+import { responsiveImage, SIZES_PORTRAIT } from '@/lib/images';
 
 /**
  * The Co-Founder & Chief Marketing Officer profile, built on the same section vocabulary as
@@ -18,6 +21,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/cmo/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "profile",
     siteName: "Grow Spark Consulting",
     title: "Meet Susshinder S.A. — Co-Founder & Chief Marketing Officer | Grow Spark Consulting",
@@ -35,6 +39,13 @@ export default function Page() {
   return (
     <main id="main" className="pt-24">
       {' '}
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Leadership', '/leadership/'],
+          ['Co-Founder & Chief Marketing Officer', '/cmo/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         {' '}
         <ol className="breadcrumb">
@@ -108,7 +119,7 @@ export default function Page() {
               <div className="portrait-frame">
                 {' '}
                 <img
-                  src="/susshinder.png"
+                  {...responsiveImage('/susshinder.png', 1200, 1200, SIZES_PORTRAIT)}
                   alt="Susshinder S.A., Co-Founder & Chief Marketing Officer of Grow Spark Consulting"
                   width={1200}
                   height={1200}

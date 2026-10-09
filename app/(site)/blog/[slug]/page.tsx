@@ -5,6 +5,8 @@ import { BLOG_POST_BY_SLUG_QUERY, BLOG_SLUGS_QUERY } from '@/lib/sanity/queries'
 import type { BlogPost } from '@/lib/sanity/types';
 import { urlForImage } from '@/lib/sanity/image';
 import PortableTextContent from '@/components/blog/PortableTextContent';
+import JsonLd, { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
+import { DEFAULT_OG_IMAGE, ORG_ID, SITE_NAME, SITE_URL } from '@/lib/site';
 
 export const revalidate = 60;
 
@@ -41,7 +43,9 @@ export async function generateMetadata({
       title,
       description,
       url: `https://www.growsparkconsulting.com/blog/${post.slug}/`,
-      ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630 }] } : {}),
+      ...(post.publishedAt ? { publishedTime: post.publishedAt } : {}),
+      modifiedTime: post._updatedAt,
+      images: [ogImage ? { url: ogImage, width: 1200, height: 630 } : DEFAULT_OG_IMAGE],
     },
     twitter: {
       card: 'summary_large_image',
@@ -67,8 +71,45 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     ? urlForImage(post.coverImage).width(1200).height(675).fit('crop').url()
     : null;
 
+  const url = `${SITE_URL}/blog/${post.slug}/`;
+
+  // Only fields the page visibly shows. `author` is a free-text name in the
+  // CMS: the company's own name points at the Organization, anything else is
+  // a Person known by name alone.
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    ...(post.excerpt ? { description: post.excerpt } : {}),
+    url,
+    mainEntityOfPage: url,
+    ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+    dateModified: post._updatedAt,
+    ...(post.author
+      ? {
+          author:
+            post.author.trim() === SITE_NAME
+              ? { '@type': 'Organization', '@id': ORG_ID, name: SITE_NAME }
+              : { '@type': 'Person', name: post.author },
+        }
+      : {}),
+    ...(coverImageUrl ? { image: coverImageUrl } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
+    ...(post.tags?.length ? { keywords: post.tags.join(', ') } : {}),
+    inLanguage: 'en',
+    publisher: { '@id': ORG_ID },
+  };
+
   return (
     <main id="main" className="pt-24">
+      <JsonLd data={articleJsonLd} />
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Blog', '/blog/'],
+          [post.title, `/blog/${post.slug}/`],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         <ol className="breadcrumb">
           <li>

@@ -44,6 +44,7 @@ export const BLOG_POST_BY_SLUG_QUERY = defineQuery(`
     category,
     tags,
     publishedAt,
+    _updatedAt,
     seoTitle,
     seoDescription
   }
@@ -51,4 +52,12 @@ export const BLOG_POST_BY_SLUG_QUERY = defineQuery(`
 
 export const BLOG_SLUGS_QUERY = defineQuery(`
   *[${PUBLISHED_FILTER}].slug.current
+`);
+
+/** Every published post's URL slug and last edit, for app/sitemap.ts. */
+export const BLOG_SITEMAP_QUERY = defineQuery(`
+  *[${PUBLISHED_FILTER}] | order(publishedAt desc) {
+    "slug": slug.current,
+    _updatedAt
+  }
 `);

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { ArrowRight } from 'lucide-react';
 import FooterCta from '@/components/layout/FooterCta';
 
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/solutions/leadership-alignment/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "website",
     siteName: "Grow Spark Consulting",
     title: "Leadership Isn't Aligned | Grow Spark Consulting",
@@ -30,6 +33,13 @@ export default function Page() {
   return (
     <main id="main" className="pt-24">
       {' '}
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Solutions', '/solutions/'],
+          ['Leadership Isn’t Aligned', '/solutions/leadership-alignment/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         {' '}
         <ol className="breadcrumb">

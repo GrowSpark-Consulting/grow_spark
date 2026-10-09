@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE, ORG_ID, SITE_NAME, SITE_URL, WEBSITE_ID } from '@/lib/site';
 import Challenges from '@/components/sections/Challenges';
 import ExecSummary from '@/components/sections/ExecSummary';
 import Framework from '@/components/sections/Framework';
@@ -12,6 +13,7 @@ import TrustStats from '@/components/sections/TrustStats';
 import ValueStrip from '@/components/sections/ValueStrip';
 import WhyUs from '@/components/sections/WhyUs';
 import FooterCta from '@/components/layout/FooterCta';
+import JsonLd from '@/components/seo/JsonLd';
 
 /**
  * Transcribed from pages/index.html by scripts/html-to-tsx.py.
@@ -24,6 +26,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "website",
     siteName: "Grow Spark Consulting",
     title: "Grow Spark Consulting — Building Companies That Outperform",
@@ -37,36 +40,51 @@ export const metadata: Metadata = {
   },
 };
 
-/** JSON-LD preserved verbatim from the source page. */
+/**
+ * The Organization block is the source page's, verbatim, plus an `@id` and the
+ * logo; every value matches what the footer shows. WebSite names the site for
+ * search results. No SearchAction: the site has no search.
+ */
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Grow Spark Consulting",
-  "url": "https://www.growsparkconsulting.com/",
-  "email": "info@growsparkconsulting.com",
-  "telephone": "+91-63814-61106",
-  "description": "AI & digital transformation consultancy helping founders and leadership teams build companies that outperform their competition.",
-  "areaServed": "Global",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Urapakkam",
-    "addressRegion": "Chennai",
-    "postalCode": "603211",
-    "addressCountry": "IN"
-  },
-  "sameAs": [
-    "https://www.linkedin.com/company/growsparkconsulting",
-    "https://www.instagram.com/growsparkconsulting/"
-  ]
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": ORG_ID,
+      "name": "Grow Spark Consulting",
+      "logo": `${SITE_URL}/logo/gsc-black.png`,
+      "url": "https://www.growsparkconsulting.com/",
+      "email": "info@growsparkconsulting.com",
+      "telephone": "+91-63814-61106",
+      "description": "AI & digital transformation consultancy helping founders and leadership teams build companies that outperform their competition.",
+      "areaServed": "Global",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Urapakkam",
+        "addressRegion": "Chennai",
+        "postalCode": "603211",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/growsparkconsulting",
+        "https://www.instagram.com/growsparkconsulting/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      "name": SITE_NAME,
+      "url": `${SITE_URL}/`,
+      "inLanguage": "en",
+      "publisher": { "@id": ORG_ID },
+    },
+  ],
 } as const;
 
 export default function Page() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
     <main id="main">
       {' '}
       <Hero />

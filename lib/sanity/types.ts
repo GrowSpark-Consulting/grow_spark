@@ -34,6 +34,14 @@ export interface BlogPostListItem {
 export interface BlogPost extends BlogPostListItem {
   content: PortableTextBlock[] | null;
   tags: string[] | null;
+  /** Sanity's own last-edit timestamp; always present on a stored document. */
+  _updatedAt: string;
   seoTitle: string | null;
   seoDescription: string | null;
+}
+
+/** Projection used by app/sitemap.ts. */
+export interface BlogSitemapEntry {
+  slug: string;
+  _updatedAt: string;
 }

@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
 import { client } from '@/lib/sanity/client';
 import { BLOG_LISTING_QUERY } from '@/lib/sanity/queries';
 import type { BlogPostListItem } from '@/lib/sanity/types';
 import BlogPostCard from '@/components/blog/BlogPostCard';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 
 /** Revalidated on a timer for now; Sanity webhooks can replace this later. */
 export const revalidate = 60;
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: '/blog/' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     siteName: 'Grow Spark Consulting',
     title: 'Blog | Grow Spark Consulting',
@@ -31,6 +34,12 @@ export default async function Page() {
 
   return (
     <main id="main" className="pt-24">
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Blog', '/blog/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         <ol className="breadcrumb">
           <li>

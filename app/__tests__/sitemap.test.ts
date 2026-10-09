@@ -1,8 +1,18 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import sitemap from '@/app/sitemap';
 import { SITE_URL } from '@/lib/site';
+
+/** Stands in for Sanity, so the suite never touches the network. */
+const POSTS = [
+  { slug: 'first-post', _updatedAt: '2026-09-01T10:00:00Z' },
+  { slug: 'second-post', _updatedAt: '2026-09-20T08:30:00Z' },
+];
+
+vi.mock('@/lib/sanity/client', () => ({
+  client: { fetch: vi.fn(async () => POSTS) },
+}));
 
 /**
  * The sitemap is a hand-maintained list, so these tests are the thing that
@@ -11,13 +21,20 @@ import { SITE_URL } from '@/lib/site';
  * or switched to noindex without a matching sitemap edit fails here.
  */
 
-const entries = sitemap();
+const entries = await sitemap();
 const urls = entries.map((entry) => entry.url);
 const paths = urls.map((url) => new URL(url).pathname);
 
-/** app/(home)/page.tsx for '/', app/(site)/<route>/page.tsx otherwise. */
+/** A blog post URL, served by the dynamic app/(site)/blog/[slug]/ route. */
+const BLOG_POST = /^\/blog\/[^/]+\/$/;
+
+/**
+ * app/(home)/page.tsx for '/', app/(site)/blog/[slug]/page.tsx for a post,
+ * app/(site)/<route>/page.tsx otherwise.
+ */
 function pageFile(pathname: string): string {
-  const segment = pathname === '/' ? '(home)' : path.posix.join('(site)', pathname);
+  const route = BLOG_POST.test(pathname) ? '/blog/[slug]/' : pathname;
+  const segment = route === '/' ? '(home)' : path.posix.join('(site)', route);
   return path.join(process.cwd(), 'app', segment, 'page.tsx');
 }
 
@@ -66,9 +83,23 @@ describe('sitemap ↔ routes', () => {
     for (const pathname of paths) {
       const source = readFileSync(pageFile(pathname), 'utf8');
       expect(source, `${pathname} is noindex`).not.toMatch(/index:\s*false/);
-      expect(source, `${pathname} canonical mismatch`).toContain(
-        `canonical: "${pathname}"`,
-      );
+      if (BLOG_POST.test(pathname)) {
+        expect(source, 'blog post canonical mismatch').toContain(
+          'canonical: `/blog/${post.slug}/`',
+        );
+      } else {
+        expect(source, `${pathname} canonical mismatch`).toMatch(
+          new RegExp(`canonical: ["']${pathname}["']`),
+        );
+      }
+    }
+  });
+
+  it('lists every published blog post, dated by its last edit', () => {
+    for (const post of POSTS) {
+      const entry = entries.find((e) => e.url === `${SITE_URL}/blog/${post.slug}/`);
+      expect(entry, `missing post ${post.slug}`).toBeDefined();
+      expect(entry?.lastModified).toEqual(new Date(post._updatedAt));
     }
   });
 
@@ -90,7 +121,12 @@ describe('sitemap ↔ routes', () => {
         } else if (entry.name === 'page.tsx') {
           const source = readFileSync(path.join(dir, entry.name), 'utf8');
           const indexable = !/index:\s*false/.test(source);
-          if (indexable && !listed.has(route)) missing.push(route);
+          // A dynamic segment is covered once any listed URL fills it in.
+          const pattern = new RegExp(`^${route.replace(/\[[^\]]+\]/g, '[^/]+')}$`);
+          const covered = route.includes('[')
+            ? paths.some((p) => pattern.test(p))
+            : listed.has(route);
+          if (indexable && !covered) missing.push(route);
         }
       }
     };

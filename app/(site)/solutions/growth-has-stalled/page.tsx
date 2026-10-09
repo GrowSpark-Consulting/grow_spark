@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import FooterCta from '@/components/layout/FooterCta';
 
 /**
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/solutions/growth-has-stalled/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "website",
     siteName: "Grow Spark Consulting",
     title: "Growth Has Stalled? Let's Find Out Why | Grow Spark Consulting",
@@ -29,6 +32,13 @@ export default function Page() {
   return (
     <main id="main" className="pt-24">
       {' '}
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Solutions', '/solutions/'],
+          ['Growth Has Stalled', '/solutions/growth-has-stalled/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         {' '}
         <ol className="breadcrumb">

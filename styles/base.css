@@ -2050,6 +2050,11 @@
   background-image:
     linear-gradient(rgba(20, 23, 26, 0.55), rgba(20, 23, 26, 0.55)),
     url('/framee.png');
+  /* framee.webp is the same image re-encoded (≈75 KB against the PNG's
+     ≈1.4 MB). A browser without image-set() or WebP keeps the line above. */
+  background-image:
+    linear-gradient(rgba(20, 23, 26, 0.55), rgba(20, 23, 26, 0.55)),
+    image-set(url('/framee.webp') type('image/webp'), url('/framee.png') type('image/png'));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

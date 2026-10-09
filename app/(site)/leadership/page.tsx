@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { ArrowRight } from 'lucide-react';
+import { responsiveImage, SIZES_AVATAR_3COL, SIZES_PORTRAIT } from '@/lib/images';
 
 /**
  * Transcribed from pages/leadership/index.html by scripts/html-to-tsx.py.
@@ -12,6 +15,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/leadership/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "website",
     siteName: "Grow Spark Consulting",
     title: "Leadership — The People Behind The Thinking | Grow Spark Consulting",
@@ -29,6 +33,12 @@ export default function Page() {
   return (
     <main id="main" className="pt-24">
       {' '}
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Leadership', '/leadership/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         {' '}
         <ol className="breadcrumb">
@@ -212,7 +222,7 @@ export default function Page() {
               >
                 {' '}
                 <img
-                  src="/pragadeesh.jpg"
+                  {...responsiveImage('/pragadeesh.jpg', 1200, 1200, SIZES_PORTRAIT)}
                   alt="Pragadeesh, Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}
@@ -333,7 +343,7 @@ export default function Page() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/pragadeesh.jpg"
+                  {...responsiveImage('/pragadeesh.jpg', 1200, 1200, SIZES_AVATAR_3COL)}
                   alt="Pragadeesh, Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}
@@ -374,7 +384,7 @@ export default function Page() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/susshinder.png"
+                  {...responsiveImage('/susshinder.png', 1200, 1200, SIZES_AVATAR_3COL)}
                   alt="Susshinder S.A., Co-Founder & Chief Marketing Officer of Grow Spark Consulting"
                   width={1200}
                   height={1200}
@@ -415,7 +425,7 @@ export default function Page() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/raja.png"
+                  {...responsiveImage('/raja.png', 1200, 1200, SIZES_AVATAR_3COL)}
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}

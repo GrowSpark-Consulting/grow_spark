@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE } from '@/lib/site';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { ArrowRight } from 'lucide-react';
+import { responsiveImage, SIZES_AVATAR_4COL } from '@/lib/images';
 
 /**
  * The wider team, as distinct from /leadership/: four people, one of whom
@@ -24,6 +27,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/our-team/" },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: "website",
     siteName: "Grow Spark Consulting",
     title: "Our Team | Grow Spark Consulting",
@@ -41,6 +45,12 @@ export default function Page() {
   return (
     <main id="main" className="pt-24">
       {' '}
+      <BreadcrumbJsonLd
+        items={[
+          ['Home', '/'],
+          ['Our Team', '/our-team/'],
+        ]}
+      />
       <nav aria-label="Breadcrumb" className="mx-auto max-w-[var(--container-page)] px-5 sm:px-8 pt-10 pb-1">
         {' '}
         <ol className="breadcrumb">
@@ -105,7 +115,7 @@ export default function Page() {
               {' '}
               <div className="lead-avatar overflow-hidden">
                 <img
-                  src="/raja.png"
+                  {...responsiveImage('/raja.png', 1200, 1200, SIZES_AVATAR_4COL)}
                   alt="Raja V., Co-Founder of Grow Spark Consulting"
                   width={1200}
                   height={1200}

@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
 
   revalidatePath('/blog/');
   if (slug) revalidatePath(`/blog/${slug}/`);
+  revalidatePath('/sitemap.xml');
 
   log.info('sanity_revalidate.done', { slug: slug ?? null });
   return NextResponse.json({ revalidated: true, slug: slug ?? null, now: Date.now() });
