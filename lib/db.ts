@@ -148,6 +148,81 @@ export async function recentSubmissionCount(
   return Number(row?.count ?? 0);
 }
 
+export type GrowthAuditPaymentInput = {
+  txnid: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  website: string | null;
+  team_size: string;
+  industry: string;
+  revenue: string;
+  business_problem: string;
+  ip: string | null;
+  user_agent: string | null;
+};
+
+export type GrowthAuditPayment = GrowthAuditPaymentInput & {
+  id: string;
+  amount: number;
+  currency: string;
+  status: 'PENDING' | 'PAID' | 'FAILED';
+  mihpayid: string | null;
+};
+
+export async function insertGrowthAuditPayment(input: GrowthAuditPaymentInput): Promise<void> {
+  const sql = db();
+  const { ip, user_agent, ...payment } = input;
+  await sql`insert into business_growth_audit_payments ${sql({
+    ...payment,
+    source_page: '/bussiness-growth-audit/',
+    ip,
+    user_agent,
+  })}`;
+}
+
+export async function getGrowthAuditPayment(txnid: string): Promise<GrowthAuditPayment | null> {
+  const sql = db();
+  const [row] = await sql<GrowthAuditPayment[]>`
+    select txnid, name, email, phone, company, website, team_size, industry,
+           revenue, business_problem, id, amount, currency, status, mihpayid
+      from business_growth_audit_payments
+     where txnid = ${txnid}
+     limit 1
+  `;
+  return row ?? null;
+}
+
+export async function markGrowthAuditPaymentPaid(txnid: string, mihpayid: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update business_growth_audit_payments
+       set status = 'PAID', mihpayid = ${mihpayid}, paid_at = now()
+     where txnid = ${txnid} and status <> 'PAID'
+  `;
+}
+
+export async function markGrowthAuditPaymentFailed(txnid: string, mihpayid: string | null): Promise<void> {
+  const sql = db();
+  await sql`
+    update business_growth_audit_payments
+       set status = 'FAILED', mihpayid = coalesce(${mihpayid}, mihpayid)
+     where txnid = ${txnid} and status = 'PENDING'
+  `;
+}
+
+export async function recentGrowthAuditPaymentCount(ip: string, windowMinutes: number): Promise<number> {
+  const sql = db();
+  const [row] = await sql<{ count: string }[]>`
+    select count(*)::text as count
+      from business_growth_audit_payments
+     where ip = ${ip}
+       and created_at > now() - (${windowMinutes} * interval '1 minute')
+  `;
+  return Number(row?.count ?? 0);
+}
+
 /**
  * Founder Strategy Session bookings + Razorpay payment state.
  *
