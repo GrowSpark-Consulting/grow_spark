@@ -50,6 +50,13 @@ export const env = {
   get razorpayWebhookSecret() {
     return required('RAZORPAY_WEBHOOK_SECRET');
   },
+  get payu() {
+    return {
+      key: required('PAYU_KEY'),
+      salt: required('PAYU_SALT'),
+      environment: process.env.PAYU_ENVIRONMENT === 'production' ? 'production' as const : 'test' as const,
+    };
+  },
   get hubspotAccessToken() {
     return required('HUBSPOT_ACCESS_TOKEN');
   },
@@ -63,6 +70,11 @@ export const env = {
     return required('SANITY_REVALIDATE_SECRET');
   },
 };
+
+/** PayU checkout is enabled only after secrets and the payment database exist. */
+export function payuConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL && process.env.PAYU_KEY && process.env.PAYU_SALT);
+}
 
 /** True when every variable the contact workflow needs is present. */
 export function contactWorkflowConfigured(): boolean {
