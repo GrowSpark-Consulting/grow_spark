@@ -11,6 +11,16 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   trailingSlash: true,
 
+  // Keep the campaign's clean landing URL while serving its standalone HTML.
+  async rewrites() {
+    return [
+      {
+        source: '/bussiness-growth-audit/',
+        destination: '/bussiness-growth-audit/index.html',
+      },
+    ];
+  },
+
   // The legacy Vite source tree still lives in pages/ (kept recoverable until
   // the migration is validated). pages/ is also Next's Pages Router directory;
   // restricting page extensions to TSX keeps Next from ever treating those
