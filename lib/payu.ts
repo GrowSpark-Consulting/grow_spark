@@ -53,6 +53,7 @@ export function verifyPayuResponseHash(response: PayuCallback): boolean {
 
   const reverse = [
     response.status ?? '',
+    '', '', '', '', '',
     response.udf5 ?? '', response.udf4 ?? '', response.udf3 ?? '',
     response.udf2 ?? '', response.udf1 ?? '',
     response.email ?? '', response.firstname ?? '', response.productinfo ?? '',
