@@ -1,8 +1,13 @@
+import { metaPixelId } from '@/lib/meta/shared';
+
 /**
  * Minimal landing-page footer: logo, one line of positioning, a handful of
  * onward links and the copyright. The global footer's Privacy / Terms /
  * Cookie Policy links point at routes that do not exist yet, so they are
  * left out here rather than repeated.
+ *
+ * "Cookie preferences" mirrors the global footer's: present only with a Meta
+ * Pixel configured, reopened by components/tracking/CookieConsent.tsx.
  */
 export default function LandingFooter() {
   return (
@@ -27,6 +32,11 @@ export default function LandingFooter() {
           <a href="/case-studies/">Case Studies</a>
           <a href="/contact/">Contact</a>
           <a href="mailto:info@growsparkconsulting.com">info@growsparkconsulting.com</a>
+          {metaPixelId() && (
+            <button type="button" data-cookie-preferences="">
+              Cookie preferences
+            </button>
+          )}
         </nav>
         <p className="lp-footer__copy">&copy; 2026 Grow Spark Consulting. All rights reserved.</p>
       </div>

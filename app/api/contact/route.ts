@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { after, NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
   insertContactSubmission,
@@ -12,6 +12,7 @@ import { sendContactNotification } from '@/lib/email';
 import { contactWorkflowConfigured } from '@/lib/env';
 import { syncContactSubmissionToHubSpot } from '@/lib/hubspot/sync';
 import { log, redact } from '@/lib/logger';
+import { contactFormName, metaLeadContext, sendMetaLead } from '@/lib/meta/capi';
 import { contactSchema } from '@/lib/validation/contact';
 
 /**
@@ -176,6 +177,21 @@ export async function POST(request: Request) {
       error: redact(e instanceof Error ? e.message : String(e)),
     });
   }
+
+  // 8 — Meta Conversions API, after the response has gone: Meta can never
+  // delay or fail the submission. sendMetaLead sends nothing without the
+  // visitor's cookie consent, claims the row so the Lead goes at most once,
+  // and never throws. submission.id is the event_id the browser's Lead shares.
+  const metaContext = metaLeadContext(request, ip);
+  after(() =>
+    sendMetaLead({
+      table: 'contact_submissions',
+      id: submission.id,
+      formName: contactFormName(sourcePage),
+      person: { email: data.email, name: data.name },
+      context: metaContext,
+    }),
+  );
 
   // The response shape is unchanged: the visitor's outcome depends only on the
   // row having been committed.

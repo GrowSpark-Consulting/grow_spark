@@ -1,4 +1,5 @@
 import { Instagram, Linkedin } from 'lucide-react';
+import { metaPixelId } from '@/lib/meta/shared';
 
 /**
  * Site footer — a Server Component. components/footer.html contains no
@@ -13,6 +14,10 @@ import { Instagram, Linkedin } from 'lucide-react';
  * The Privacy / Terms / Cookie Policy links point at routes that do not exist
  * and 404 today. They are reproduced exactly as-is: fixing them would be a
  * content change, not a migration. Tracked as a known pre-existing issue.
+ *
+ * "Cookie preferences" is a plain button, present only when the Meta Pixel is
+ * configured. components/tracking/CookieConsent.tsx listens for clicks on
+ * [data-cookie-preferences] and reopens the banner, so this stays server-only.
  */
 export default function Footer() {
   return (
@@ -137,6 +142,15 @@ export default function Footer() {
             >
               Cookie Policy
             </a>
+            {metaPixelId() && (
+              <button
+                type="button"
+                data-cookie-preferences=""
+                className="text-[13px] text-white/50 hover:text-white/70 transition-colors duration-200 cursor-pointer"
+              >
+                Cookie preferences
+              </button>
+            )}
           </div>
         </div>
       </div>

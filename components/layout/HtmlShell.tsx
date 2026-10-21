@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
 import { FONT_HREF_DEFAULT, GTM_ID } from '@/lib/site';
+import { metaPixelId } from '@/lib/meta/shared';
 import Nav from './Nav';
 import Footer from './Footer';
 import SiteEffects from '@/components/effects/SiteEffects';
+import CookieConsent from '@/components/tracking/CookieConsent';
 import '@/app/globals.css';
 
 /**
@@ -93,6 +95,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           already been rendered.
         */}
         <SiteEffects />
+        {/*
+          Cookie banner + Meta Pixel. Not rendered at all without a Pixel ID,
+          so such a deployment ships neither the banner nor any tracking code.
+          The Pixel itself never loads from here — only after Accept.
+        */}
+        {metaPixelId() && <CookieConsent />}
       </body>
     </html>
   );

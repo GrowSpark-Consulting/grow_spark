@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { trackLead } from '@/components/tracking/metaPixel';
 
 /**
  * Shared submit behaviour for the public forms.
@@ -14,6 +15,9 @@ import { useState } from 'react';
  * Inputs stay uncontrolled and are read through FormData on submit, which keeps
  * the markup identical to the server-rendered version and means a field can be
  * added to the JSX without also wiring a piece of state.
+ *
+ * `leadForm` names the form for the Meta Pixel's Lead event. Forms that are
+ * not sales leads (careers) simply omit it.
  */
 
 export type SubmitStatus =
@@ -22,7 +26,7 @@ export type SubmitStatus =
   | { kind: 'success'; message: string }
   | { kind: 'error'; message: string };
 
-export function useFormSubmit(endpoint: string, successFallback: string) {
+export function useFormSubmit(endpoint: string, successFallback: string, leadForm?: string) {
   const [status, setStatus] = useState<SubmitStatus>({ kind: 'idle' });
   const sending = status.kind === 'sending';
 
@@ -55,6 +59,10 @@ export function useFormSubmit(endpoint: string, successFallback: string) {
       }
 
       setStatus({ kind: 'success', message: result.message ?? successFallback });
+      // Only here, with the row confirmed saved. The returned id is the
+      // eventID that pairs this with the server's Conversions API event; no-op
+      // without cookie consent.
+      if (leadForm) trackLead(leadForm, result.id);
       form.reset();
     } catch {
       // Network-level failure: the request never reached the server, so there

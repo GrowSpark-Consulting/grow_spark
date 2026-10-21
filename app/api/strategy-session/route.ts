@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { after, NextResponse } from 'next/server';
 import {
   attachRazorpayOrder,
   insertStrategySessionBooking,
@@ -8,6 +8,8 @@ import { env, razorpayConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
 import { markTableHubspotFailed, markTableHubspotSynced } from '@/lib/db';
 import { syncBookingToHubSpot } from '@/lib/hubspot/sync';
+import { metaLeadContext, sendMetaLead } from '@/lib/meta/capi';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 import {
   razorpayClient,
   STRATEGY_SESSION_AMOUNT_PAISE,
@@ -187,6 +189,22 @@ export async function POST(request: Request) {
       error: redact(e instanceof Error ? e.message : String(e)),
     });
   }
+
+  // Meta Conversions API, after the response. The saved booking is the lead —
+  // whether or not the payment that follows completes — and only a booking the
+  // visitor can actually go on to pay for counts, hence here and not straight
+  // after the insert. Same contract as /api/contact: consent-gated, at most
+  // once, never fatal; booking.id is the event_id the browser's Lead shares.
+  const metaContext = metaLeadContext(request, ip);
+  after(() =>
+    sendMetaLead({
+      table: 'strategy_session_bookings',
+      id: booking.id,
+      formName: LEAD_FORMS.strategySession,
+      person: { email: data.email, name: data.name, phone: data.phone },
+      context: metaContext,
+    }),
+  );
 
   return NextResponse.json({
     success: true,

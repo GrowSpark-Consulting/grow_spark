@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { trackLead } from '@/components/tracking/metaPixel';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 
 /**
  * Contact form.
@@ -65,6 +67,9 @@ export default function ContactForm() {
       }
 
       setStatus({ kind: 'success', message: result.message });
+      // Only once the row is confirmed saved; result.id pairs this with the
+      // server's Conversions API event. No-op without cookie consent.
+      trackLead(LEAD_FORMS.contact, result.id);
       form.reset();
     } catch {
       // Network-level failure: the request never reached the server.
