@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { after, NextResponse } from 'next/server';
 import {
   attachRazorpayOrder,
   insertStrategySessionBooking,
@@ -8,6 +8,8 @@ import { env, razorpayConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
 import { markTableHubspotFailed, markTableHubspotSynced } from '@/lib/db';
 import { syncBookingToHubSpot } from '@/lib/hubspot/sync';
+import { metaLeadContext, sendMetaLead } from '@/lib/meta/capi';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 import {
   GROWTH_INTENSIVE_AMOUNT_PAISE,
   razorpayClient,
@@ -194,6 +196,19 @@ export async function POST(request: Request) {
       error: redact(e instanceof Error ? e.message : String(e)),
     });
   }
+
+  // Meta Conversions API, after the response — see /api/strategy-session for
+  // why it sits here rather than straight after the insert.
+  const metaContext = metaLeadContext(request, ip);
+  after(() =>
+    sendMetaLead({
+      table: 'strategy_session_bookings',
+      id: booking.id,
+      formName: LEAD_FORMS.growthIntensive,
+      person: { email: data.email, name: data.name, phone: data.phone },
+      context: metaContext,
+    }),
+  );
 
   return NextResponse.json({
     success: true,

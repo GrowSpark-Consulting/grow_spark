@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { trackLead } from '@/components/tracking/metaPixel';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 
 /**
  * Booking form + Razorpay Standard Checkout for the two 1:1 paid engagements
@@ -88,6 +90,7 @@ type EngagementConfig = {
   idPrefix: string;
   checkoutDescription: string;
   priceLabel: string;
+  leadForm: string;
 };
 
 const ENGAGEMENT_CONFIG: Record<Engagement, EngagementConfig> = {
@@ -96,12 +99,14 @@ const ENGAGEMENT_CONFIG: Record<Engagement, EngagementConfig> = {
     idPrefix: 's',
     checkoutDescription: 'Founder Strategy Session',
     priceLabel: '₹9,999',
+    leadForm: LEAD_FORMS.strategySession,
   },
   growth_intensive: {
     apiEndpoint: '/api/growth-intensive/',
     idPrefix: 'i',
     checkoutDescription: 'Founder Growth Intensive',
     priceLabel: '₹15,999',
+    leadForm: LEAD_FORMS.growthIntensive,
   },
 };
 
@@ -164,6 +169,12 @@ export default function StrategySessionForm({
       });
       return;
     }
+
+    // The booking row is saved and its Order created — that, not the payment,
+    // is the lead, the same "CRM before payment" line the server draws.
+    // bookingId is also the server's Conversions API event_id. No-op without
+    // cookie consent.
+    trackLead(config.leadForm, order.bookingId);
 
     setStatus({ kind: 'paying' });
 

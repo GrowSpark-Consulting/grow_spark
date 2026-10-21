@@ -62,6 +62,9 @@ export const env = {
   get sanityRevalidateSecret() {
     return required('SANITY_REVALIDATE_SECRET');
   },
+  get metaCapiAccessToken() {
+    return required('META_CAPI_ACCESS_TOKEN');
+  },
 };
 
 /** True when every variable the contact workflow needs is present. */
@@ -120,4 +123,15 @@ export function hubspotDealsConfigured(): boolean {
 /** True when the Sanity webhook can verify its signature and revalidate. */
 export function sanityRevalidateConfigured(): boolean {
   return Boolean(process.env.SANITY_REVALIDATE_SECRET);
+}
+
+/**
+ * True when server-side Lead events can be sent to Meta.
+ *
+ * Needs the Pixel (dataset) ID as well as the token, because the ID is the
+ * endpoint path. Like HubSpot, this gates one step rather than the workflow:
+ * without it every form keeps storing, emailing and syncing exactly as before.
+ */
+export function metaCapiConfigured(): boolean {
+  return Boolean(process.env.META_CAPI_ACCESS_TOKEN && process.env.NEXT_PUBLIC_META_PIXEL_ID);
 }

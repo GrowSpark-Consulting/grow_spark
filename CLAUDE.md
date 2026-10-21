@@ -54,6 +54,15 @@ Five forms post to endpoints that do not exist and 404 on submit:
 
 This is pre-existing behaviour carried through the migration intentionally, not an oversight. Do not add route handlers, email, storage or CRM integration without being asked. `razorpay` is a dependency with no source usage, retained for future payment work — it is a server-side SDK and must never reach a client bundle.
 
+## Meta Pixel + Conversions API
+
+Off unless `NEXT_PUBLIC_META_PIXEL_ID` is set; then `HtmlShell` mounts `components/tracking/CookieConsent.tsx`, and both footers show a "Cookie preferences" button.
+
+- **Consent first, always.** The choice lives in the `gs_consent` cookie (`granted`|`denied`). The Pixel loads only after Accept, from `components/tracking/metaPixel.ts` — never paste Meta's base snippet or `<noscript>` pixel, and never add a Meta tag in GTM: GTM loads before consent. Decline/withdraw revokes and deletes `_fbp`/`_fbc`.
+- **Every event** carries `content_category: "website"` (the Growth Audit sites share this Pixel). `autoConfig` is off so Meta sends nothing unlabelled.
+- **Lead** fires in the browser only after the server returns the saved row's id, which is also the Conversions API `event_id` — that pair is how Meta deduplicates. Careers is not a lead and has no Lead event.
+- **Server**: the lead routes call `lib/meta/capi.ts` `sendMetaLead` inside `after()`. It checks consent from the request cookie, claims `meta_capi_claimed_at` (migration `0006`) for at-most-once delivery, never throws, and keeps `META_CAPI_ACCESS_TOKEN` out of URLs and logs.
+
 ## Known pre-existing issues
 
 - Footer links `/privacy/`, `/terms/` and `/cookie-policy/` point at routes that do not exist, on all 27 pages.

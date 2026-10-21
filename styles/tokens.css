@@ -109,6 +109,8 @@
   --z-base: 0;
   --z-sticky-subnav: 30;
   --z-header: 50;
+  /* Cookie banner: above the header, below the mobile drawer and its scrim. */
+  --z-consent: 55;
   --z-drawer: 60;
   --z-skip-link: 200;
 

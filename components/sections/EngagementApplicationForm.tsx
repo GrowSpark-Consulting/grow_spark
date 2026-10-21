@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormSubmit } from '@/components/forms/useFormSubmit';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 
 /**
  * Long-form engagement application on /strategy/.
@@ -17,6 +18,7 @@ export default function EngagementApplicationForm() {
   const { status, sending, handleSubmit } = useFormSubmit(
     '/api/engagement-application/',
     'Your application has been submitted successfully.',
+    LEAD_FORMS.engagement,
   );
 
   return (

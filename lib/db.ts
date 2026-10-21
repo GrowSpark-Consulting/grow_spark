@@ -556,3 +556,53 @@ export async function markTableHubspotFailed(
      where id = ${id}
   `;
 }
+
+/**
+ * Meta Conversions API delivery state, for the three tables whose rows are
+ * leads (careers_applications is not one).
+ *
+ * The claim is the at-most-once guarantee: it stamps meta_capi_claimed_at only
+ * while it is still null and reports whether this call did it, so whichever
+ * caller wins sends the event and any other — a retry, a duplicated
+ * invocation — finds the row taken and sends nothing. Same atomic
+ * update-and-return shape as markBookingPaid.
+ */
+export type MetaCapiTable =
+  | 'contact_submissions'
+  | 'engagement_applications'
+  | 'strategy_session_bookings';
+
+export async function claimMetaCapiEvent(table: MetaCapiTable, id: string): Promise<boolean> {
+  const sql = db();
+  const [row] = await sql<{ id: string }[]>`
+    update ${sql(table)}
+       set meta_capi_claimed_at = now()
+     where id = ${id}
+       and meta_capi_claimed_at is null
+    returning id
+  `;
+  return Boolean(row);
+}
+
+export async function markMetaCapiSent(table: MetaCapiTable, id: string): Promise<void> {
+  const sql = db();
+  await sql`
+    update ${sql(table)}
+       set meta_capi_sent_at = now(), meta_capi_error = null
+     where id = ${id}
+  `;
+}
+
+/** The claim is left in place: a failed event is recorded, not resent. */
+export async function markMetaCapiFailed(
+  table: MetaCapiTable,
+  id: string,
+  error: string,
+): Promise<void> {
+  const sql = db();
+  await sql`
+    update ${sql(table)}
+       set meta_capi_error = ${error.slice(0, 500)}
+     where id = ${id}
+  `;
+}

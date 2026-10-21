@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ChevronRight, CircleCheck } from 'lucide-react';
 import { useFormSubmit } from '@/components/forms/useFormSubmit';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 import { booking } from './content';
 
 /**
@@ -52,6 +53,9 @@ export default function LeadForm() {
     // would answer with a 308 first.
     '/api/contact/',
     booking.form.successBody,
+    // Its own content_name, although it shares /api/contact/ with
+    // ContactForm.tsx; lib/meta/capi.ts tells them apart by the page.
+    LEAD_FORMS.frameworkAssessment,
   );
   const [errors, setErrors] = useState<Errors>({});
 

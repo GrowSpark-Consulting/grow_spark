@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { after, NextResponse } from 'next/server';
 import {
   insertEngagementApplication,
   markEngagementEmailFailed,
@@ -11,6 +11,8 @@ import { sendFormNotification } from '@/lib/email';
 import { contactWorkflowConfigured } from '@/lib/env';
 import { log, redact } from '@/lib/logger';
 import { syncEngagementApplicationToHubSpot } from '@/lib/hubspot/sync';
+import { metaLeadContext, sendMetaLead } from '@/lib/meta/capi';
+import { LEAD_FORMS } from '@/lib/meta/shared';
 import { engagementSchema } from '@/lib/validation/engagement';
 
 /**
@@ -181,6 +183,18 @@ export async function POST(request: Request) {
       error: redact(e instanceof Error ? e.message : String(e)),
     });
   }
+
+  // Meta Conversions API, after the response — same contract as /api/contact.
+  const metaContext = metaLeadContext(request, ip);
+  after(() =>
+    sendMetaLead({
+      table: 'engagement_applications',
+      id: application.id,
+      formName: LEAD_FORMS.engagement,
+      person: { email: data.email, name: data.name },
+      context: metaContext,
+    }),
+  );
 
   return NextResponse.json({
     success: true,

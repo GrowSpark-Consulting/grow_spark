@@ -1083,11 +1083,22 @@ html:not(.lenis) .lp-anchor {
   gap: 10px 24px;
   font-size: 14px;
 }
-.lp-footer__links a {
+.lp-footer__links a,
+.lp-footer__links button {
   color: var(--lp-on-dark-dim);
   text-decoration: none;
 }
-.lp-footer__links a:hover {
+/* "Cookie preferences" is a button (it opens the banner, it goes nowhere) but
+   reads as one more footer link. */
+.lp-footer__links button {
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.lp-footer__links a:hover,
+.lp-footer__links button:hover {
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 4px;
