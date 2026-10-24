@@ -41,5 +41,5 @@ export const DEFAULT_OG_IMAGE = {
 export const ORG_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
-/** Google Tag Manager container, loaded on every route by HtmlShell. */
-export const GTM_ID = 'GTM-T44BDVHX';
+/** Google tag (GA4) measurement ID, loaded on every route by HtmlShell. */
+export const GA_MEASUREMENT_ID = 'G-QJH61735YG';

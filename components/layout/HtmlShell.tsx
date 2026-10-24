@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
-import { FONT_HREF_DEFAULT, GTM_ID } from '@/lib/site';
+import { FONT_HREF_DEFAULT } from '@/lib/site';
 import { metaPixelId } from '@/lib/meta/shared';
 import Nav from './Nav';
 import Footer from './Footer';
 import SiteEffects from '@/components/effects/SiteEffects';
 import CookieConsent from '@/components/tracking/CookieConsent';
+import GoogleTag from '@/components/tracking/GoogleTag';
 import '@/app/globals.css';
 
 /**
@@ -38,24 +39,11 @@ export default function HtmlShell({
     <html lang="en">
       <head>
         {/*
-          Google Tag Manager. Lives here rather than in a route group because
-          all three root layouts — (home), (site) and (landing) — render this
-          shell, so it loads once on every route. A plain inline <script>, not
-          next/script: in the App Router even strategy="beforeInteractive"
-          only queues the code on self.__next_s for Next's runtime to run once
-          its chunks load. Inline, it runs as the parser reaches it, the way
-          Google's install instructions require; gtm.js itself loads async.
+          Google tag. Lives here rather than in a route group because all
+          three root layouts — (home), (site) and (landing) — render this
+          shell, so it loads once on every route.
         */}
-        <script
-          id="gtm"
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`,
-          }}
-        />
+        <GoogleTag />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/*
@@ -70,15 +58,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         className="bg-paper text-ink"
         {...(heroTheme ? { 'data-hero-theme': 'dark' } : {})}
       >
-        {/* Google Tag Manager (noscript) — must stay the first child of <body>. */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
         {/*
           Every one of the 27 pages includes components/nav.html then its own
           <main>, then components/footer.html. <main> stays with the page rather

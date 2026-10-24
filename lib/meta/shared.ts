@@ -31,6 +31,9 @@ export const CONTENT_CATEGORY = 'website';
 /** First-party cookie holding the visitor's choice, readable by the server too. */
 export const CONSENT_COOKIE = 'gs_consent';
 
+/** Window event saveConsent() dispatches, detail = the new Consent; the Google tag listens. */
+export const CONSENT_EVENT = 'gs:consent';
+
 /** 180 days, in seconds. */
 export const CONSENT_MAX_AGE = 180 * 24 * 60 * 60;
 

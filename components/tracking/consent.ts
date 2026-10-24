@@ -1,4 +1,4 @@
-import { CONSENT_COOKIE, CONSENT_MAX_AGE, parseConsent, type Consent } from '@/lib/meta/shared';
+import { CONSENT_COOKIE, CONSENT_EVENT, CONSENT_MAX_AGE, parseConsent, type Consent } from '@/lib/meta/shared';
 
 /**
  * The visitor's cookie choice, browser side.
@@ -18,6 +18,7 @@ export function saveConsent(value: Consent): void {
   // otherwise refuse to store the cookie at all.
   const secure = window.location.protocol === 'https:' ? '; Secure' : '';
   document.cookie = `${CONSENT_COOKIE}=${value}; Path=/; Max-Age=${CONSENT_MAX_AGE}; SameSite=Lax${secure}`;
+  window.dispatchEvent?.(new CustomEvent(CONSENT_EVENT, { detail: value }));
 }
 
 const META_COOKIES = ['_fbp', '_fbc'] as const;
