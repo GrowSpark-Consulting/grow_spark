@@ -13,6 +13,7 @@ import { contactWorkflowConfigured } from '@/lib/env';
 import { syncContactSubmissionToHubSpot } from '@/lib/hubspot/sync';
 import { log, redact } from '@/lib/logger';
 import { contactFormName, metaLeadContext, sendMetaLead } from '@/lib/meta/capi';
+import { sendCrmIntake } from '@/lib/crm-intake/send';
 import { contactSchema } from '@/lib/validation/contact';
 
 /**
@@ -28,6 +29,10 @@ import { contactSchema } from '@/lib/validation/contact';
 
 // Never prerender or cache: this route only ever handles POSTs with side effects.
 export const dynamic = 'force-dynamic';
+
+// Explicit function time limit (seconds). after() work (Meta, CRM intake) runs
+// inside it; lib/crm-intake/send.ts holds its worst case to 40s to fit.
+export const maxDuration = 60;
 
 const MAX_BODY_BYTES = 64 * 1024;
 const RATE_LIMIT_WINDOW_MINUTES = 10;
@@ -190,6 +195,18 @@ export async function POST(request: Request) {
       formName: contactFormName(sourcePage),
       person: { email: data.email, name: data.name },
       context: metaContext,
+    }),
+  );
+
+  // 9 — Website-intake add-on for the Sales & CRM app. Runs after the
+  // response, so it can never delay or fail the visitor, HubSpot or Meta.
+  // sendCrmIntake never throws and does nothing unless CRM_INTAKE_ENABLED.
+  after(() =>
+    sendCrmIntake({
+      submissionId: submission.id,
+      submittedAt: submission.created_at,
+      sourcePage,
+      data,
     }),
   );
 

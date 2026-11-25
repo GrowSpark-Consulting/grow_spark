@@ -151,7 +151,8 @@ describe('/api/contact', () => {
 
     expect(response.status).toBe(200);
     expect(json.id).toBe('contact-row-1');
-    expect(m.after).toHaveBeenCalledTimes(1);
+    // Two after() callbacks: Meta, then the CRM-intake add-on (a no-op unless enabled).
+    expect(m.after).toHaveBeenCalledTimes(2);
     expect(m.sendMetaLead).not.toHaveBeenCalled(); // only once the response is out
 
     await runScheduled();

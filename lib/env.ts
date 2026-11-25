@@ -120,6 +120,19 @@ export function hubspotDealsConfigured(): boolean {
   );
 }
 
+/**
+ * True when the Sales & CRM website-intake add-on is switched on and fully
+ * configured. Off by default: any missing variable means the site behaves
+ * exactly as it did before the add-on existed. Server-only; never NEXT_PUBLIC.
+ */
+export function crmIntakeConfigured(): boolean {
+  return Boolean(
+    process.env.CRM_INTAKE_ENABLED === 'true'
+      && process.env.CRM_INTAKE_URL
+      && process.env.CRM_INTAKE_API_KEY,
+  );
+}
+
 /** True when the Sanity webhook can verify its signature and revalidate. */
 export function sanityRevalidateConfigured(): boolean {
   return Boolean(process.env.SANITY_REVALIDATE_SECRET);
